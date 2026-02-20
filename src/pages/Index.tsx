@@ -61,10 +61,14 @@ const Index = () => {
           <br />
           Jury
         </h1>
-        <p className="text-base md:text-lg max-w-xl mx-auto mt-3 text-muted-foreground">
+        <p className="text-base md:text-lg max-w-2xl mx-auto mt-3 text-muted-foreground">
           A global registry of{" "}
           <span className="font-bold text-foreground">{cases.length}</span>{" "}
-          data privacy enforcement decisions..
+          data privacy enforcement decisions across{" "}
+          <span className="font-bold text-foreground">6</span>{" "}
+          jurisdictions, totaling{" "}
+          <span className="font-bold text-foreground">{formatTotalFines(totalFines)}</span>{" "}
+          in fines.
         </p>
       </header>
 
