@@ -72,7 +72,7 @@ const CaseDetail = () => {
 
         {/* Case Information */}
         <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">\CASE INFORMATION</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE INFORMATION</h2>
           <div className="h-[3px] bg-foreground mb-4" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -86,16 +86,24 @@ const CaseDetail = () => {
               </div>
             ))}
           </div>
-          <div className="mt-4 flex items-center gap-4">
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <div className="brutalist-border bg-card px-5 py-3">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">SEVERITY</p>
+              <div className="flex gap-1 mt-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className={`w-10 h-5 border-2 border-foreground ${i < case_.severityForIndividuals ? "severity-bar-fill" : "severity-bar-empty"}`} />
+                ))}
+              </div>
+            </div>
             <div className="brutalist-border bg-card px-5 py-3">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">FINE</p>
               <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay}</p>
             </div>
             <div className="brutalist-border bg-card px-5 py-3 flex-1">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">SEVERITY</p>
-              <div className="flex gap-1 mt-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className={`w-10 h-5 border-2 border-foreground ${i < case_.severityForIndividuals ? "severity-bar-fill" : "severity-bar-empty"}`} />
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
+              <div className="flex flex-wrap gap-1.5 mt-1">
+                {case_.violations.map((v) => (
+                  <span key={v} className="text-xs font-mono font-bold" style={{ color: "hsl(var(--accent))" }}>{v}</span>
                 ))}
               </div>
             </div>
@@ -153,7 +161,7 @@ const CaseDetail = () => {
 
         {/* Regulatory Findings */}
         <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">\ How they violated data privacy laws</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ LEGAL FINDINGS</h2>
           <div className="h-[3px] bg-foreground mb-4" />
           {case_.regulatoryFindings.map((rf, i) => (
             <div key={i} className="brutalist-border bg-card p-5 mb-4">
@@ -190,7 +198,7 @@ const CaseDetail = () => {
           </div>
           <div className="brutalist-border border-t-0 bg-card p-6">
             {activeTab === "outcome" && <p className="text-sm leading-relaxed">{case_.outcome}</p>}
-            {activeTab === "consequences" && <p className="text-sm leading-relaxed">{case_.consequences}</p>}
+            {activeTab === "consequences" && <div className="text-sm leading-relaxed space-y-3"><p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {case_.fineDisplay}</span></p><p>{case_.consequences}</p></div>}
             {activeTab === "company" && <p className="text-sm leading-relaxed">{case_.companyNow}</p>}
             {activeTab === "pdfs" && (
               <div>
