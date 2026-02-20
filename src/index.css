@@ -54,11 +54,8 @@
     --tag-foreground: 20 10% 30%;
     --card-tab: 38 55% 82%;
     --card-tab-foreground: 20 10% 12%;
-    --info-box: 40 30% 97%;
+    --info-box: 38 55% 82%;
     --info-box-foreground: 20 10% 12%;
-    --detail-bg: 220 10% 14%;
-    --detail-foreground: 36 33% 94%;
-    --detail-muted: 220 8% 40%;
     --label-green: 152 50% 32%;
     --label-red: 4 80% 50%;
   }
