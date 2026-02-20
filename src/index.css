@@ -54,7 +54,7 @@
     --tag-foreground: 20 10% 30%;
     --card-tab: 38 55% 82%;
     --card-tab-foreground: 20 10% 12%;
-    --info-box: 38 55% 82%;
+    --info-box: 0 0% 100%;
     --info-box-foreground: 20 10% 12%;
     --label-green: 152 50% 32%;
     --label-red: 4 80% 50%;
@@ -87,7 +87,13 @@
   }
 
   .brutalist-shadow {
-    box-shadow: 4px 4px 0px hsl(var(--foreground));
+    box-shadow: 5px 5px 0px hsl(var(--foreground));
+  }
+
+  .info-box {
+    background: hsl(var(--info-box));
+    color: hsl(var(--info-box-foreground));
+    box-shadow: 5px 5px 0px hsl(var(--foreground) / 0.25);
   }
 
   .brutalist-card {
