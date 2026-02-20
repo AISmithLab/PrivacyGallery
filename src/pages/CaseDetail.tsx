@@ -48,7 +48,7 @@ const CaseDetail = () => {
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
         {/* Company hero section */}
-        <section className="brutalist-border bg-card p-8" style={{ borderLeftWidth: "6px", borderLeftColor: "hsl(var(--accent))" }}>
+        <section className="brutalist-border p-8" style={{ borderLeftWidth: "6px", borderLeftColor: "hsl(var(--accent))", background: "hsl(var(--info-box))" }}>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">{case_.company}</h1>
@@ -61,7 +61,7 @@ const CaseDetail = () => {
                 { label: "FOUNDING YEAR", value: case_.foundingYear.toString() },
                 { label: "COMPANY WORTH", value: case_.companyWorth },
               ].map((item) => (
-                <div key={item.label} className="brutalist-border bg-background px-4 py-3 min-w-[180px]">
+                <div key={item.label} className="brutalist-border px-4 py-3 min-w-[180px]" style={{ background: "hsl(var(--background))" }}>
                   <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
                   <p className="text-sm font-bold mt-0.5">{item.value}</p>
                 </div>
@@ -80,14 +80,14 @@ const CaseDetail = () => {
               { label: "COMPLAINT ISSUED", value: `${case_.complaintYear} – Decision ${case_.year}` },
               { label: "NUM IMPACTED", value: case_.impactedIndividuals },
             ].map((item) => (
-              <div key={item.label} className="brutalist-border bg-card p-4">
+              <div key={item.label} className="brutalist-border p-4" style={{ background: "hsl(var(--info-box))" }}>
                 <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
                 <p className="text-lg font-bold mt-1">{item.value}</p>
               </div>
             ))}
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div className="brutalist-border bg-card px-5 py-3">
+            <div className="brutalist-border px-5 py-3" style={{ background: "hsl(var(--info-box))" }}>
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">SEVERITY</p>
               <div className="flex gap-1 mt-1">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -95,11 +95,11 @@ const CaseDetail = () => {
                 ))}
               </div>
             </div>
-            <div className="brutalist-border bg-card px-5 py-3">
+            <div className="brutalist-border px-5 py-3" style={{ background: "hsl(var(--info-box))" }}>
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">FINE</p>
               <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay}</p>
             </div>
-            <div className="brutalist-border bg-card px-5 py-3 flex-1">
+            <div className="brutalist-border px-5 py-3 flex-1" style={{ background: "hsl(var(--info-box))" }}>
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
               <div className="flex flex-wrap gap-1.5 mt-1">
                 {case_.violations.map((v) => (
@@ -114,7 +114,7 @@ const CaseDetail = () => {
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE OVERVIEW</h2>
           <div className="h-[3px] bg-foreground mb-4" />
-          <div className="brutalist-border bg-card p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))" }}>
+          <div className="brutalist-border p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))", background: "hsl(var(--info-box))" }}>
             <p className="text-[15px] leading-relaxed">{case_.caseDescription}</p>
           </div>
           {case_.violations.length > 0 && (
@@ -138,12 +138,12 @@ const CaseDetail = () => {
               <div
                 key={i}
                 onClick={() => toggleClaim(i)}
-                className="brutalist-border bg-card p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                style={{ borderLeftWidth: "4px", borderLeftColor: revealedClaims.has(i) ? "hsl(var(--accent))" : "hsl(152, 60%, 30%)" }}
+                className="brutalist-border p-4 cursor-pointer hover:opacity-90 transition-colors"
+                style={{ borderLeftWidth: "4px", borderLeftColor: revealedClaims.has(i) ? "hsl(var(--accent))" : "hsl(152, 60%, 30%)", background: "hsl(var(--info-box))" }}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
-                    <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 mb-1">CLAIM</p>
+                    <p className="text-[10px] font-mono font-bold uppercase tracking-wider mb-1" style={{ color: "hsl(var(--label-green))" }}>CLAIM</p>
                     <p className="text-sm font-medium">{cr.claim}</p>
                   </div>
                   {revealedClaims.has(i) ? <ChevronUp className="w-5 h-5 shrink-0 text-accent" /> : <ChevronDown className="w-5 h-5 shrink-0 text-muted-foreground" />}
@@ -164,7 +164,7 @@ const CaseDetail = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ LEGAL FINDINGS</h2>
           <div className="h-[3px] bg-foreground mb-4" />
           {case_.regulatoryFindings.map((rf, i) => (
-            <div key={i} className="brutalist-border bg-card p-5 mb-4">
+            <div key={i} className="brutalist-border p-5 mb-4" style={{ background: "hsl(var(--info-box))" }}>
               <p className="text-xs font-mono font-bold">{rf.act}</p>
               <p className="text-sm text-muted-foreground mt-1 mb-3">{rf.description}</p>
               <div className="bg-primary text-primary-foreground p-3 mb-3">
