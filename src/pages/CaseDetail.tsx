@@ -102,6 +102,24 @@ const CaseDetail = () => {
           </div>
         </section>
 
+        {/* Case Context */}
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE OVERVIEW</h2>
+          <div className="h-[3px] bg-foreground mb-4" />
+          <div className="brutalist-border bg-card p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))" }}>
+            <p className="text-[15px] leading-relaxed">{case_.caseDescription}</p>
+          </div>
+          {case_.violations.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {case_.violations.map((v) => (
+                <span key={v} className="brutalist-border px-3 py-1.5 text-xs font-mono font-bold uppercase" style={{ background: "hsl(var(--accent) / 0.1)", color: "hsl(var(--accent))" }}>
+                  ⚠️ {v}
+                </span>
+              ))}
+            </div>
+          )}
+        </section>
+
         {/* Claim vs Reality */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-1">\ CLAIM vs REALITY</h2>

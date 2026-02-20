@@ -87,14 +87,14 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </div>
         </div>
 
-        {/* Colored footer bar */}
+        {/* Colored footer bar - violation type */}
         <div className="px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider"
           style={{
             background: "hsl(var(--accent))",
             color: "hsl(var(--accent-foreground))",
             borderTop: "2px solid hsl(var(--foreground))",
           }}>
-          ⚖️ {case_.jurisdiction}
+          ⚠️ {case_.violations[0] || "Privacy Violation"}
         </div>
       </div>
     </Link>

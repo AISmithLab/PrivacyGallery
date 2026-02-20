@@ -26,6 +26,7 @@ export interface EnforcementCase {
   company: string;
   companyDescription: string;
   companyLongDescription: string;
+  caseDescription: string;
   country: string;
   sector: Sector;
   foundingYear: number;
@@ -87,6 +88,7 @@ export const cases: EnforcementCase[] = [
     company: "Snapchat",
     companyDescription: "A U.S.-based social media company that operates a messaging app where users share disappearing photos and videos.",
     companyLongDescription: "Snap Inc. is an American technology company, founded on September 16, 2011, by Evan Spiegel, Bobby Murphy, and Reggie Brown, based in Santa Monica, California. The company developed and maintains technological products and services, namely Snapchat, Spectacles, Bitmoji, and SnapBoost. The company was named Snapchat Inc. at its inception, but it was rebranded Snap Inc. on September 24, 2016.",
+    caseDescription: "In 2014, the Federal Trade Commission charged Snapchat with deceiving consumers by promoting the ephemeral nature of its messaging service. The FTC found that Snapchat's core marketing promise—that photos and videos would 'disappear forever'—was false. Recipients could easily save snaps through third-party apps, screenshots that bypassed detection, or by accessing the device's file system. Furthermore, the company transmitted users' location data and contact lists without adequate disclosure, and its failure to secure the Find Friends feature led to a breach exposing 4.6 million usernames and phone numbers. This case was one of the first major FTC enforcement actions against a social media company for deceptive privacy practices and set an important precedent for how regulators evaluate 'disappearing' content claims.",
     country: "USA",
     sector: "Social Media",
     foundingYear: 2011,
@@ -103,10 +105,10 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2013,
     views: 342,
     claimsVsReality: [
-      { claim: "Snaps 'disappear forever' after the timer expires.", reality: "Recipients could save them via file storage, third-party apps, or screenshots." },
-      { claim: "Senders would be notified if recipients took a screenshot.", reality: "Screenshot detection could be evaded on some devices." },
-      { claim: "No location tracking by the Android app.", reality: "The Android app sent Wi-Fi and cell-based location to an analytics provider." },
-      { claim: "Find Friends used only phone/email/Facebook ID.", reality: "The app collected the full address book without adequate notice." },
+      { claim: "Snaps 'disappear forever' after the timer expires.", reality: "The FTC found that snaps were stored unencrypted on the recipient's device and could be retrieved by connecting the phone to a computer or using widely available third-party apps like SnapHack. Even Snapchat's own screenshot detection was unreliable—on Android, recipients could simply disable it." },
+      { claim: "Senders would be notified if recipients took a screenshot.", reality: "On Android devices running versions older than 4.1, the screenshot-detection mechanism failed entirely, meaning senders received no notification. Third-party apps also bypassed detection on all platforms, giving recipients a false sense of security." },
+      { claim: "No location tracking by the Android app.", reality: "Despite the privacy policy stating that Snapchat did not track location, the Android app transmitted Wi-Fi-based and cell-tower-based location data to Snapchat's analytics tracking provider from January 2013 onward without any user disclosure." },
+      { claim: "Find Friends used only phone/email/Facebook ID.", reality: "The app silently uploaded the user's entire address book—including names, phone numbers, and email addresses—to Snapchat's servers when using the Find Friends feature. This went far beyond the stated collection of just the user's own phone number or email." },
     ],
     regulatoryFindings: [
       {
@@ -131,6 +133,7 @@ export const cases: EnforcementCase[] = [
     company: "Epic Games",
     companyDescription: "Video game developer behind Fortnite and the Unreal Engine.",
     companyLongDescription: "Epic Games, Inc. is an American video game and software development company founded by Tim Sweeney in 1991. The company is headquartered in Cary, North Carolina. Epic Games develops the Unreal Engine, a commercially available game engine, and its subsidiary, Psyonix, develops Rocket League.",
+    caseDescription: "The FTC brought two separate actions against Epic Games in December 2022, resulting in a combined $520 million settlement—the largest gaming privacy enforcement in history. The first action alleged Epic violated COPPA by collecting personal data from children under 13 playing Fortnite without obtaining parental consent, and by defaulting minors into real-time voice and text chat with strangers. The second action targeted Epic's use of 'dark patterns'—confusing button placements, intentionally misleading purchase flows, and a deliberately complex refund process—that tricked players of all ages into making unwanted purchases. The FTC demonstrated that Epic's item shop design was purposefully deceptive, with players frequently purchasing items accidentally when they only meant to preview them.",
     country: "USA",
     sector: "Gaming",
     foundingYear: 1991,
@@ -147,8 +150,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2022,
     views: 1203,
     claimsVsReality: [
-      { claim: "Age-appropriate content and privacy protections for all users.", reality: "Children under 13 were exposed to real-time voice and text chat with strangers without parental consent." },
-      { claim: "In-app purchases require clear confirmation.", reality: "Dark patterns led to unintended purchases with confusing button layouts." },
+      { claim: "Age-appropriate content and privacy protections for all users.", reality: "The FTC found that Epic knowingly allowed children under 13 to register for Fortnite accounts and defaulted all players—including minors—into open voice and text chat with strangers. Internal documents showed Epic employees raised concerns about child safety as early as 2017, but the company resisted adding parental controls because they feared it would reduce engagement metrics." },
+      { claim: "In-app purchases require clear confirmation.", reality: "Epic's purchase flow used a single button press with no confirmation dialog, leading to thousands of accidental purchases. The 'preview' and 'purchase' buttons were placed in nearly identical positions across different screens, and the company actively resisted adding a purchase confirmation step despite internal data showing high rates of refund requests—many from parents of minor players." },
     ],
     regulatoryFindings: [
       {
@@ -171,6 +174,7 @@ export const cases: EnforcementCase[] = [
     company: "Meta Platforms",
     companyDescription: "Social media conglomerate operating Facebook, Instagram, and WhatsApp.",
     companyLongDescription: "Meta Platforms, Inc., formerly known as Facebook, Inc., is an American multinational technology conglomerate founded in 2004 by Mark Zuckerberg. Headquartered in Menlo Park, California, the company owns and operates Facebook, Instagram, WhatsApp, and Threads.",
+    caseDescription: "In May 2023, Ireland's Data Protection Commission (DPC) imposed a record-breaking €1.2 billion fine on Meta for systematically transferring EU users' personal data to the United States in violation of GDPR. The case originated from a 2020 complaint filed following the Court of Justice of the European Union's Schrems II decision, which invalidated the EU-US Privacy Shield. Despite the ruling, Meta continued transferring data of approximately 390 million EU/EEA users to US servers where it was subject to US surveillance programs such as PRISM and UPSTREAM. The DPC found that Meta's reliance on Standard Contractual Clauses was insufficient because US law fundamentally undermined the protections those clauses were meant to provide.",
     country: "Ireland (EU)",
     sector: "Social Media",
     foundingYear: 2004,
@@ -187,8 +191,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2020,
     views: 2841,
     claimsVsReality: [
-      { claim: "User data transfers to the US comply with GDPR requirements.", reality: "Meta continued transferring data without adequate safeguards after the EU-US Privacy Shield was invalidated." },
-      { claim: "Standard Contractual Clauses provide sufficient protection.", reality: "US surveillance laws undermined the protections offered by SCCs." },
+      { claim: "User data transfers to the US comply with GDPR requirements.", reality: "After the EU-US Privacy Shield was invalidated by the CJEU in July 2020, Meta continued transferring data of 390 million EU users to the US for nearly three years. Internal documents showed Meta was aware that its transfer mechanism lacked legal basis but continued the practice to avoid disrupting its advertising business model." },
+      { claim: "Standard Contractual Clauses provide sufficient protection.", reality: "The DPC found that Meta's SCCs could not address the fundamental issue: US federal law (particularly Section 702 of FISA and Executive Order 12333) gave US intelligence agencies broad access to data held by US companies. No contractual clause could override these statutory surveillance powers, rendering Meta's safeguards effectively meaningless." },
     ],
     regulatoryFindings: [
       {
@@ -210,6 +214,7 @@ export const cases: EnforcementCase[] = [
     company: "British Airways",
     companyDescription: "Major UK-based international airline carrier.",
     companyLongDescription: "British Airways is the flag carrier airline of the United Kingdom, headquartered in London. It is the largest airline in the UK based on fleet size and the second-largest based on passengers carried.",
+    caseDescription: "Between June and September 2018, attackers compromised British Airways' website and mobile app by injecting malicious JavaScript code (a 'Magecart' attack) that redirected customer payment card details to a fraudulent website controlled by the attackers. Approximately 380,000 payment card transactions were compromised before the breach was detected. The ICO's investigation found that BA had failed to implement basic security measures including multi-factor authentication, timely software patching, and adequate network monitoring. The initial proposed fine of £183 million was reduced to £20 million, with the ICO citing BA's cooperation, financial impact of COVID-19, and the steps BA had already taken to improve security.",
     country: "UK",
     sector: "Transportation",
     foundingYear: 1974,
@@ -226,8 +231,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2018,
     views: 892,
     claimsVsReality: [
-      { claim: "Customer payment data is processed securely.", reality: "A Magecart-style attack diverted customer payment details to a fraudulent site for months undetected." },
-      { claim: "Robust cybersecurity measures protect personal data.", reality: "BA lacked adequate security testing, multi-factor authentication, and network monitoring." },
+      { claim: "Customer payment data is processed securely.", reality: "Attackers injected 22 lines of malicious JavaScript into BA's payment page that silently copied card details—including CVV codes—to a lookalike domain (baways.com). The skimming code ran undetected for 3 months, compromising an estimated 380,000 transactions. BA's security team had no monitoring in place to detect unauthorized script injections on payment pages." },
+      { claim: "Robust cybersecurity measures protect personal data.", reality: "The ICO found that BA failed to implement even basic security controls: no multi-factor authentication for domain administrator accounts, no file integrity monitoring, outdated and unpatched software, no network segmentation, and inadequate logging. Many of these failures persisted despite BA being aware of similar attacks on other companies months earlier." },
     ],
     regulatoryFindings: [
       {
@@ -249,6 +254,7 @@ export const cases: EnforcementCase[] = [
     company: "SingHealth",
     companyDescription: "Singapore's largest public healthcare group operating hospitals and clinics.",
     companyLongDescription: "Singapore Health Services Pte Ltd (SingHealth) is the largest group of healthcare institutions in Singapore, comprising four hospitals, five national specialty centres, and eight polyclinics.",
+    caseDescription: "In June-July 2018, Singapore experienced its worst-ever cyberattack when a sophisticated state-sponsored Advanced Persistent Threat (APT) group breached SingHealth's patient database and exfiltrated 1.5 million patient records, including the personal particulars and outpatient prescription details of Prime Minister Lee Hsien Loong. The attackers had been inside the network since August 2017, exploiting vulnerabilities in SingHealth's front-end workstations to move laterally through the network. A Committee of Inquiry found multiple failures in both SingHealth and its IT vendor IHiS, including inadequate staff training, failure to patch known vulnerabilities, and delayed incident response despite early warning signs being detected by a junior IT administrator.",
     country: "Singapore",
     sector: "Healthcare",
     foundingYear: 2000,
@@ -265,8 +271,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2018,
     views: 1567,
     claimsVsReality: [
-      { claim: "Patient records are protected by robust security systems.", reality: "Attackers exploited vulnerabilities in SingHealth's IT systems for nearly a year before detection." },
-      { claim: "Only authorized medical staff can access patient data.", reality: "A sophisticated state-sponsored APT group exfiltrated 1.5 million patient records." },
+      { claim: "Patient records are protected by robust security systems.", reality: "The APT group maintained persistent access to SingHealth's network for approximately 10 months (August 2017 to July 2018). They exploited unpatched vulnerabilities in internet-facing workstations and used publicly available hacking tools to escalate privileges and move laterally through the network. A junior IT admin first noticed suspicious database queries in June 2018 but was told to 'continue monitoring'—delaying the response by over a month." },
+      { claim: "Only authorized medical staff can access patient data.", reality: "The attackers compromised multiple administrator credentials, including a dormant service account with high-level database access that had never been reviewed or deactivated. Using these credentials, they ran bulk SQL queries against the patient database, exfiltrating 1.5 million records including the Prime Minister's personal prescription history—data that was specifically targeted." },
     ],
     regulatoryFindings: [
       {
@@ -288,6 +294,7 @@ export const cases: EnforcementCase[] = [
     company: "Sephora",
     companyDescription: "Global beauty retailer selling cosmetics, skincare, and fragrances.",
     companyLongDescription: "Sephora is a French multinational retailer of personal care and beauty products founded in 1969, now owned by LVMH. It operates over 2,700 stores across 35 countries.",
+    caseDescription: "In August 2022, the California Attorney General announced a $1.2 million settlement with Sephora in one of the first public enforcement actions under the California Consumer Privacy Act (CCPA). The AG's investigation found that Sephora was 'selling' consumers' personal information to third-party advertising and analytics companies—through tracking cookies and pixels—without disclosing this in its privacy policy or providing consumers with a 'Do Not Sell My Personal Information' link as required by law. Critically, Sephora also failed to honor Global Privacy Control (GPC) signals, which California treats as legally valid opt-out requests. This case was significant because it established that sharing consumer data with third-party trackers in exchange for analytics services constitutes a 'sale' under CCPA.",
     country: "USA",
     sector: "Retail",
     foundingYear: 1969,
@@ -304,8 +311,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2022,
     views: 456,
     claimsVsReality: [
-      { claim: "We do not sell your personal information.", reality: "Sephora shared customer data with third-party analytics and advertising companies in exchange for services—constituting a 'sale' under CCPA." },
-      { claim: "We respect your privacy choices.", reality: "Failed to process Global Privacy Control opt-out signals from consumers' browsers." },
+      { claim: "We do not sell your personal information.", reality: "Sephora's website deployed dozens of third-party tracking technologies—including cookies and pixels from advertising networks—that transmitted detailed customer browsing behavior, purchase history, and device identifiers to companies like Google, Facebook, and data brokers. Under CCPA's broad definition, this data-for-services exchange constituted a 'sale,' yet Sephora's privacy policy explicitly denied selling consumer data." },
+      { claim: "We respect your privacy choices.", reality: "When consumers sent legally-recognized Global Privacy Control (GPC) signals via their browsers, Sephora's systems simply ignored them and continued tracking. The AG's office tested this by visiting Sephora's website with GPC enabled and confirmed that tracking cookies continued to be set and data continued to flow to third parties—a direct violation of CCPA's opt-out requirements." },
     ],
     regulatoryFindings: [
       {
@@ -328,6 +335,7 @@ export const cases: EnforcementCase[] = [
     company: "Amazon Europe",
     companyDescription: "European arm of the global e-commerce and cloud computing giant.",
     companyLongDescription: "Amazon Europe Core S.à r.l. is the European headquarters of Amazon, based in Luxembourg. It processes personal data for hundreds of millions of EU customers across its e-commerce and digital services platforms.",
+    caseDescription: "In July 2021, Luxembourg's Commission Nationale pour la Protection des Données (CNPD) imposed a €746 million fine on Amazon—at the time the largest GDPR penalty ever issued. The case originated from a 2018 complaint filed by French privacy advocacy group La Quadrature du Net on behalf of 10,000 individuals. The CNPD found that Amazon's advertising targeting system processed personal data without obtaining valid consent under GDPR, and that the company's privacy notices were insufficiently transparent about how user data was being used for behavioral advertising. Amazon has strongly contested the fine and filed an appeal, arguing that its data processing practices comply with GDPR requirements.",
     country: "Luxembourg (EU)",
     sector: "E-Commerce",
     foundingYear: 1994,
@@ -344,8 +352,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2018,
     views: 2105,
     claimsVsReality: [
-      { claim: "Advertising targeting is based on user consent.", reality: "Amazon's advertising system processed personal data without obtaining valid consent under GDPR." },
-      { claim: "Users have transparent control over their data.", reality: "Privacy notices did not adequately explain how personal data was used for ad targeting." },
+      { claim: "Advertising targeting is based on user consent.", reality: "The CNPD found that Amazon's consent mechanism was fundamentally flawed: users were enrolled in behavioral advertising by default, and the 'consent' was buried within general terms of service rather than presented as a separate, affirmative choice. Amazon could not produce evidence of freely-given, specific, informed consent from the majority of its 300+ million affected users—a core GDPR requirement." },
+      { claim: "Users have transparent control over their data.", reality: "Amazon's privacy notices used vague language like 'to improve our services' without specifying that browsing behavior, purchase history, and device usage data were being combined to build detailed advertising profiles. Users had no practical way to understand the full scope of data processing or make informed choices about their data." },
     ],
     regulatoryFindings: [
       {
@@ -367,6 +375,7 @@ export const cases: EnforcementCase[] = [
     company: "TikTok",
     companyDescription: "Short-form video social media platform owned by ByteDance.",
     companyLongDescription: "TikTok is a short-form video hosting service owned by Chinese company ByteDance. It allows users to create and share videos between 15 seconds and 10 minutes long. TikTok has become one of the most downloaded apps globally.",
+    caseDescription: "In April 2023, the UK Information Commissioner's Office fined TikTok £12.7 million for processing the personal data of an estimated 1.4 million UK children under 13 without parental consent between May 2018 and July 2020. The ICO's investigation found that TikTok's age gate—which simply asked users to enter their date of birth—was trivially easy for children to bypass by entering a false age. Despite being aware that many users were underage, TikTok failed to implement meaningful age verification and did not obtain parental consent before collecting children's data, violating the UK GDPR's specific protections for children. The case highlighted the inadequacy of self-declaration age gates as a sole verification mechanism.",
     country: "UK",
     sector: "Social Media",
     foundingYear: 2016,
@@ -383,8 +392,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2020,
     views: 1832,
     claimsVsReality: [
-      { claim: "Users must be at least 13 years old to use TikTok.", reality: "Up to 1.4 million UK children under 13 were estimated to have used the platform." },
-      { claim: "Age verification prevents underage use.", reality: "Age gates were easily bypassed with no meaningful verification." },
+      { claim: "Users must be at least 13 years old to use TikTok.", reality: "The ICO estimated that up to 1.4 million UK children under the age of 13 were actively using TikTok during the period under investigation. TikTok's own internal data showed patterns of usage consistent with young children—including usage spikes after school hours and content engagement patterns typical of pre-teens—yet the company took no meaningful steps to identify or remove these underage accounts." },
+      { claim: "Age verification prevents underage use.", reality: "TikTok's sole age verification mechanism was a date-of-birth entry screen at registration. Children who were initially blocked for being too young could simply close the app, reopen it, and enter a different birth date to gain access. There was no secondary verification, no parental consent mechanism, and no algorithmic detection of likely underage users despite the technology being available in the market." },
     ],
     regulatoryFindings: [
       {
@@ -407,6 +416,7 @@ export const cases: EnforcementCase[] = [
     company: "Clearview AI",
     companyDescription: "Facial recognition company scraping billions of images from the internet.",
     companyLongDescription: "Clearview AI is an American facial recognition company that provides software to law enforcement agencies. The company has scraped over 30 billion images from social media and the web to build its facial recognition database.",
+    caseDescription: "Clearview AI faced enforcement actions from multiple EU data protection authorities for building a facial recognition database by mass-scraping billions of photos from social media platforms and the public internet—all without the knowledge or consent of the individuals depicted. Authorities in Italy, France, Greece, and the UK each imposed fines and orders, finding that Clearview's practices fundamentally violated GDPR principles of lawfulness, fairness, and transparency. The company argued that publicly available images were fair game, but regulators firmly rejected this position, ruling that biometric data processing requires explicit consent regardless of whether the source images are publicly accessible. The case became a landmark precedent for regulating AI companies that process personal data at scale.",
     country: "USA",
     sector: "Technology",
     foundingYear: 2017,
@@ -423,8 +433,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2021,
     views: 3201,
     claimsVsReality: [
-      { claim: "Publicly available images can be freely collected.", reality: "GDPR applies to processing of personal data regardless of whether images are publicly accessible." },
-      { claim: "The service is only used by law enforcement for public safety.", reality: "The mass surveillance system was deployed without consent or legal basis affecting billions of individuals." },
+      { claim: "Publicly available images can be freely collected.", reality: "Multiple EU regulators rejected Clearview's argument that public availability equals free use. Under GDPR, scraping billions of facial images constitutes processing of biometric data—a special category under Article 9 that requires explicit consent. The Italian Garante noted that individuals who post photos on social media do not reasonably expect those images to be scraped into a global surveillance database used by law enforcement and private companies." },
+      { claim: "The service is only used by law enforcement for public safety.", reality: "Investigations revealed that Clearview offered free trial accounts to individual police officers without departmental authorization, and also provided its services to private companies, banks, and individuals. The company had no meaningful controls over who accessed its database or how results were used, creating a mass biometric surveillance system operating entirely outside legal frameworks." },
     ],
     regulatoryFindings: [
       {
@@ -448,6 +458,7 @@ export const cases: EnforcementCase[] = [
     company: "GoodRx",
     companyDescription: "Health-focused platform offering prescription drug price comparisons.",
     companyLongDescription: "GoodRx Holdings, Inc. is an American healthcare company that provides a telehealth platform and free-to-use website and mobile app that tracks prescription drug prices.",
+    caseDescription: "In February 2023, the FTC took its first-ever enforcement action under the Health Breach Notification Rule against GoodRx, a popular prescription drug discount platform. The FTC alleged that GoodRx promised users it would never share their personal health information, then systematically violated that promise by sharing sensitive health data—including users' medication searches, prescription purchases, and health conditions—with advertising giants including Facebook, Google, Criteo, and others. GoodRx used tracking pixels and SDKs to transmit this data, enabling these companies to target users with health-related advertisements. The case was particularly egregious because GoodRx users trusted the platform with deeply sensitive health information, and the company monetized that trust for advertising revenue.",
     country: "USA",
     sector: "Healthcare",
     foundingYear: 2011,
@@ -464,8 +475,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2023,
     views: 678,
     claimsVsReality: [
-      { claim: "We never share your personal health information with advertisers.", reality: "GoodRx shared users' health data—including medication searches and prescriptions—with Facebook, Google, and other ad platforms." },
-      { claim: "HIPAA compliant health data handling.", reality: "GoodRx is not a covered entity under HIPAA, and monetized health data through advertising pixels." },
+      { claim: "We never share your personal health information with advertisers.", reality: "The FTC documented that GoodRx embedded Facebook Pixel, Google Analytics, Criteo tags, and other tracking technologies across its platform. These tools transmitted detailed health information—including specific medications users searched for, prescriptions they filled, and health conditions they researched—directly to advertising companies. Facebook then used this data to create 'lookalike audiences' targeting people with similar health profiles. GoodRx's own privacy policy explicitly promised users their health data would never be shared for advertising." },
+      { claim: "HIPAA compliant health data handling.", reality: "GoodRx prominently displayed a 'HIPAA' badge on its website, implying its data practices met healthcare privacy standards. However, GoodRx is not a HIPAA-covered entity (it's not a healthcare provider, insurer, or clearinghouse), meaning HIPAA protections never actually applied. The FTC found this display was misleading, giving users false confidence that their sensitive prescription and health data was protected by federal healthcare privacy law when it was actually being monetized through advertising networks." },
     ],
     regulatoryFindings: [
       {
@@ -487,6 +498,7 @@ export const cases: EnforcementCase[] = [
     company: "Google LLC",
     companyDescription: "Global tech company specializing in search, advertising, and cloud.",
     companyLongDescription: "Google LLC is an American multinational corporation and technology company focusing on online advertising, search engine technology, cloud computing, and artificial intelligence.",
+    caseDescription: "In September 2023, Google agreed to pay $93 million to settle a lawsuit brought by the California Attorney General over deceptive location tracking practices. The investigation found that even when users turned off their 'Location History' setting—a step Google's own help pages described as stopping location tracking—Google continued to collect and store precise location data through a separate 'Web & App Activity' setting that was enabled by default. This dual-setting design meant users who believed they had opted out of location tracking were still being tracked. The AG's office demonstrated that Google's own engineers and product managers were aware of the misleading design but chose to maintain it because location data was critical to the company's advertising revenue.",
     country: "USA",
     sector: "Technology",
     foundingYear: 1998,
@@ -503,8 +515,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2022,
     views: 1456,
     claimsVsReality: [
-      { claim: "Disabling Location History stops Google from tracking your location.", reality: "Google continued tracking location through Web & App Activity, even when Location History was turned off." },
-      { claim: "Users have full control over location data collection.", reality: "Multiple overlapping settings made it practically impossible to fully disable location tracking." },
+      { claim: "Disabling Location History stops Google from tracking your location.", reality: "Internal emails obtained during the investigation showed Google engineers acknowledging that the Location History toggle was misleading. When users disabled Location History, Google continued collecting precise location data through 'Web & App Activity'—a separate, default-on setting buried deep in account preferences. An internal Google memo stated that turning off Location History 'does not prevent Google from using location,' but this was never disclosed to users." },
+      { claim: "Users have full control over location data collection.", reality: "To fully stop location tracking, users had to navigate multiple nested settings pages, disable at least three separate toggles, and manually delete previously collected data. The AG's investigation found that even Google's own engineers struggled to locate all the relevant settings, and internal usability studies confirmed that users were confused by the overlapping controls—yet Google maintained the design because simplifying it would reduce the volume of location data available for its $200+ billion advertising business." },
     ],
     regulatoryFindings: [
       {
@@ -526,6 +538,7 @@ export const cases: EnforcementCase[] = [
     company: "Marriott International",
     companyDescription: "Global hospitality company operating thousands of hotels worldwide.",
     companyLongDescription: "Marriott International, Inc. is an American multinational hospitality company. It has the most rooms of any hotel chain in the world, operating over 8,000 properties across 139 countries.",
+    caseDescription: "In October 2020, the UK ICO fined Marriott £18.4 million for a data breach that exposed up to 339 million guest records worldwide. The breach originated in the Starwood Hotels reservation system, which had been compromised by an unknown attacker in 2014—two years before Marriott acquired Starwood in 2016. The intrusion went undetected until September 2018, meaning attackers had access to guest data for four years. The compromised data included names, email addresses, phone numbers, passport numbers, dates of birth, and encrypted payment card details. The ICO found that Marriott failed to conduct adequate due diligence on Starwood's IT systems during the acquisition and did not implement sufficient security monitoring after the merger.",
     country: "UK",
     sector: "Hospitality",
     foundingYear: 1927,
@@ -542,8 +555,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2018,
     views: 1023,
     claimsVsReality: [
-      { claim: "Guest data is protected by industry-standard security.", reality: "The Starwood systems had been compromised since 2014—two years before Marriott's acquisition—and were not properly audited." },
-      { claim: "Due diligence was conducted during the Starwood acquisition.", reality: "Marriott failed to adequately investigate the security posture of Starwood's IT systems." },
+      { claim: "Guest data is protected by industry-standard security.", reality: "The attackers installed a web shell and remote access trojan on Starwood's servers in 2014, giving them persistent access to the reservation database for four years. During this time, they installed tools to harvest credentials and exfiltrated encrypted payment card data along with the encryption keys needed to decrypt it. Marriott's post-acquisition security team did not discover the compromise because they relied on Starwood's existing (inadequate) security monitoring rather than conducting independent assessments." },
+      { claim: "Due diligence was conducted during the Starwood acquisition.", reality: "The ICO found that Marriott's $13.6 billion acquisition of Starwood in 2016 did not include adequate cybersecurity due diligence. Marriott's pre-acquisition review focused primarily on financial and operational risks, not IT security. After the merger, Marriott continued operating the compromised Starwood reservation system alongside its own systems without conducting a thorough security audit, effectively inheriting a four-year-old breach without knowing it." },
     ],
     regulatoryFindings: [
       {
@@ -565,6 +578,7 @@ export const cases: EnforcementCase[] = [
     company: "Criteo",
     companyDescription: "French advertising technology company specializing in retargeting ads.",
     companyLongDescription: "Criteo S.A. is a French advertising technology company that specializes in performance marketing technology for online advertisers, operating in over 100 countries.",
+    caseDescription: "In June 2023, France's CNIL fined Criteo €40 million for multiple GDPR violations related to its retargeting advertising business. Criteo's technology tracked users across millions of websites using cookies to build detailed browsing profiles for targeted advertising. The CNIL's investigation—triggered by a complaint from Privacy International—found that Criteo could not demonstrate valid consent from the users it tracked, failed to provide adequate transparency about its data processing, and did not properly honor users' rights to withdraw consent or request data erasure. The case was significant because it targeted the adtech intermediary rather than the websites deploying the trackers, establishing that data brokers and advertising technology companies bear independent GDPR compliance obligations.",
     country: "France (EU)",
     sector: "Advertising",
     foundingYear: 2005,
@@ -581,8 +595,8 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2020,
     views: 534,
     claimsVsReality: [
-      { claim: "User tracking is based on valid consent.", reality: "Criteo relied on partner websites to collect consent but failed to verify that consent was actually obtained." },
-      { claim: "Users can easily withdraw consent and exercise their rights.", reality: "The opt-out process was confusing and did not effectively stop data processing." },
+      { claim: "User tracking is based on valid consent.", reality: "Criteo placed the entire burden of consent collection on its partner websites, but the CNIL found that Criteo never verified whether those partners actually obtained valid consent. In many cases, partners used non-compliant cookie banners with pre-ticked boxes or dark patterns. Since Criteo acted as a joint controller with its partners, it bore independent responsibility for ensuring valid consent—responsibility it completely abdicated while tracking hundreds of millions of users across the web." },
+      { claim: "Users can easily withdraw consent and exercise their rights.", reality: "Users who attempted to opt out of Criteo's tracking faced a confusing multi-step process. Even after opting out, the CNIL found that Criteo continued to store and process existing profile data rather than deleting it. Data subject access requests were frequently incomplete or delayed, and the company's privacy dashboard failed to show users the full extent of data collected about them—including browsing histories spanning millions of websites." },
     ],
     regulatoryFindings: [
       {
@@ -605,6 +619,7 @@ export const cases: EnforcementCase[] = [
     company: "DoorDash",
     companyDescription: "American food delivery and logistics platform.",
     companyLongDescription: "DoorDash, Inc. is an American company that operates an online food ordering and food delivery platform headquartered in San Francisco, California.",
+    caseDescription: "In June 2022, DoorDash agreed to pay $375,000 to settle allegations by the California Attorney General that it violated the California Consumer Privacy Act (CCPA) by selling consumer personal information without providing required notice or opt-out rights. The investigation found that DoorDash had participated in a marketing co-operative arrangement where it shared customer data—including names, addresses, and order histories—with other companies in exchange for receiving their customer data. Under CCPA's broad definition, this data exchange constituted a 'sale' of personal information, yet DoorDash failed to disclose this practice in its privacy policy, did not provide a 'Do Not Sell' link on its website, and did not offer consumers any mechanism to opt out of these data exchanges.",
     country: "USA",
     sector: "Food Delivery",
     foundingYear: 2013,
@@ -621,7 +636,7 @@ export const cases: EnforcementCase[] = [
     complaintYear: 2022,
     views: 289,
     claimsVsReality: [
-      { claim: "We do not sell your personal information.", reality: "DoorDash shared customer data with a marketing co-operative, which constituted a 'sale' under CCPA." },
+      { claim: "We do not sell your personal information.", reality: "DoorDash participated in a marketing co-operative where it exchanged detailed customer data—including names, delivery addresses, email addresses, and order histories—with other companies who reciprocated with their own customer data. Under CCPA, any exchange of personal information for 'valuable consideration' constitutes a sale. DoorDash received access to other companies' customer databases in return, clearly meeting this threshold, yet its privacy policy and public statements denied selling consumer data." },
     ],
     regulatoryFindings: [
       {
