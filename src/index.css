@@ -6,56 +6,56 @@
 
 @layer base {
   :root {
-    --background: 48 100% 50%;
-    --foreground: 0 0% 7%;
+    --background: 36 33% 94%;
+    --foreground: 20 10% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
+    --card: 40 30% 97%;
+    --card-foreground: 20 10% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
+    --popover: 40 30% 97%;
+    --popover-foreground: 20 10% 12%;
 
-    --primary: 0 0% 7%;
-    --primary-foreground: 48 100% 50%;
+    --primary: 20 10% 12%;
+    --primary-foreground: 36 33% 94%;
 
-    --secondary: 48 100% 50%;
-    --secondary-foreground: 0 0% 7%;
+    --secondary: 36 40% 86%;
+    --secondary-foreground: 20 10% 12%;
 
-    --muted: 45 30% 90%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 36 20% 90%;
+    --muted-foreground: 20 10% 40%;
 
-    --accent: 0 85% 50%;
+    --accent: 4 80% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 7%;
-    --input: 0 0% 7%;
-    --ring: 48 100% 50%;
+    --border: 20 10% 12%;
+    --input: 20 15% 70%;
+    --ring: 36 40% 60%;
 
     --radius: 0px;
 
-    --sidebar-background: 48 100% 50%;
-    --sidebar-foreground: 0 0% 7%;
-    --sidebar-primary: 0 0% 7%;
-    --sidebar-primary-foreground: 48 100% 50%;
-    --sidebar-accent: 48 80% 45%;
-    --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 0 0% 7%;
-    --sidebar-ring: 48 100% 50%;
+    --sidebar-background: 36 33% 94%;
+    --sidebar-foreground: 20 10% 12%;
+    --sidebar-primary: 20 10% 12%;
+    --sidebar-primary-foreground: 36 33% 94%;
+    --sidebar-accent: 36 30% 80%;
+    --sidebar-accent-foreground: 20 10% 12%;
+    --sidebar-border: 20 10% 12%;
+    --sidebar-ring: 36 40% 60%;
 
     /* Custom tokens */
-    --fine-badge: 0 85% 50%;
+    --fine-badge: 4 80% 55%;
     --fine-badge-foreground: 0 0% 100%;
-    --severity-fill: 152 60% 30%;
-    --severity-empty: 0 0% 85%;
-    --tag-bg: 45 20% 92%;
-    --tag-foreground: 0 0% 25%;
-    --card-category: 0 0% 20%;
-    --card-category-foreground: 0 0% 100%;
-    --card-footer: 0 30% 25%;
-    --card-footer-foreground: 0 0% 100%;
+    --severity-fill: 20 10% 12%;
+    --severity-empty: 36 20% 85%;
+    --tag-bg: 36 20% 90%;
+    --tag-foreground: 20 10% 30%;
+    --card-tab: 36 30% 88%;
+    --card-tab-foreground: 20 10% 12%;
+    --label-green: 152 45% 38%;
+    --label-red: 4 80% 55%;
   }
 }
 
@@ -81,7 +81,7 @@
 
 @layer components {
   .brutalist-border {
-    @apply border-[3px] border-foreground;
+    @apply border-2 border-foreground;
   }
 
   .brutalist-shadow {
@@ -89,13 +89,56 @@
   }
 
   .brutalist-card {
-    @apply brutalist-border brutalist-shadow bg-card text-card-foreground;
+    @apply brutalist-border bg-card text-card-foreground;
+    box-shadow: 4px 4px 0px hsl(var(--foreground) / 0.15);
   }
 
-  .fine-badge {
-    @apply inline-flex items-center gap-1 px-3 py-1 text-sm font-bold;
-    background-color: hsl(var(--fine-badge));
+  /* File folder card shape */
+  .file-card {
+    @apply bg-card text-card-foreground relative;
+    border: 2px solid hsl(var(--foreground));
+    box-shadow: 3px 3px 0px hsl(var(--foreground) / 0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .file-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px hsl(var(--foreground) / 0.18);
+  }
+
+  /* File tab at top-left */
+  .file-tab {
+    position: absolute;
+    top: -14px;
+    left: 16px;
+    background: hsl(var(--card-tab));
+    border: 2px solid hsl(var(--foreground));
+    border-bottom: none;
+    padding: 2px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Space Mono', monospace;
+    z-index: 2;
+  }
+
+  /* Overlapping fine badge */
+  .fine-stamp {
+    position: absolute;
+    top: -12px;
+    right: -8px;
+    background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
+    border: 2px solid hsl(var(--foreground));
+    padding: 6px 14px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    transform: rotate(4deg);
+    box-shadow: 2px 2px 0px hsl(var(--foreground) / 0.2);
+    z-index: 3;
+    white-space: nowrap;
   }
 
   .severity-bar-fill {
@@ -104,24 +147,6 @@
 
   .severity-bar-empty {
     background-color: hsl(var(--severity-empty));
-  }
-
-  .violation-tag {
-    @apply inline-block px-2 py-0.5 text-xs font-mono;
-    background-color: hsl(var(--tag-bg));
-    color: hsl(var(--tag-foreground));
-  }
-
-  .card-category-bar {
-    @apply px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider;
-    background-color: hsl(var(--card-category));
-    color: hsl(var(--card-category-foreground));
-  }
-
-  .card-footer-bar {
-    @apply px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider;
-    background-color: hsl(var(--card-footer));
-    color: hsl(var(--card-footer-foreground));
   }
 
   .filter-btn {
@@ -136,5 +161,24 @@
 
   .filter-btn.active {
     @apply bg-secondary text-secondary-foreground;
+  }
+
+  .sidebar-heading {
+    @apply font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-2 border-foreground;
+    color: hsl(var(--foreground));
+  }
+
+  .sidebar-btn {
+    @apply w-full text-left px-3 py-1.5 text-xs font-mono transition-colors;
+    border-bottom: 1px solid hsl(var(--foreground) / 0.1);
+  }
+
+  .sidebar-btn:hover {
+    background: hsl(var(--secondary));
+  }
+
+  .sidebar-btn.active {
+    background: hsl(var(--secondary));
+    font-weight: 700;
   }
 }

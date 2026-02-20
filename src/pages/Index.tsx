@@ -45,7 +45,6 @@ const Index = () => {
       case "newest": result.sort((a, b) => b.year - a.year); break;
       case "fined": result.sort((a, b) => b.fineAmount - a.fineAmount); break;
       case "severity": result.sort((a, b) => b.severityForIndividuals - a.severityForIndividuals); break;
-      case "views": result.sort((a, b) => b.views - a.views); break;
     }
 
     return result;
@@ -56,24 +55,24 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <header className="py-10 px-6 text-center border-b-[3px] border-foreground">
-        <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          THE PRIVACY
+      <header className="py-10 px-6 text-center">
+        <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter uppercase">
+          The Privacy
           <br />
-          JURY
+          Jury
         </h1>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto mt-4">
+        <p className="text-base md:text-lg max-w-xl mx-auto mt-3 text-muted-foreground">
           A global registry of{" "}
-          <span className="brutalist-border px-2 py-0.5 font-bold bg-card">{cases.length}</span>{" "}
+          <span className="font-bold text-foreground">{cases.length}</span>{" "}
           data privacy enforcement decisions..
         </p>
       </header>
 
-      {/* Colored divider */}
-      <div className="h-1 bg-gradient-to-r from-accent via-secondary to-emerald-500" />
+      {/* Divider */}
+      <div className="mx-6 max-w-[1400px] lg:mx-auto border-t-2 border-foreground" />
 
       {/* Main layout */}
-      <div className="flex gap-6 px-6 py-8 max-w-[1400px] mx-auto">
+      <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">
         <FilterSidebar
           selectedJurisdictions={selectedJurisdictions}
           onToggleJurisdiction={toggle(setSelectedJurisdictions)}
@@ -91,19 +90,9 @@ const Index = () => {
           {/* Active filter pills */}
           {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
             <div className="flex gap-2 flex-wrap">
-              {selectedJurisdictions.map((j) => (
-                <span key={j} className="brutalist-border bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
-                  {j} ×
-                </span>
-              ))}
-              {selectedSectors.map((s) => (
-                <span key={s} className="brutalist-border bg-emerald-200 text-foreground px-3 py-1 text-xs font-mono font-bold">
-                  {s} ×
-                </span>
-              ))}
-              {selectedViolations.map((v) => (
-                <span key={v} className="brutalist-border bg-accent/20 text-foreground px-3 py-1 text-xs font-mono font-bold">
-                  {v} ×
+              {[...selectedJurisdictions, ...selectedSectors, ...selectedViolations].map((f) => (
+                <span key={f} className="border-2 border-foreground bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
+                  {f} ×
                 </span>
               ))}
             </div>
@@ -113,7 +102,7 @@ const Index = () => {
             Showing {filtered.length} of {cases.length} cases • {formatTotalFines(totalFines)} in total fines
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filtered.map((c) => (
               <CaseCard key={c.id} case_={c} />
             ))}

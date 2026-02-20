@@ -12,10 +12,9 @@ interface FilterSidebarProps {
 }
 
 const SORT_OPTIONS = [
-  { key: "newest", label: "Newest" },
-  { key: "fined", label: "Highest Fine" },
-  { key: "severity", label: "Most Severe" },
-  { key: "views", label: "Most Viewed" },
+  { key: "newest", label: "Newest Case" },
+  { key: "fined", label: "Cost of Fine" },
+  { key: "severity", label: "Severity" },
 ];
 
 const FilterSidebar = ({
@@ -29,90 +28,71 @@ const FilterSidebar = ({
   onSortChange,
 }: FilterSidebarProps) => {
   return (
-    <aside className="w-64 shrink-0 space-y-6 hidden lg:block">
+    <aside className="w-56 shrink-0 space-y-5 hidden lg:block">
       {/* Sort By */}
-      <div className="space-y-2">
-        <p className="font-mono text-xs font-bold uppercase tracking-wider brutalist-border bg-primary text-primary-foreground px-3 py-2">
-          Sort By
-        </p>
-        <div className="space-y-1">
+      <div className="brutalist-border bg-card">
+        <p className="sidebar-heading">Sort By</p>
+        <div>
           {SORT_OPTIONS.map((s) => (
             <button
               key={s.key}
               onClick={() => onSortChange(s.key)}
-              className={`w-full text-left px-3 py-2 text-xs font-mono border-2 border-foreground transition-all ${
-                sortMode === s.key
-                  ? "bg-secondary text-secondary-foreground font-bold"
-                  : "bg-card hover:bg-muted"
-              }`}
+              className={`sidebar-btn ${sortMode === s.key ? "active" : ""}`}
             >
-              {s.label}
+              {sortMode === s.key ? "● " : "○ "}{s.label}
             </button>
           ))}
         </div>
       </div>
 
+      {/* Filter By label */}
+      <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+        Filter By
+      </p>
+
       {/* Sector */}
-      <div className="space-y-2">
-        <p className="font-mono text-xs font-bold uppercase tracking-wider brutalist-border bg-primary text-primary-foreground px-3 py-2">
-          Sector
-        </p>
-        <div className="space-y-1">
+      <div className="brutalist-border bg-card">
+        <p className="sidebar-heading">Sector</p>
+        <div className="max-h-48 overflow-y-auto">
           {SECTORS.map((s) => (
             <button
               key={s}
               onClick={() => onToggleSector(s)}
-              className={`w-full text-left px-3 py-2 text-xs font-mono border-2 border-foreground transition-all ${
-                selectedSectors.includes(s)
-                  ? "bg-secondary text-secondary-foreground font-bold"
-                  : "bg-card hover:bg-muted"
-              }`}
+              className={`sidebar-btn ${selectedSectors.includes(s) ? "active" : ""}`}
             >
-              {s}
+              {selectedSectors.includes(s) ? "☑ " : "☐ "}{s}
             </button>
           ))}
         </div>
       </div>
 
       {/* Violation */}
-      <div className="space-y-2">
-        <p className="font-mono text-xs font-bold uppercase tracking-wider brutalist-border bg-primary text-primary-foreground px-3 py-2">
-          Violation
-        </p>
-        <div className="space-y-1">
+      <div className="brutalist-border bg-card">
+        <p className="sidebar-heading">Violation</p>
+        <div>
           {VIOLATION_TYPES.map((v) => (
             <button
               key={v}
               onClick={() => onToggleViolation(v)}
-              className={`w-full text-left px-3 py-1.5 text-[11px] font-mono border-2 border-foreground transition-all ${
-                selectedViolations.includes(v)
-                  ? "bg-secondary text-secondary-foreground font-bold"
-                  : "bg-card hover:bg-muted"
-              }`}
+              className={`sidebar-btn ${selectedViolations.includes(v) ? "active" : ""}`}
             >
-              {v}
+              {selectedViolations.includes(v) ? "☑ " : "☐ "}{v}
             </button>
           ))}
         </div>
       </div>
 
       {/* Jurisdiction */}
-      <div className="space-y-2">
-        <p className="font-mono text-xs font-bold uppercase tracking-wider brutalist-border bg-primary text-primary-foreground px-3 py-2">
-          Jurisdiction
-        </p>
-        <div className="space-y-1">
+      <div className="brutalist-border bg-card">
+        <p className="sidebar-heading">Jurisdiction</p>
+        <div>
           {JURISDICTIONS.map((j) => (
             <button
               key={j}
               onClick={() => onToggleJurisdiction(j)}
-              className={`w-full text-left px-3 py-2 text-xs font-mono border-2 border-foreground transition-all ${
-                selectedJurisdictions.includes(j)
-                  ? "bg-secondary text-secondary-foreground font-bold"
-                  : "bg-card hover:bg-muted"
-              }`}
+              className={`sidebar-btn ${selectedJurisdictions.includes(j) ? "active" : ""}`}
             >
-              {j}
+              {selectedJurisdictions.includes(j) ? "☑ " : "☐ "}{j}
             </button>
           ))}
         </div>
