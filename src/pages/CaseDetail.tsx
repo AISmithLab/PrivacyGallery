@@ -48,7 +48,7 @@ const CaseDetail = () => {
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
         {/* Company hero section */}
-        <section className="brutalist-border p-8" style={{ borderLeftWidth: "6px", borderLeftColor: "hsl(var(--accent))", background: "hsl(var(--info-box))" }}>
+        <section className="brutalist-border info-box p-8" style={{ borderLeftWidth: "6px", borderLeftColor: "hsl(var(--accent))" }}>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">{case_.company}</h1>
@@ -80,14 +80,14 @@ const CaseDetail = () => {
               { label: "COMPLAINT ISSUED", value: `${case_.complaintYear} – Decision ${case_.year}` },
               { label: "NUM IMPACTED", value: case_.impactedIndividuals },
             ].map((item) => (
-              <div key={item.label} className="brutalist-border p-4" style={{ background: "hsl(var(--info-box))" }}>
+              <div key={item.label} className="brutalist-border info-box p-4">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
                 <p className="text-lg font-bold mt-1">{item.value}</p>
               </div>
             ))}
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div className="brutalist-border px-5 py-3" style={{ background: "hsl(var(--info-box))" }}>
+            <div className="brutalist-border info-box px-5 py-3">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">SEVERITY</p>
               <div className="flex gap-1 mt-1">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -95,11 +95,11 @@ const CaseDetail = () => {
                 ))}
               </div>
             </div>
-            <div className="brutalist-border px-5 py-3" style={{ background: "hsl(var(--info-box))" }}>
+            <div className="brutalist-border info-box px-5 py-3">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">FINE</p>
               <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay}</p>
             </div>
-            <div className="brutalist-border px-5 py-3 flex-1" style={{ background: "hsl(var(--info-box))" }}>
+            <div className="brutalist-border info-box px-5 py-3 flex-1">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
               <div className="flex flex-wrap gap-1.5 mt-1">
                 {case_.violations.map((v) => (
@@ -114,7 +114,7 @@ const CaseDetail = () => {
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE OVERVIEW</h2>
           <div className="h-[3px] bg-foreground mb-4" />
-          <div className="brutalist-border p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))", background: "hsl(var(--info-box))" }}>
+          <div className="brutalist-border info-box p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))" }}>
             <p className="text-[15px] leading-relaxed">{case_.caseDescription}</p>
           </div>
           {case_.violations.length > 0 && (
@@ -133,13 +133,13 @@ const CaseDetail = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-1">\ CLAIM vs REALITY</h2>
           <p className="text-sm text-muted-foreground mb-4">Click a claim to reveal the reality</p>
           <div className="h-[3px] bg-foreground mb-4" />
-          <div className="space-y-3">
+          <div className="space-y-4">
             {case_.claimsVsReality.map((cr, i) => (
               <div
                 key={i}
                 onClick={() => toggleClaim(i)}
-                className="brutalist-border p-4 cursor-pointer hover:opacity-90 transition-colors"
-                style={{ borderLeftWidth: "4px", borderLeftColor: revealedClaims.has(i) ? "hsl(var(--accent))" : "hsl(var(--label-green))", background: "hsl(var(--info-box))" }}
+                className="brutalist-border info-box p-4 cursor-pointer hover:opacity-90 transition-colors"
+                style={{ borderLeftWidth: "4px", borderLeftColor: revealedClaims.has(i) ? "hsl(var(--accent))" : "hsl(var(--label-green))" }}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
@@ -164,7 +164,7 @@ const CaseDetail = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ LEGAL FINDINGS</h2>
           <div className="h-[3px] bg-foreground mb-4" />
           {case_.regulatoryFindings.map((rf, i) => (
-            <div key={i} className="brutalist-border p-5 mb-4" style={{ background: "hsl(var(--info-box))" }}>
+            <div key={i} className="brutalist-border info-box p-5 mb-4">
               <p className="text-xs font-mono font-bold">{rf.act}</p>
               <p className="text-sm text-muted-foreground mt-1 mb-3">{rf.description}</p>
               <div className="bg-primary text-primary-foreground p-3 mb-3">
@@ -197,7 +197,7 @@ const CaseDetail = () => {
               </button>
             ))}
           </div>
-          <div className="brutalist-border border-t-0 p-6" style={{ background: "hsl(var(--info-box))" }}>
+          <div className="brutalist-border border-t-0 info-box p-6">
             {activeTab === "outcome" && <p className="text-sm leading-relaxed">{case_.outcome}</p>}
             {activeTab === "consequences" && <div className="text-sm leading-relaxed space-y-3"><p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {case_.fineDisplay}</span></p><p>{case_.consequences}</p></div>}
             {activeTab === "company" && <p className="text-sm leading-relaxed">{case_.companyNow}</p>}
