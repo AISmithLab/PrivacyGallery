@@ -11,10 +11,10 @@ const SearchBar = ({ value, onChange }: SearchBarProps) => {
       <Search className="w-5 h-5 text-foreground" />
       <input
         type="text"
-        placeholder="SEARCH THE ARCHIVE..."
+        placeholder="Explore a case.."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="flex-1 bg-transparent text-lg font-mono font-bold placeholder:text-muted-foreground/60 outline-none"
+        className="flex-1 bg-transparent text-lg font-mono placeholder:text-muted-foreground/60 outline-none"
       />
     </div>
   );
