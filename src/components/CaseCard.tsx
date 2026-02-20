@@ -39,7 +39,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </span>
           <span className="border-2 border-foreground px-3 py-1 text-xs font-mono font-bold"
             style={{ background: "hsl(var(--card-tab))" }}>
-            {case_.complaintYear} – {case_.year}
+            📅 {case_.complaintYear}
           </span>
         </div>
 
