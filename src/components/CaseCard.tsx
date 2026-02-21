@@ -1,6 +1,7 @@
 import { EnforcementCase } from "@/data/cases";
 import { Link } from "react-router-dom";
-import { Eye, User } from "lucide-react";
+import { Eye } from "lucide-react";
+import impactedIcon from "@/assets/impacted-icon.jpg";
 
 interface CaseCardProps {
   case_: EnforcementCase;
@@ -27,7 +28,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">{case_.jurisdiction}</p>
           <div className="flex items-center gap-1.5 mt-1.5">
-            <User className="w-4 h-4 text-muted-foreground" />
+            <img src={impactedIcon} alt="Impacted" className="w-5 h-5 object-contain" />
             <span className="text-sm font-mono font-bold">{case_.impactedIndividuals}</span>
           </div>
 
@@ -37,8 +38,8 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </div>
         </div>
 
-        {/* What they claimed */}
-        <div className="px-5 pt-4">
+        {/* What they did */}
+        <div className="px-5 pt-5">
           <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5"
             style={{ color: "hsl(var(--label-green))" }}>
             WHAT THEY DID
@@ -47,7 +48,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         </div>
 
         {/* Dashed divider */}
-        <div className="mx-5 my-3 border-t-2 border-dashed" style={{ borderColor: "hsl(var(--foreground) / 0.15)" }} />
+        <div className="mx-5 my-2 border-t-2 border-dashed" style={{ borderColor: "hsl(var(--foreground) / 0.15)" }} />
 
         {/* Why they were wrong */}
         <div className="px-5">
@@ -58,7 +59,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>
         </div>
 
-        <div className="py-3" />
+        <div className="py-2" />
       </div>
     </Link>
   );
