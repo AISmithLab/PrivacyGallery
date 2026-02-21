@@ -28,9 +28,9 @@ const FilterSidebar = ({
   onSortChange,
 }: FilterSidebarProps) => {
   return (
-    <aside className="w-56 shrink-0 space-y-5 hidden lg:block parchment-sidebar">
+    <aside className="w-56 shrink-0 space-y-5 hidden lg:block">
       {/* Sort By */}
-      <div className="brutalist-border parchment">
+      <div className="brutalist-border bg-card">
         <p className="sidebar-heading">Sort By</p>
         <div>
           {SORT_OPTIONS.map((s) => (
@@ -51,7 +51,7 @@ const FilterSidebar = ({
       </p>
 
       {/* Sector */}
-      <div className="brutalist-border parchment">
+      <div className="brutalist-border bg-card">
         <p className="sidebar-heading">Sector</p>
         <div className="max-h-48 overflow-y-auto">
           {SECTORS.map((s) => (
@@ -67,7 +67,7 @@ const FilterSidebar = ({
       </div>
 
       {/* Violation */}
-      <div className="brutalist-border parchment">
+      <div className="brutalist-border bg-card">
         <p className="sidebar-heading">Violation</p>
         <div>
           {VIOLATION_TYPES.map((v) => (
@@ -83,7 +83,7 @@ const FilterSidebar = ({
       </div>
 
       {/* Jurisdiction */}
-      <div className="brutalist-border parchment">
+      <div className="brutalist-border bg-card">
         <p className="sidebar-heading">Jurisdiction</p>
         <div>
           {JURISDICTIONS.map((j) => (

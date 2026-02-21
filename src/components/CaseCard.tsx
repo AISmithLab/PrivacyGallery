@@ -23,18 +23,9 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
 
         {/* Company name + fine stamp */}
         <div className="px-5 pt-5 pb-1 relative">
-          <h3 className="text-3xl font-bold leading-tight tracking-tight pr-28" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900 }}>
-            {case_.company}
+          <h3 className="text-3xl font-bold leading-tight tracking-tight pr-28">
+            {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
-          <span className="text-base font-mono text-muted-foreground">({case_.year})</span>
-          {/* Western-style decorative line */}
-          <div className="flex items-center gap-2 mt-2 mb-1">
-            <div className="h-[2px] flex-1" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.4), hsl(var(--foreground) / 0.6))' }} />
-            <span className="text-xs text-muted-foreground">✦</span>
-            <div className="h-[2px] w-12" style={{ background: 'hsl(var(--foreground) / 0.6)' }} />
-            <span className="text-xs text-muted-foreground">✦</span>
-            <div className="h-[2px] flex-1" style={{ background: 'linear-gradient(90deg, hsl(var(--foreground) / 0.6), hsl(var(--foreground) / 0.4), transparent)' }} />
-          </div>
           <div className="flex items-center gap-6 mt-2">
             <span className="text-sm font-mono font-bold text-muted-foreground border-2 border-foreground px-3 py-1.5">{case_.jurisdiction}</span>
             <div className="flex items-center gap-2 border-2 border-foreground px-3 py-1.5">
@@ -43,9 +34,9 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             </div>
           </div>
 
-          {/* Taped-on fine card */}
-          <div className="fine-stamp" style={{ top: "-4px", right: "-6px", fontSize: 20, padding: "10px 20px" }}>
-            {case_.fineDisplay}
+          {/* Large overlapping fine badge */}
+          <div className="fine-stamp" style={{ top: "-4px", right: "-6px", fontSize: 20, padding: "8px 16px" }}>
+            🔥 {case_.fineDisplay}
           </div>
         </div>
 
