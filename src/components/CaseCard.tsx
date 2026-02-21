@@ -1,7 +1,6 @@
 import { EnforcementCase } from "@/data/cases";
 import { Link } from "react-router-dom";
-import { Eye } from "lucide-react";
-import impactedIcon from "@/assets/impacted-icon.jpg";
+import { Eye, Users } from "lucide-react";
 
 interface CaseCardProps {
   case_: EnforcementCase;
@@ -10,7 +9,7 @@ interface CaseCardProps {
 const CaseCard = ({ case_ }: CaseCardProps) => {
   return (
     <Link to={`/case/${case_.id}`} className="block group">
-      <div className="file-card relative mt-4 mr-2 flex flex-col" style={{ minHeight: 440 }}>
+      <div className="file-card relative mt-4 mr-2 flex flex-col">
         {/* Colored category bar at top */}
         <div className="px-4 py-2.5 flex items-center justify-between"
           style={{ background: "hsl(var(--card-tab))", borderBottom: "2px solid hsl(var(--foreground))" }}>
@@ -27,9 +26,9 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">{case_.jurisdiction}</p>
-          <div className="flex items-center gap-1.5 mt-1.5">
-            <img src={impactedIcon} alt="Impacted" className="w-5 h-5 object-contain" />
-            <span className="text-sm font-mono font-bold">{case_.impactedIndividuals}</span>
+          <div className="flex items-center gap-2 mt-2">
+            <Users className="w-6 h-6" />
+            <span className="text-base font-mono font-bold">{case_.impactedIndividuals}</span>
           </div>
 
           {/* Large overlapping fine badge */}
@@ -51,15 +50,13 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         <div className="mx-5 my-2 border-t-2 border-dashed" style={{ borderColor: "hsl(var(--foreground) / 0.15)" }} />
 
         {/* Why they were wrong */}
-        <div className="px-5">
+        <div className="px-5 pb-4">
           <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5"
             style={{ color: "hsl(var(--label-red))" }}>
             WHY THEY WERE WRONG
           </p>
           <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>
         </div>
-
-        <div className="py-2" />
       </div>
     </Link>
   );
