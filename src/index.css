@@ -83,45 +83,39 @@
 
 @layer components {
   .brutalist-border {
-    @apply border-2 border-foreground;
+    @apply border-4 border-foreground;
   }
 
   .brutalist-shadow {
-    box-shadow: 5px 5px 0px hsl(var(--foreground));
+    box-shadow: 6px 6px 0 hsl(var(--foreground));
   }
 
   .info-box {
     background: hsl(var(--info-box));
     color: hsl(var(--info-box-foreground));
-    box-shadow: 5px 5px 0px hsl(var(--foreground) / 0.25);
+    box-shadow: 6px 6px 0 hsl(var(--foreground) / 0.9);
   }
 
   .brutalist-card {
     @apply brutalist-border bg-card text-card-foreground;
-    box-shadow: 4px 4px 0px hsl(var(--foreground) / 0.15);
+    box-shadow: 6px 6px 0 hsl(var(--foreground) / 0.9);
   }
 
-  /* Loot-drop style shadow for contrast from background */
+  /* Dark thick drop shadow - solid offset, no blur */
   .loot-drop-shadow {
-    box-shadow:
-      4px 4px 0px hsl(var(--foreground) / 0.12),
-      0 12px 32px -8px hsl(var(--foreground) / 0.28),
-      0 6px 16px -6px hsl(var(--foreground) / 0.2);
+    box-shadow: 8px 8px 0 hsl(var(--foreground) / 0.9);
   }
 
   /* File folder card shape */
   .file-card {
     @apply bg-card text-card-foreground relative loot-drop-shadow;
-    border: 2px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--foreground));
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
   .file-card:hover {
     transform: translate(-2px, -2px);
-    box-shadow:
-      6px 6px 0px hsl(var(--foreground) / 0.18),
-      0 18px 44px -8px hsl(var(--foreground) / 0.32),
-      0 8px 20px -6px hsl(var(--foreground) / 0.22);
+    box-shadow: 10px 10px 0 hsl(var(--foreground) / 0.95);
   }
 
   /* File tab at top-left */
@@ -130,7 +124,7 @@
     top: -14px;
     left: 16px;
     background: hsl(var(--card-tab));
-    border: 2px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--foreground));
     border-bottom: none;
     padding: 2px 14px;
     font-size: 10px;
@@ -148,15 +142,13 @@
     right: -8px;
     background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
-    border: 2px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--foreground));
     padding: 6px 14px;
     font-size: 16px;
     font-weight: 700;
     font-family: 'Space Grotesk', sans-serif;
     transform: rotate(4deg);
-    box-shadow:
-      2px 2px 0px hsl(var(--foreground) / 0.2),
-      0 8px 20px -4px hsl(var(--foreground) / 0.35);
+    box-shadow: 6px 6px 0 hsl(var(--foreground) / 0.9);
     z-index: 3;
     white-space: nowrap;
   }
@@ -175,7 +167,7 @@
   }
 
   .filter-btn:hover {
-    box-shadow: 3px 3px 0px hsl(var(--foreground));
+    box-shadow: 5px 5px 0 hsl(var(--foreground));
     transform: translate(-1px, -1px);
   }
 
@@ -184,7 +176,7 @@
   }
 
   .sidebar-heading {
-    @apply font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-2 border-foreground;
+    @apply font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-4 border-foreground;
     color: hsl(var(--foreground));
   }
 

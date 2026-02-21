@@ -73,7 +73,7 @@ const Index = () => {
       </header>
 
       {/* Divider */}
-      <div className="mx-6 max-w-[1400px] lg:mx-auto border-t-2 border-foreground" />
+      <div className="mx-6 max-w-[1400px] lg:mx-auto border-t-4 border-foreground" />
 
       {/* Main layout */}
       <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">
@@ -95,7 +95,7 @@ const Index = () => {
           {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
             <div className="flex gap-2 flex-wrap">
               {[...selectedJurisdictions, ...selectedSectors, ...selectedViolations].map((f) => (
-                <span key={f} className="border-2 border-foreground bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
+                <span key={f} className="border-4 border-foreground bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
                   {f} ×
                 </span>
               ))}
@@ -113,7 +113,7 @@ const Index = () => {
           </div>
 
           {filtered.length === 0 && (
-            <div className="brutalist-border bg-card p-12 text-center">
+            <div className="brutalist-border bg-card loot-drop-shadow p-12 text-center">
               <p className="text-lg font-bold">No cases found.</p>
               <p className="text-sm text-muted-foreground mt-1">Try adjusting your filters.</p>
             </div>
