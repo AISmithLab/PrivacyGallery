@@ -26,6 +26,10 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">{case_.jurisdiction}</p>
+          <div className="flex items-center gap-1.5 mt-1.5">
+            <User className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-mono font-bold">{case_.impactedIndividuals}</span>
+          </div>
 
           {/* Large overlapping fine badge */}
           <div className="fine-stamp" style={{ top: "-4px", right: "-6px", fontSize: 20, padding: "8px 16px" }}>
@@ -54,14 +58,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>
         </div>
 
-        {/* Bottom stats - pushed to bottom */}
-        <div className="px-5 py-4 mt-auto flex items-center gap-3 border-t" style={{ borderColor: "hsl(var(--foreground) / 0.1)" }}>
-          <User className="w-5 h-5 text-muted-foreground shrink-0" />
-          <span className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground">Impacted:</span>
-          <span className="border-2 border-foreground px-3 py-1.5 text-sm font-bold bg-card ml-auto">
-            {case_.impactedIndividuals}
-          </span>
-        </div>
+        <div className="py-3" />
       </div>
     </Link>
   );
