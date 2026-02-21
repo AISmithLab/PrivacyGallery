@@ -57,13 +57,13 @@ const Index = () => {
       {/* Hero */}
       <header className="py-10 px-6 text-center">
         <h1 className="text-5xl md:text-7xl leading-none tracking-tight uppercase"
-          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900 }}>
+          style={{ fontFamily: "'Rye', cursive" }}>
           The Privacy
           <br />
           Watchlist
         </h1>
         <p className="text-base md:text-lg max-w-2xl mx-auto mt-3 text-muted-foreground"
-          style={{ fontFamily: "'Source Serif 4', serif" }}>
+          style={{ fontFamily: "'Lora', serif" }}>
           A global registry of{" "}
           <span className="font-bold text-foreground">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
