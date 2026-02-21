@@ -42,6 +42,8 @@ export interface EnforcementCase {
   year: number;
   complaintYear: number;
   views: number;
+  whatTheyClaimed: string;
+  whyTheyWereWrong: string;
   claimsVsReality: ClaimVsReality[];
   regulatoryFindings: RegulatoryFinding[];
   outcome: string;
@@ -104,6 +106,8 @@ export const cases: EnforcementCase[] = [
     year: 2014,
     complaintYear: 2013,
     views: 342,
+    whatTheyClaimed: "Snapchat represented that users' photos and videos would permanently disappear after viewing, and that senders would be notified if recipients captured a screenshot.",
+    whyTheyWereWrong: "Snaps were stored without adequate encryption and could be accessed or retrieved using third-party applications. Additionally, on certain devices running older operating systems, users were able to bypass the screenshot notification mechanism.",
     claimsVsReality: [
       { claim: "Snaps 'disappear forever' after the timer expires.", reality: "The FTC found that snaps were stored unencrypted on the recipient's device and could be retrieved by connecting the phone to a computer or using widely available third-party apps like SnapHack. Even Snapchat's own screenshot detection was unreliable—on Android, recipients could simply disable it." },
       { claim: "Senders would be notified if recipients took a screenshot.", reality: "On Android devices running versions older than 4.1, the screenshot-detection mechanism failed entirely, meaning senders received no notification. Third-party apps also bypassed detection on all platforms, giving recipients a false sense of security." },
@@ -149,6 +153,8 @@ export const cases: EnforcementCase[] = [
     year: 2022,
     complaintYear: 2022,
     views: 1203,
+    whatTheyClaimed: "Epic Games claimed its platform provided age-appropriate privacy protections and that in-app purchases required clear user confirmation before being processed.",
+    whyTheyWereWrong: "The company knowingly collected personal data from children under 13 without parental consent and designed purchase flows that used dark patterns to trick players into accidental transactions.",
     claimsVsReality: [
       { claim: "Age-appropriate content and privacy protections for all users.", reality: "The FTC found that Epic knowingly allowed children under 13 to register for Fortnite accounts and defaulted all players—including minors—into open voice and text chat with strangers. Internal documents showed Epic employees raised concerns about child safety as early as 2017, but the company resisted adding parental controls because they feared it would reduce engagement metrics." },
       { claim: "In-app purchases require clear confirmation.", reality: "Epic's purchase flow used a single button press with no confirmation dialog, leading to thousands of accidental purchases. The 'preview' and 'purchase' buttons were placed in nearly identical positions across different screens, and the company actively resisted adding a purchase confirmation step despite internal data showing high rates of refund requests—many from parents of minor players." },
@@ -190,6 +196,8 @@ export const cases: EnforcementCase[] = [
     year: 2023,
     complaintYear: 2020,
     views: 2841,
+    whatTheyClaimed: "Meta assured EU users that their personal data transfers to the United States complied with GDPR requirements through Standard Contractual Clauses.",
+    whyTheyWereWrong: "After the EU-US Privacy Shield was invalidated, Meta continued transferring data of 390 million EU users to US servers subject to mass surveillance programs, knowing its transfer mechanism lacked legal basis.",
     claimsVsReality: [
       { claim: "User data transfers to the US comply with GDPR requirements.", reality: "After the EU-US Privacy Shield was invalidated by the CJEU in July 2020, Meta continued transferring data of 390 million EU users to the US for nearly three years. Internal documents showed Meta was aware that its transfer mechanism lacked legal basis but continued the practice to avoid disrupting its advertising business model." },
       { claim: "Standard Contractual Clauses provide sufficient protection.", reality: "The DPC found that Meta's SCCs could not address the fundamental issue: US federal law (particularly Section 702 of FISA and Executive Order 12333) gave US intelligence agencies broad access to data held by US companies. No contractual clause could override these statutory surveillance powers, rendering Meta's safeguards effectively meaningless." },
@@ -230,6 +238,8 @@ export const cases: EnforcementCase[] = [
     year: 2020,
     complaintYear: 2018,
     views: 892,
+    whatTheyClaimed: "British Airways represented that customer payment data was processed securely with robust cybersecurity protections in place.",
+    whyTheyWereWrong: "Attackers injected malicious code into BA's payment page that skimmed card details for three months undetected, exploiting the absence of basic security controls like multi-factor authentication and file integrity monitoring.",
     claimsVsReality: [
       { claim: "Customer payment data is processed securely.", reality: "Attackers injected 22 lines of malicious JavaScript into BA's payment page that silently copied card details—including CVV codes—to a lookalike domain (baways.com). The skimming code ran undetected for 3 months, compromising an estimated 380,000 transactions. BA's security team had no monitoring in place to detect unauthorized script injections on payment pages." },
       { claim: "Robust cybersecurity measures protect personal data.", reality: "The ICO found that BA failed to implement even basic security controls: no multi-factor authentication for domain administrator accounts, no file integrity monitoring, outdated and unpatched software, no network segmentation, and inadequate logging. Many of these failures persisted despite BA being aware of similar attacks on other companies months earlier." },
@@ -270,6 +280,8 @@ export const cases: EnforcementCase[] = [
     year: 2019,
     complaintYear: 2018,
     views: 1567,
+    whatTheyClaimed: "SingHealth maintained that patient records were protected by robust security systems and accessible only to authorized medical staff.",
+    whyTheyWereWrong: "A state-sponsored attack group maintained access to SingHealth's network for ten months, exploiting unpatched vulnerabilities and dormant service accounts to exfiltrate 1.5 million patient records including the Prime Minister's prescription data.",
     claimsVsReality: [
       { claim: "Patient records are protected by robust security systems.", reality: "The APT group maintained persistent access to SingHealth's network for approximately 10 months (August 2017 to July 2018). They exploited unpatched vulnerabilities in internet-facing workstations and used publicly available hacking tools to escalate privileges and move laterally through the network. A junior IT admin first noticed suspicious database queries in June 2018 but was told to 'continue monitoring'—delaying the response by over a month." },
       { claim: "Only authorized medical staff can access patient data.", reality: "The attackers compromised multiple administrator credentials, including a dormant service account with high-level database access that had never been reviewed or deactivated. Using these credentials, they ran bulk SQL queries against the patient database, exfiltrating 1.5 million records including the Prime Minister's personal prescription history—data that was specifically targeted." },
@@ -310,6 +322,8 @@ export const cases: EnforcementCase[] = [
     year: 2022,
     complaintYear: 2022,
     views: 456,
+    whatTheyClaimed: "Sephora's privacy policy stated that the company did not sell consumers' personal information and respected their privacy choices.",
+    whyTheyWereWrong: "The company deployed tracking cookies and pixels that transmitted customer browsing and purchase data to advertising networks—constituting a 'sale' under CCPA—while ignoring legally mandated Global Privacy Control opt-out signals.",
     claimsVsReality: [
       { claim: "We do not sell your personal information.", reality: "Sephora's website deployed dozens of third-party tracking technologies—including cookies and pixels from advertising networks—that transmitted detailed customer browsing behavior, purchase history, and device identifiers to companies like Google, Facebook, and data brokers. Under CCPA's broad definition, this data-for-services exchange constituted a 'sale,' yet Sephora's privacy policy explicitly denied selling consumer data." },
       { claim: "We respect your privacy choices.", reality: "When consumers sent legally-recognized Global Privacy Control (GPC) signals via their browsers, Sephora's systems simply ignored them and continued tracking. The AG's office tested this by visiting Sephora's website with GPC enabled and confirmed that tracking cookies continued to be set and data continued to flow to third parties—a direct violation of CCPA's opt-out requirements." },
@@ -351,6 +365,8 @@ export const cases: EnforcementCase[] = [
     year: 2021,
     complaintYear: 2018,
     views: 2105,
+    whatTheyClaimed: "Amazon stated that its advertising targeting was based on user consent and that users had transparent control over how their data was used.",
+    whyTheyWereWrong: "Users were enrolled in behavioral advertising by default with consent buried in general terms of service, and privacy notices used vague language that obscured how browsing and purchase data were combined into detailed advertising profiles.",
     claimsVsReality: [
       { claim: "Advertising targeting is based on user consent.", reality: "The CNPD found that Amazon's consent mechanism was fundamentally flawed: users were enrolled in behavioral advertising by default, and the 'consent' was buried within general terms of service rather than presented as a separate, affirmative choice. Amazon could not produce evidence of freely-given, specific, informed consent from the majority of its 300+ million affected users—a core GDPR requirement." },
       { claim: "Users have transparent control over their data.", reality: "Amazon's privacy notices used vague language like 'to improve our services' without specifying that browsing behavior, purchase history, and device usage data were being combined to build detailed advertising profiles. Users had no practical way to understand the full scope of data processing or make informed choices about their data." },
@@ -391,6 +407,8 @@ export const cases: EnforcementCase[] = [
     year: 2023,
     complaintYear: 2020,
     views: 1832,
+    whatTheyClaimed: "TikTok required users to be at least 13 years old and stated that its age verification system prevented underage access to the platform.",
+    whyTheyWereWrong: "The age gate was trivially easy to bypass—children could simply re-enter a different birth date—and an estimated 1.4 million UK children under 13 used the platform while TikTok collected their data without parental consent.",
     claimsVsReality: [
       { claim: "Users must be at least 13 years old to use TikTok.", reality: "The ICO estimated that up to 1.4 million UK children under the age of 13 were actively using TikTok during the period under investigation. TikTok's own internal data showed patterns of usage consistent with young children—including usage spikes after school hours and content engagement patterns typical of pre-teens—yet the company took no meaningful steps to identify or remove these underage accounts." },
       { claim: "Age verification prevents underage use.", reality: "TikTok's sole age verification mechanism was a date-of-birth entry screen at registration. Children who were initially blocked for being too young could simply close the app, reopen it, and enter a different birth date to gain access. There was no secondary verification, no parental consent mechanism, and no algorithmic detection of likely underage users despite the technology being available in the market." },
@@ -432,6 +450,8 @@ export const cases: EnforcementCase[] = [
     year: 2022,
     complaintYear: 2021,
     views: 3201,
+    whatTheyClaimed: "Clearview AI argued that publicly available images on social media could be freely collected and used for its facial recognition service.",
+    whyTheyWereWrong: "Scraping billions of facial images constitutes processing of biometric data under GDPR, which requires explicit consent regardless of whether the source images were publicly posted—individuals do not expect their photos to be harvested into a global surveillance database.",
     claimsVsReality: [
       { claim: "Publicly available images can be freely collected.", reality: "Multiple EU regulators rejected Clearview's argument that public availability equals free use. Under GDPR, scraping billions of facial images constitutes processing of biometric data—a special category under Article 9 that requires explicit consent. The Italian Garante noted that individuals who post photos on social media do not reasonably expect those images to be scraped into a global surveillance database used by law enforcement and private companies." },
       { claim: "The service is only used by law enforcement for public safety.", reality: "Investigations revealed that Clearview offered free trial accounts to individual police officers without departmental authorization, and also provided its services to private companies, banks, and individuals. The company had no meaningful controls over who accessed its database or how results were used, creating a mass biometric surveillance system operating entirely outside legal frameworks." },
@@ -474,6 +494,8 @@ export const cases: EnforcementCase[] = [
     year: 2023,
     complaintYear: 2023,
     views: 678,
+    whatTheyClaimed: "GoodRx promised users it would never share their personal health information with advertisers, and displayed a HIPAA badge implying healthcare-grade privacy protections.",
+    whyTheyWereWrong: "The company embedded tracking pixels from Facebook, Google, and others that transmitted sensitive prescription and health condition data to advertising networks. GoodRx was never a HIPAA-covered entity, making the badge misleading.",
     claimsVsReality: [
       { claim: "We never share your personal health information with advertisers.", reality: "The FTC documented that GoodRx embedded Facebook Pixel, Google Analytics, Criteo tags, and other tracking technologies across its platform. These tools transmitted detailed health information—including specific medications users searched for, prescriptions they filled, and health conditions they researched—directly to advertising companies. Facebook then used this data to create 'lookalike audiences' targeting people with similar health profiles. GoodRx's own privacy policy explicitly promised users their health data would never be shared for advertising." },
       { claim: "HIPAA compliant health data handling.", reality: "GoodRx prominently displayed a 'HIPAA' badge on its website, implying its data practices met healthcare privacy standards. However, GoodRx is not a HIPAA-covered entity (it's not a healthcare provider, insurer, or clearinghouse), meaning HIPAA protections never actually applied. The FTC found this display was misleading, giving users false confidence that their sensitive prescription and health data was protected by federal healthcare privacy law when it was actually being monetized through advertising networks." },
@@ -514,6 +536,8 @@ export const cases: EnforcementCase[] = [
     year: 2023,
     complaintYear: 2022,
     views: 1456,
+    whatTheyClaimed: "Google told users that disabling Location History would stop the company from tracking their location, and that users had full control over location data collection.",
+    whyTheyWereWrong: "Even with Location History disabled, Google continued collecting precise location data through a separate 'Web & App Activity' setting enabled by default. Internal emails showed engineers knew the design was misleading but maintained it to protect advertising revenue.",
     claimsVsReality: [
       { claim: "Disabling Location History stops Google from tracking your location.", reality: "Internal emails obtained during the investigation showed Google engineers acknowledging that the Location History toggle was misleading. When users disabled Location History, Google continued collecting precise location data through 'Web & App Activity'—a separate, default-on setting buried deep in account preferences. An internal Google memo stated that turning off Location History 'does not prevent Google from using location,' but this was never disclosed to users." },
       { claim: "Users have full control over location data collection.", reality: "To fully stop location tracking, users had to navigate multiple nested settings pages, disable at least three separate toggles, and manually delete previously collected data. The AG's investigation found that even Google's own engineers struggled to locate all the relevant settings, and internal usability studies confirmed that users were confused by the overlapping controls—yet Google maintained the design because simplifying it would reduce the volume of location data available for its $200+ billion advertising business." },
@@ -554,6 +578,8 @@ export const cases: EnforcementCase[] = [
     year: 2020,
     complaintYear: 2018,
     views: 1023,
+    whatTheyClaimed: "Marriott represented that guest data was protected by industry-standard security and that adequate due diligence was conducted during the Starwood acquisition.",
+    whyTheyWereWrong: "Attackers had been inside Starwood's systems since 2014—two years before Marriott's acquisition. Marriott's pre-acquisition review focused on finances, not IT security, and they continued operating the compromised system for two more years without detecting the breach.",
     claimsVsReality: [
       { claim: "Guest data is protected by industry-standard security.", reality: "The attackers installed a web shell and remote access trojan on Starwood's servers in 2014, giving them persistent access to the reservation database for four years. During this time, they installed tools to harvest credentials and exfiltrated encrypted payment card data along with the encryption keys needed to decrypt it. Marriott's post-acquisition security team did not discover the compromise because they relied on Starwood's existing (inadequate) security monitoring rather than conducting independent assessments." },
       { claim: "Due diligence was conducted during the Starwood acquisition.", reality: "The ICO found that Marriott's $13.6 billion acquisition of Starwood in 2016 did not include adequate cybersecurity due diligence. Marriott's pre-acquisition review focused primarily on financial and operational risks, not IT security. After the merger, Marriott continued operating the compromised Starwood reservation system alongside its own systems without conducting a thorough security audit, effectively inheriting a four-year-old breach without knowing it." },
@@ -594,6 +620,8 @@ export const cases: EnforcementCase[] = [
     year: 2023,
     complaintYear: 2020,
     views: 534,
+    whatTheyClaimed: "Criteo stated that its user tracking for retargeted advertising was based on valid consent and that users could easily withdraw consent and exercise their data rights.",
+    whyTheyWereWrong: "Criteo never verified whether its partner websites actually obtained valid consent, and users who opted out found their profile data was still stored and processed rather than deleted.",
     claimsVsReality: [
       { claim: "User tracking is based on valid consent.", reality: "Criteo placed the entire burden of consent collection on its partner websites, but the CNIL found that Criteo never verified whether those partners actually obtained valid consent. In many cases, partners used non-compliant cookie banners with pre-ticked boxes or dark patterns. Since Criteo acted as a joint controller with its partners, it bore independent responsibility for ensuring valid consent—responsibility it completely abdicated while tracking hundreds of millions of users across the web." },
       { claim: "Users can easily withdraw consent and exercise their rights.", reality: "Users who attempted to opt out of Criteo's tracking faced a confusing multi-step process. Even after opting out, the CNIL found that Criteo continued to store and process existing profile data rather than deleting it. Data subject access requests were frequently incomplete or delayed, and the company's privacy dashboard failed to show users the full extent of data collected about them—including browsing histories spanning millions of websites." },
@@ -635,6 +663,8 @@ export const cases: EnforcementCase[] = [
     year: 2022,
     complaintYear: 2022,
     views: 289,
+    whatTheyClaimed: "DoorDash's privacy policy and public statements denied selling consumers' personal information.",
+    whyTheyWereWrong: "The company participated in a marketing co-operative, exchanging detailed customer data—names, delivery addresses, and order histories—with other companies, which constitutes a 'sale' under CCPA, without providing notice or any opt-out mechanism.",
     claimsVsReality: [
       { claim: "We do not sell your personal information.", reality: "DoorDash participated in a marketing co-operative where it exchanged detailed customer data—including names, delivery addresses, email addresses, and order histories—with other companies who reciprocated with their own customer data. Under CCPA, any exchange of personal information for 'valuable consideration' constitutes a sale. DoorDash received access to other companies' customer databases in return, clearly meeting this threshold, yet its privacy policy and public statements denied selling consumer data." },
     ],

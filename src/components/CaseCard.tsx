@@ -9,7 +9,7 @@ interface CaseCardProps {
 const CaseCard = ({ case_ }: CaseCardProps) => {
   return (
     <Link to={`/case/${case_.id}`} className="block group">
-      <div className="file-card relative mt-4 mr-2 flex flex-col" style={{ minHeight: 420 }}>
+      <div className="file-card relative mt-4 mr-2 flex flex-col" style={{ minHeight: 440 }}>
         {/* Colored category bar at top */}
         <div className="px-4 py-2.5 flex items-center justify-between"
           style={{ background: "hsl(var(--card-tab))", borderBottom: "2px solid hsl(var(--foreground))" }}>
@@ -33,13 +33,13 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </div>
         </div>
 
-        {/* What they did */}
+        {/* What they claimed */}
         <div className="px-5 pt-4">
           <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5"
-            style={{ color: "hsl(var(--label-red))" }}>
-            WHAT THEY DID
+            style={{ color: "hsl(var(--label-green))" }}>
+            WHAT THEY CLAIMED
           </p>
-          <p className="text-[15px] leading-relaxed">{case_.violationSummary}</p>
+          <p className="text-[15px] leading-relaxed">{case_.whatTheyClaimed}</p>
         </div>
 
         {/* Dashed divider */}
@@ -48,17 +48,10 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         {/* Why they were wrong */}
         <div className="px-5">
           <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5"
-            style={{ color: "hsl(var(--label-green))" }}>
+            style={{ color: "hsl(var(--label-red))" }}>
             WHY THEY WERE WRONG
           </p>
-          <div className="flex flex-wrap gap-1.5">
-            {case_.violations.map((v) => (
-              <span key={v} className="border-2 border-foreground px-2.5 py-1 text-xs font-mono font-bold"
-                style={{ background: "hsl(var(--card-tab))" }}>
-                ⚠️ {v}
-              </span>
-            ))}
-          </div>
+          <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>
         </div>
 
         {/* Bottom stats - pushed to bottom */}
