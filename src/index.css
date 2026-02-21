@@ -6,58 +6,58 @@
 
 @layer base {
   :root {
-    --background: 28 30% 42%;
-    --foreground: 20 10% 12%;
+    --background: 25 35% 32%;
+    --foreground: 20 15% 15%;
 
-    --card: 38 40% 90%;
-    --card-foreground: 20 10% 12%;
+    --card: 36 35% 85%;
+    --card-foreground: 20 15% 15%;
 
     --popover: 40 30% 97%;
-    --popover-foreground: 20 10% 12%;
+    --popover-foreground: 20 15% 15%;
 
-    --primary: 20 10% 12%;
+    --primary: 20 15% 15%;
     --primary-foreground: 36 33% 94%;
 
-    --secondary: 36 40% 86%;
-    --secondary-foreground: 20 10% 12%;
+    --secondary: 34 30% 78%;
+    --secondary-foreground: 20 15% 15%;
 
-    --muted: 36 20% 90%;
-    --muted-foreground: 20 10% 40%;
+    --muted: 34 20% 75%;
+    --muted-foreground: 20 12% 40%;
 
-    --accent: 4 80% 55%;
+    --accent: 4 80% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 20 10% 12%;
-    --input: 20 15% 70%;
+    --border: 20 15% 15%;
+    --input: 20 15% 55%;
     --ring: 36 40% 60%;
 
     --radius: 0px;
 
-    --sidebar-background: 35 35% 85%;
-    --sidebar-foreground: 20 10% 12%;
-    --sidebar-primary: 20 10% 12%;
+    --sidebar-background: 34 28% 78%;
+    --sidebar-foreground: 20 15% 15%;
+    --sidebar-primary: 20 15% 15%;
     --sidebar-primary-foreground: 36 33% 94%;
-    --sidebar-accent: 36 30% 80%;
-    --sidebar-accent-foreground: 20 10% 12%;
-    --sidebar-border: 20 10% 12%;
+    --sidebar-accent: 34 25% 72%;
+    --sidebar-accent-foreground: 20 15% 15%;
+    --sidebar-border: 20 15% 15%;
     --sidebar-ring: 36 40% 60%;
 
     /* Custom tokens */
-    --fine-badge: 4 80% 55%;
+    --fine-badge: 4 75% 42%;
     --fine-badge-foreground: 0 0% 100%;
-    --severity-fill: 20 10% 12%;
-    --severity-empty: 36 20% 85%;
-    --tag-bg: 36 20% 90%;
-    --tag-foreground: 20 10% 30%;
-    --card-tab: 36 45% 78%;
-    --card-tab-foreground: 20 10% 12%;
+    --severity-fill: 20 15% 15%;
+    --severity-empty: 36 20% 80%;
+    --tag-bg: 34 20% 80%;
+    --tag-foreground: 20 12% 25%;
+    --card-tab: 34 30% 75%;
+    --card-tab-foreground: 20 15% 15%;
     --info-box: 0 0% 100%;
-    --info-box-foreground: 20 10% 12%;
-    --label-green: 152 50% 32%;
-    --label-red: 4 80% 50%;
+    --info-box-foreground: 20 15% 15%;
+    --label-green: 152 50% 28%;
+    --label-red: 4 70% 40%;
   }
 }
 
@@ -69,6 +69,10 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-family: 'Space Grotesk', sans-serif;
+    /* Cork-board texture */
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n2)' opacity='0.06'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -101,13 +105,23 @@
     box-shadow: 4px 4px 0px hsl(var(--foreground) / 0.15);
   }
 
+  /* Parchment paper texture base */
+  .parchment {
+    background-color: hsl(var(--card));
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
   /* File folder card shape */
   .file-card {
-    @apply bg-card text-card-foreground relative overflow-hidden;
-    border: 2px solid hsl(var(--foreground) / 0.6);
-    box-shadow: 6px 8px 16px hsl(28 30% 20% / 0.4), 2px 2px 0px hsl(var(--foreground) / 0.1);
+    @apply text-card-foreground relative overflow-hidden parchment;
+    border: 2px solid hsl(var(--foreground) / 0.5);
+    box-shadow:
+      4px 6px 12px hsl(25 35% 15% / 0.5),
+      2px 2px 0px hsl(var(--foreground) / 0.08),
+      inset 0 0 30px hsl(30 20% 50% / 0.06);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   }
 
   /* Paper curl effect */
@@ -116,34 +130,37 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     background: linear-gradient(
       225deg,
-      hsl(28 30% 42%) 0%,
-      hsl(38 35% 82%) 45%,
-      hsl(38 40% 88%) 50%,
-      hsl(38 30% 78%) 80%,
-      hsl(38 25% 70%) 100%
+      hsl(25 35% 32%) 0%,
+      hsl(36 30% 76%) 45%,
+      hsl(36 35% 82%) 50%,
+      hsl(36 28% 74%) 80%,
+      hsl(36 22% 66%) 100%
     );
-    box-shadow: -3px -3px 6px hsl(28 20% 30% / 0.2);
+    box-shadow: -3px -3px 6px hsl(25 25% 20% / 0.25);
     border-top-left-radius: 8px;
     z-index: 5;
   }
 
-  /* Soft edge darkening */
+  /* Soft edge darkening / vignette */
   .file-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 60%, hsl(30 20% 50% / 0.08) 100%);
+    background: radial-gradient(ellipse at center, transparent 55%, hsl(30 25% 40% / 0.1) 100%);
     pointer-events: none;
     z-index: 1;
   }
 
   .file-card:hover {
     transform: translate(-2px, -3px);
-    box-shadow: 8px 12px 20px hsl(28 30% 20% / 0.5), 3px 3px 0px hsl(var(--foreground) / 0.12);
+    box-shadow:
+      6px 10px 18px hsl(25 35% 15% / 0.55),
+      3px 3px 0px hsl(var(--foreground) / 0.1),
+      inset 0 0 30px hsl(30 20% 50% / 0.06);
   }
 
   /* File tab at top-left */
@@ -176,7 +193,7 @@
     font-weight: 700;
     font-family: 'Playfair Display', serif;
     transform: rotate(3deg);
-    box-shadow: 3px 4px 8px hsl(28 30% 15% / 0.35);
+    box-shadow: 3px 4px 8px hsl(25 30% 12% / 0.4);
     z-index: 4;
     white-space: nowrap;
   }
@@ -192,11 +209,11 @@
     height: 18px;
     background: linear-gradient(
       180deg,
-      hsl(45 20% 85% / 0.7) 0%,
-      hsl(45 15% 80% / 0.5) 50%,
-      hsl(45 20% 85% / 0.65) 100%
+      hsl(42 18% 82% / 0.7) 0%,
+      hsl(42 12% 76% / 0.5) 50%,
+      hsl(42 18% 82% / 0.65) 100%
     );
-    border: 1px solid hsl(40 10% 70% / 0.3);
+    border: 1px solid hsl(40 10% 65% / 0.3);
     z-index: 5;
   }
 
@@ -209,7 +226,7 @@
   }
 
   .filter-btn {
-    @apply brutalist-border px-4 py-2 text-sm font-mono font-bold uppercase tracking-wider 
+    @apply brutalist-border px-4 py-2 text-sm font-mono font-bold uppercase tracking-wider
            bg-primary text-primary-foreground cursor-pointer transition-all;
   }
 

@@ -54,14 +54,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <header className="py-10 px-6 text-center">
-       <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter uppercase" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900, color: 'hsl(38 40% 90%)' }}>
+      {/* Hero - parchment banner */}
+      <header className="mx-6 max-w-[1400px] lg:mx-auto mt-8 parchment border-2 border-foreground/50 py-10 px-6 text-center relative"
+        style={{ boxShadow: '3px 5px 12px hsl(25 35% 15% / 0.4)' }}>
+        <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-[0.08em] uppercase text-foreground" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900 }}>
           The Privacy
           <br />
           Jury
         </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mt-3" style={{ color: 'hsl(38 30% 75%)' }}>
+        {/* Decorative star */}
+        <div className="flex justify-center my-3">
+          <span className="text-muted-foreground text-sm">★</span>
+        </div>
+        <p className="text-base md:text-lg max-w-2xl mx-auto text-muted-foreground">
           A global registry of{" "}
           <span className="font-bold text-foreground">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
@@ -72,11 +77,8 @@ const Index = () => {
         </p>
       </header>
 
-      {/* Divider */}
-      <div className="mx-6 max-w-[1400px] lg:mx-auto border-t-2" style={{ borderColor: 'hsl(38 30% 65%)' }} />
-
       {/* Main layout */}
-      <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">
+      <div className="flex gap-8 px-6 py-8 mt-6 max-w-[1400px] mx-auto">
         <FilterSidebar
           selectedJurisdictions={selectedJurisdictions}
           onToggleJurisdiction={toggle(setSelectedJurisdictions)}
