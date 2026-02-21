@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rye&family=Stint+Ultra+Condensed&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
@@ -46,7 +46,7 @@
     --sidebar-ring: 30 30% 50%;
 
     /* Custom tokens */
-    --fine-badge: 5 75% 48%;
+    --fine-badge: 5 70% 42%;
     --fine-badge-foreground: 0 0% 100%;
     --severity-fill: 20 30% 14%;
     --severity-empty: 30 20% 75%;
@@ -58,10 +58,10 @@
     --info-box-foreground: 20 30% 14%;
     --label-green: 152 50% 32%;
     --label-red: 5 70% 42%;
-    --poster-bg: 40 40% 88%;
+    --poster-bg: 38 45% 85%;
     --poster-edge: 30 25% 65%;
     --cork-bg: 30 30% 58%;
-    --tape-bg: 50 50% 88%;
+    --tape-bg: 48 60% 85%;
   }
 }
 
@@ -72,12 +72,12 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Lora', 'Georgia', serif;
+    font-family: 'Source Serif 4', 'Georgia', serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Rye', cursive;
-    font-weight: 400;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-weight: 900;
   }
 }
 
@@ -101,152 +101,113 @@
     box-shadow: 4px 4px 0px hsl(var(--foreground) / 0.15);
   }
 
-  /* Wanted poster card with crinkled edges */
+  /* Wanted poster card */
   .file-card {
     @apply relative;
     background: hsl(var(--poster-bg));
     color: hsl(var(--card-foreground));
     border: none;
-    box-shadow:
-      0 1px 2px hsl(var(--foreground) / 0.1),
-      2px 4px 8px hsl(var(--foreground) / 0.15),
-      4px 8px 20px hsl(var(--foreground) / 0.1);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    /* Paper texture */
-    background-image:
+    box-shadow: 
+      2px 2px 8px hsl(var(--foreground) / 0.25),
+      inset 0 0 30px hsl(var(--foreground) / 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Subtle paper texture via gradient */
+    background-image: 
       repeating-linear-gradient(
         0deg,
         transparent,
-        transparent 40px,
-        hsl(var(--foreground) / 0.015) 40px,
-        hsl(var(--foreground) / 0.015) 41px
+        transparent 28px,
+        hsl(var(--foreground) / 0.02) 28px,
+        hsl(var(--foreground) / 0.02) 29px
       ),
       linear-gradient(
-        160deg,
-        hsl(42 45% 91%) 0%,
-        hsl(40 40% 88%) 25%,
-        hsl(38 38% 86%) 50%,
-        hsl(36 35% 84%) 75%,
-        hsl(40 40% 87%) 100%
+        135deg,
+        hsl(var(--poster-bg)) 0%,
+        hsl(38 42% 83%) 30%,
+        hsl(35 38% 80%) 70%,
+        hsl(32 35% 78%) 100%
       );
-    /* Crinkled / rough edge via clip-path */
-    clip-path: polygon(
-      0% 1.5%, 2% 0%, 5% 1%, 8% 0.3%, 12% 1.2%, 15% 0%, 18% 0.8%, 22% 0.2%,
-      26% 1%, 30% 0%, 34% 0.6%, 38% 0.1%, 42% 0.9%, 46% 0%, 50% 0.7%,
-      54% 0.1%, 58% 0.8%, 62% 0%, 66% 1%, 70% 0.2%, 74% 0.7%, 78% 0%,
-      82% 0.9%, 86% 0.3%, 90% 1.1%, 94% 0%, 97% 0.8%, 100% 0.5%,
-      100% 98.5%, 98% 100%, 95% 99%, 92% 100%, 88% 99.2%, 85% 100%, 82% 99.3%,
-      78% 100%, 74% 99%, 70% 100%, 66% 99.4%, 62% 100%, 58% 99.1%, 54% 100%,
-      50% 99.3%, 46% 100%, 42% 99%, 38% 100%, 34% 99.5%, 30% 100%, 26% 99.2%,
-      22% 100%, 18% 99%, 14% 100%, 10% 99.3%, 6% 100%, 3% 99%, 0% 100%
-    );
   }
 
-  /* Pin at top */
   .file-card::before {
     content: '';
     position: absolute;
-    top: -5px;
+    top: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 16px;
-    height: 16px;
-    background: radial-gradient(circle at 40% 40%, hsl(0 65% 55%) 0%, hsl(0 60% 38%) 60%, hsl(0 50% 25%) 100%);
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle, hsl(0 70% 45%) 35%, hsl(0 60% 35%) 36%, hsl(0 60% 35%) 55%, transparent 56%);
     border-radius: 50%;
     z-index: 10;
-    box-shadow: 0 2px 4px hsl(var(--foreground) / 0.4);
-  }
-
-  /* Corner curl / lift effect */
-  .file-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 35px;
-    height: 35px;
-    background: linear-gradient(
-      225deg,
-      hsl(var(--cork-bg)) 0%,
-      hsl(var(--cork-bg)) 45%,
-      hsl(35 30% 78%) 46%,
-      hsl(38 35% 82%) 60%,
-      hsl(var(--poster-bg)) 100%
-    );
-    z-index: 5;
-    clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
-  }
-
-  /* Slight rotations for pinned look */
-  .file-card:nth-child(odd) {
-    transform: rotate(0.5deg);
-  }
-  .file-card:nth-child(even) {
-    transform: rotate(-0.4deg);
-  }
-  .file-card:nth-child(3n) {
-    transform: rotate(0.8deg);
+    box-shadow: 0 2px 3px hsl(var(--foreground) / 0.3);
   }
 
   .file-card:hover {
-    transform: translateY(-4px) rotate(0deg) !important;
-    box-shadow:
-      0 2px 4px hsl(var(--foreground) / 0.1),
-      4px 8px 16px hsl(var(--foreground) / 0.2),
-      8px 16px 32px hsl(var(--foreground) / 0.12);
+    transform: translateY(-3px) rotate(-0.3deg);
+    box-shadow: 
+      4px 6px 16px hsl(var(--foreground) / 0.3),
+      inset 0 0 30px hsl(var(--foreground) / 0.04);
   }
 
+  /* Slight random rotations for cards */
+  .file-card:nth-child(odd) {
+    transform: rotate(0.4deg);
+  }
+  .file-card:nth-child(even) {
+    transform: rotate(-0.3deg);
+  }
+  .file-card:nth-child(odd):hover {
+    transform: rotate(0.4deg) translateY(-3px);
+  }
+  .file-card:nth-child(even):hover {
+    transform: rotate(-0.3deg) translateY(-3px);
+  }
+
+  /* File tab removed, using poster header instead */
   .file-tab {
     display: none;
   }
 
-  /* Bounty fine stamp — red, taped on */
+  /* Bounty stamp for fines */
   .fine-stamp {
     position: absolute;
     top: -10px;
     right: 12px;
-    color: hsl(var(--fine-badge));
+    background: hsl(var(--tape-bg));
+    color: hsl(var(--foreground));
     border: none;
-    padding: 5px 20px;
+    padding: 6px 18px;
     font-size: 18px;
-    font-weight: 400;
-    font-family: 'Rye', cursive;
-    transform: rotate(2.5deg);
-    z-index: 6;
+    font-weight: 900;
+    font-family: 'Playfair Display', serif;
+    transform: rotate(2deg);
+    box-shadow: 1px 2px 4px hsl(var(--foreground) / 0.2);
+    z-index: 3;
     white-space: nowrap;
-    /* Tape background */
-    background: linear-gradient(
+    /* Tape effect */
+    opacity: 0.92;
+    border-top: 3px solid hsl(var(--tape-bg));
+    border-bottom: 3px solid hsl(var(--tape-bg));
+    background-image: linear-gradient(
       180deg,
-      hsl(50 45% 92% / 0.7) 0%,
-      hsl(50 40% 88% / 0.85) 20%,
-      hsl(50 40% 88% / 0.85) 80%,
-      hsl(50 45% 92% / 0.7) 100%
+      hsl(48 70% 90% / 0.5) 0%,
+      hsl(48 60% 85% / 0.3) 50%,
+      hsl(48 70% 90% / 0.5) 100%
     );
-    box-shadow:
-      0 1px 3px hsl(var(--foreground) / 0.15),
-      inset 0 0 8px hsl(var(--foreground) / 0.05);
-    /* Semi-transparent tape look */
-    border-top: 1px solid hsl(50 50% 95% / 0.6);
-    border-bottom: 1px solid hsl(45 30% 70% / 0.4);
   }
 
-  /* Tape extends slightly beyond */
   .fine-stamp::before,
   .fine-stamp::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 8px;
-    background: linear-gradient(
-      180deg,
-      hsl(50 45% 92% / 0.5) 0%,
-      hsl(50 40% 88% / 0.65) 50%,
-      hsl(50 45% 92% / 0.5) 100%
-    );
+    top: -2px;
+    bottom: -2px;
+    width: 6px;
+    background: hsl(var(--tape-bg) / 0.6);
   }
-  .fine-stamp::before { left: -8px; }
-  .fine-stamp::after { right: -8px; }
+  .fine-stamp::before { left: -6px; }
+  .fine-stamp::after { right: -6px; }
 
   .severity-bar-fill {
     background-color: hsl(var(--severity-fill));
@@ -257,9 +218,9 @@
   }
 
   .filter-btn {
-    @apply brutalist-border px-4 py-2 text-sm font-bold uppercase tracking-wider
+    @apply brutalist-border px-4 py-2 text-sm font-bold uppercase tracking-wider 
            bg-primary text-primary-foreground cursor-pointer transition-all;
-    font-family: 'Lora', serif;
+    font-family: 'Source Serif 4', serif;
   }
 
   .filter-btn:hover {
@@ -273,13 +234,13 @@
 
   .sidebar-heading {
     @apply text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-2 border-foreground;
-    font-family: 'Rye', cursive;
+    font-family: 'Playfair Display', serif;
     color: hsl(var(--foreground));
   }
 
   .sidebar-btn {
     @apply w-full text-left px-3 py-1.5 text-xs transition-colors;
-    font-family: 'Lora', serif;
+    font-family: 'Source Serif 4', serif;
     border-bottom: 1px solid hsl(var(--foreground) / 0.1);
   }
 
@@ -295,10 +256,10 @@
   /* Cork board background */
   .cork-board {
     background-color: hsl(var(--cork-bg));
-    background-image:
+    background-image: 
       radial-gradient(ellipse at 20% 50%, hsl(30 35% 62%) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 20%, hsl(28 28% 55%) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 80%, hsl(32 32% 60%) 0%, transparent 50%),
-      url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
   }
 }
