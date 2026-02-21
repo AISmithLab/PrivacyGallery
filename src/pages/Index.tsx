@@ -59,7 +59,7 @@ const Index = () => {
         className="py-12 px-6 text-center border-b-4 border-foreground"
         style={{ background: "hsl(var(--hero-bg))", color: "hsl(var(--hero-foreground))" }}
       >
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tighter uppercase">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter uppercase">
           The Privacy
           <br />
           Jury
