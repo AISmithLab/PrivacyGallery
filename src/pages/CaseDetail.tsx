@@ -37,13 +37,13 @@ const CaseDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen cork-board">
+    <div className="min-h-screen bg-background">
       {/* Top bar */}
       <header className="flex items-center justify-between px-6 py-4 border-b-[3px] border-foreground">
         <Link to="/" className="brutalist-border bg-card px-4 py-2 text-xs font-mono font-bold uppercase hover:bg-muted transition-colors flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" /> Back to Cases
         </Link>
-        <h2 className="text-xl font-bold tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>THE PRIVACY WATCHLIST</h2>
+        <h2 className="text-xl font-bold tracking-tighter">THE PRIVACY JURY</h2>
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">

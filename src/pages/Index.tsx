@@ -53,17 +53,15 @@ const Index = () => {
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);
 
   return (
-    <div className="min-h-screen cork-board">
+    <div className="min-h-screen bg-background">
       {/* Hero */}
       <header className="py-10 px-6 text-center">
-        <h1 className="text-5xl md:text-7xl leading-none tracking-tight uppercase"
-          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900 }}>
+        <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter uppercase">
           The Privacy
           <br />
-          Watchlist
+          Jury
         </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mt-3 text-muted-foreground"
-          style={{ fontFamily: "'Source Serif 4', serif" }}>
+        <p className="text-base md:text-lg max-w-2xl mx-auto mt-3 text-muted-foreground">
           A global registry of{" "}
           <span className="font-bold text-foreground">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
