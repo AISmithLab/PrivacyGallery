@@ -27,10 +27,10 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
           <div className="flex items-center gap-6 mt-2">
-            <span className="text-lg font-mono font-bold text-muted-foreground border-2 border-foreground px-3 py-2">{case_.jurisdiction}</span>
-            <div className="flex items-center gap-2 border-2 border-foreground px-3 py-2">
-              <img src={impactedIcon} alt="Impacted" className="w-10 h-10 object-contain" />
-              <span className="text-lg font-mono font-bold">{case_.impactedIndividuals}</span>
+            <span className="text-sm font-mono font-bold text-muted-foreground border-2 border-foreground px-3 py-1.5">{case_.jurisdiction}</span>
+            <div className="flex items-center gap-2 border-2 border-foreground px-3 py-1.5">
+              <img src={impactedIcon} alt="Impacted" className="w-6 h-6 object-contain" />
+              <span className="text-sm font-mono font-bold">{case_.impactedIndividuals}</span>
             </div>
           </div>
 
