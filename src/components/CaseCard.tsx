@@ -37,9 +37,9 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         <div className="px-5 pt-4">
           <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5"
             style={{ color: "hsl(var(--label-green))" }}>
-            WHAT THEY CLAIMED
+            WHAT THEY DID
           </p>
-          <p className="text-[15px] leading-relaxed">{case_.whatTheyClaimed}</p>
+          <p className="text-[15px] leading-relaxed">{case_.whatTheyDid}</p>
         </div>
 
         {/* Dashed divider */}
