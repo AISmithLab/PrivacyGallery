@@ -54,26 +54,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <header className="py-10 px-6 text-center">
-        <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter uppercase">
+      {/* Hero – colored band, tied to sidebar headers */}
+      <header
+        className="py-12 px-6 text-center border-b-4 border-foreground"
+        style={{ background: "hsl(var(--hero-bg))", color: "hsl(var(--hero-foreground))" }}
+      >
+        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tighter uppercase">
           The Privacy
           <br />
           Jury
         </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mt-3 text-muted-foreground">
+        <p className="text-base md:text-lg max-w-2xl mx-auto mt-4 opacity-90" style={{ color: "hsl(var(--hero-foreground))" }}>
           A global registry of{" "}
-          <span className="font-bold text-foreground">{cases.length}</span>{" "}
+          <span className="font-bold">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
-          <span className="font-bold text-foreground">6</span>{" "}
+          <span className="font-bold">6</span>{" "}
           jurisdictions, totaling{" "}
-          <span className="font-bold text-foreground">{formatTotalFines(totalFines)}</span>{" "}
+          <span className="font-bold">{formatTotalFines(totalFines)}</span>{" "}
           in fines.
         </p>
       </header>
-
-      {/* Divider */}
-      <div className="mx-6 max-w-[1400px] lg:mx-auto border-t-4 border-foreground" />
 
       {/* Main layout */}
       <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">

@@ -58,6 +58,9 @@
     --info-box-foreground: 20 10% 12%;
     --label-green: 152 50% 32%;
     --label-red: 4 80% 50%;
+    /* Hero / title band – ties to sidebar headers (formal court blue) */
+    --hero-bg: 220 45% 38%;
+    --hero-foreground: 0 0% 98%;
   }
 }
 
@@ -177,7 +180,8 @@
 
   .sidebar-heading {
     @apply font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-4 border-foreground;
-    color: hsl(var(--foreground));
+    background: hsl(var(--hero-bg));
+    color: hsl(var(--hero-foreground));
   }
 
   .sidebar-btn {
