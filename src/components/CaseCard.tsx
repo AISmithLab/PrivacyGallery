@@ -26,10 +26,12 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           <h3 className="text-3xl font-bold leading-tight tracking-tight pr-28">
             {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
-          <p className="text-sm font-mono text-muted-foreground mt-1">{case_.jurisdiction}</p>
-          <div className="flex items-center gap-2 mt-2">
-            <img src={impactedIcon} alt="Impacted" className="w-7 h-7 object-contain" />
-            <span className="text-base font-mono font-bold">{case_.impactedIndividuals}</span>
+          <div className="flex items-center gap-4 mt-2">
+            <span className="text-base font-mono font-bold text-muted-foreground">{case_.jurisdiction}</span>
+            <div className="flex items-center gap-2">
+              <img src={impactedIcon} alt="Impacted" className="w-9 h-9 object-contain" />
+              <span className="text-lg font-mono font-bold">{case_.impactedIndividuals}</span>
+            </div>
           </div>
 
           {/* Large overlapping fine badge */}
