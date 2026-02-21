@@ -15,32 +15,30 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         <div className="px-4 py-2 text-center border-b-2 border-foreground"
           style={{ background: "hsl(var(--card-tab))" }}>
           <span className="text-xs font-bold uppercase tracking-[0.2em]"
-            style={{ fontFamily: "'Playfair Display', serif" }}>
+            style={{ fontFamily: "'Rye', cursive", fontSize: 11 }}>
             {case_.sector}
           </span>
         </div>
 
-        {/* "WANTED" style company name */}
+        {/* Company name — wanted poster style */}
         <div className="px-5 pt-5 pb-1 relative">
           <div className="flex items-center justify-between mb-1">
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground"
-              style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Eye className="w-3.5 h-3.5" />
               {case_.views.toLocaleString()} views
             </div>
           </div>
-          <h3 className="text-3xl font-black leading-tight tracking-tight uppercase pr-28"
-            style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h3 className="text-3xl leading-tight tracking-tight uppercase pr-28"
+            style={{ fontFamily: "'Rye', cursive" }}>
             {case_.company}
           </h3>
-          <span className="text-base text-muted-foreground"
-            style={{ fontFamily: "'Source Serif 4', serif" }}>
+          <span className="text-sm text-muted-foreground">
             ({case_.year})
           </span>
 
           <div className="flex items-center gap-6 mt-3">
             <span className="text-sm font-bold text-muted-foreground border-2 border-foreground px-3 py-1.5"
-              style={{ fontFamily: "'Playfair Display', serif" }}>
+              style={{ fontFamily: "'Rye', cursive", fontSize: 12 }}>
               {case_.jurisdiction}
             </span>
             <div className="flex items-center gap-2 text-sm">
@@ -49,8 +47,8 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             </div>
           </div>
 
-          {/* Bounty / fine stamp (taped on) */}
-          <div className="fine-stamp" style={{ top: "-8px", right: "8px", fontSize: 18, padding: "6px 18px" }}>
+          {/* Fine amount — red text on tape */}
+          <div className="fine-stamp" style={{ top: "-8px", right: "8px", fontSize: 18, padding: "6px 20px" }}>
             {case_.fineDisplay}
           </div>
         </div>
@@ -58,7 +56,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         {/* What they did */}
         <div className="px-5 pt-4">
           <p className="text-xs font-bold uppercase tracking-wider mb-1.5"
-            style={{ color: "hsl(var(--label-green))", fontFamily: "'Playfair Display', serif" }}>
+            style={{ color: "hsl(var(--label-green))", fontFamily: "'Rye', cursive", fontSize: 10 }}>
             What They Did
           </p>
           <p className="text-[15px] leading-relaxed">{case_.whatTheyDid}</p>
@@ -70,7 +68,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         {/* Why they were wrong */}
         <div className="px-5 pb-5">
           <p className="text-xs font-bold uppercase tracking-wider mb-1.5"
-            style={{ color: "hsl(var(--label-red))", fontFamily: "'Playfair Display', serif" }}>
+            style={{ color: "hsl(var(--label-red))", fontFamily: "'Rye', cursive", fontSize: 10 }}>
             Why They Were Wrong
           </p>
           <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>

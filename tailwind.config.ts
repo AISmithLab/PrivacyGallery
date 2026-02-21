@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Source Serif 4", "Georgia", "serif"],
-        display: ["Playfair Display", "Georgia", "serif"],
+        sans: ["Lora", "Georgia", "serif"],
+        display: ["Rye", "cursive"],
         mono: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
