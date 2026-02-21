@@ -1,6 +1,7 @@
 import { EnforcementCase } from "@/data/cases";
 import { Link } from "react-router-dom";
-import { Eye, Users } from "lucide-react";
+import { Eye } from "lucide-react";
+import impactedIcon from "@/assets/impacted-icon.png";
 
 interface CaseCardProps {
   case_: EnforcementCase;
@@ -27,7 +28,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">{case_.jurisdiction}</p>
           <div className="flex items-center gap-2 mt-2">
-            <Users className="w-6 h-6" />
+            <img src={impactedIcon} alt="Impacted" className="w-7 h-7 object-contain" />
             <span className="text-base font-mono font-bold">{case_.impactedIndividuals}</span>
           </div>
 
