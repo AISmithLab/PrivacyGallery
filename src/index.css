@@ -2,66 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&display=swap');
 
 @layer base {
   :root {
-    /* Loot-drop.io: white background, black borders, orange-yellow accent */
     --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
+    --foreground: 45 90% 55%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 40 10% 90%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 40 10% 90%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 40 12% 8%;
 
-    --secondary: 0 0% 94%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 40 8% 20%;
+    --secondary-foreground: 40 10% 85%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 40 6% 18%;
+    --muted-foreground: 40 10% 55%;
 
-    --accent: 4 85% 55%;
+    --accent: 0 80% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 0%;
-    --input: 0 0% 90%;
-    --ring: 40 100% 52%;
+    --border: 45 90% 55%;
+    --input: 40 10% 30%;
+    --ring: 45 80% 45%;
 
     --radius: 0px;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 9%;
-    --sidebar-primary: 0 0% 9%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 94%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 0 0% 0%;
-    --sidebar-ring: 40 100% 52%;
+    --sidebar-background: 45 100% 50%;
+    --sidebar-foreground: 40 12% 8%;
+    --sidebar-primary: 40 12% 8%;
+    --sidebar-primary-foreground: 45 100% 50%;
+    --sidebar-accent: 45 80% 42%;
+    --sidebar-accent-foreground: 40 12% 8%;
+    --sidebar-border: 40 12% 8%;
+    --sidebar-ring: 45 80% 45%;
 
-    /* Loot-drop: orange-yellow accent, red for fines, black borders */
-    --fine-badge: 0 85% 52%;
+    /* Custom tokens */
+    --fine-badge: 0 80% 50%;
     --fine-badge-foreground: 0 0% 100%;
-    --severity-fill: 40 100% 52%;
-    --severity-empty: 0 0% 90%;
-    --tag-bg: 0 0% 94%;
-    --tag-foreground: 0 0% 9%;
-    --card-tab: 40 100% 52%;
-    --card-tab-foreground: 0 0% 6%;
-    --info-box: 0 0% 98%;
-    --info-box-foreground: 0 0% 9%;
-    --label-green: 152 45% 32%;
-    --label-red: 0 85% 52%;
-    --hero-bg: 40 100% 52%;
-    --hero-foreground: 0 0% 6%;
-    --shadow-dark: 0 0% 0%;
+    --severity-fill: 45 100% 50%;
+    --severity-empty: 40 6% 22%;
+    --tag-bg: 40 8% 20%;
+    --tag-foreground: 40 10% 75%;
+    --card-tab: 45 100% 50%;
+    --card-tab-foreground: 40 12% 8%;
+    --info-box: 40 8% 16%;
+    --info-box-foreground: 40 10% 90%;
+    --label-green: 145 65% 45%;
+    --label-red: 0 80% 55%;
+    /* Hero / title band */
+    --hero-bg: 40 12% 6%;
+    --hero-foreground: 45 100% 50%;
   }
 }
 
@@ -82,9 +81,9 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Bebas Neue', sans-serif;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
   }
 
   .font-mono {
