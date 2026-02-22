@@ -53,8 +53,8 @@ const Index = () => {
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero – colored band, tied to sidebar headers */}
+    <div className="min-h-screen bg-background" style={{ backgroundColor: "hsl(var(--background))" }}>
+      {/* Hero – loot-drop: bright yellow, black text */}
       <header
         className="py-12 px-6 text-center border-b-4 border-border"
         style={{ background: "hsl(var(--hero-bg))", color: "hsl(var(--hero-foreground))" }}

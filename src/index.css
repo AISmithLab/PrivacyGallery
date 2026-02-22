@@ -2,65 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 45 90% 55%;
+    /* Loot-drop.io: paper white page, bright yellow hero, black text & borders */
+    --background: 40 12% 98%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 40 10% 90%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 45 100% 50%;
-    --primary-foreground: 40 12% 8%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 40 8% 20%;
-    --secondary-foreground: 40 10% 85%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 40 6% 18%;
-    --muted-foreground: 40 10% 55%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 0 80% 55%;
+    --accent: 0 75% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 45 90% 55%;
-    --input: 40 10% 30%;
-    --ring: 45 80% 45%;
+    --border: 0 0% 0%;
+    --input: 0 0% 92%;
+    --ring: 48 100% 50%;
 
     --radius: 0px;
 
-    --sidebar-background: 45 100% 50%;
-    --sidebar-foreground: 40 12% 8%;
-    --sidebar-primary: 40 12% 8%;
-    --sidebar-primary-foreground: 45 100% 50%;
-    --sidebar-accent: 45 80% 42%;
-    --sidebar-accent-foreground: 40 12% 8%;
-    --sidebar-border: 40 12% 8%;
-    --sidebar-ring: 45 80% 45%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 0 0% 9%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 0%;
+    --sidebar-ring: 48 100% 50%;
 
-    /* Custom tokens */
-    --fine-badge: 0 80% 50%;
+    --fine-badge: 0 75% 48%;
     --fine-badge-foreground: 0 0% 100%;
-    --severity-fill: 45 100% 50%;
-    --severity-empty: 40 6% 22%;
-    --tag-bg: 40 8% 20%;
-    --tag-foreground: 40 10% 75%;
-    --card-tab: 45 100% 50%;
-    --card-tab-foreground: 40 12% 8%;
-    --info-box: 40 8% 16%;
-    --info-box-foreground: 40 10% 90%;
-    --label-green: 145 65% 45%;
-    --label-red: 0 80% 55%;
-    /* Hero / title band – white background, black text */
-    --hero-bg: 0 0% 100%;
+    --severity-fill: 48 100% 50%;
+    --severity-empty: 0 0% 88%;
+    --tag-bg: 0 0% 96%;
+    --tag-foreground: 0 0% 9%;
+    --card-tab: 48 100% 50%;
+    --card-tab-foreground: 0 0% 9%;
+    --info-box: 0 0% 100%;
+    --info-box-foreground: 0 0% 9%;
+    --label-green: 152 45% 28%;
+    --label-red: 0 75% 48%;
+    --hero-bg: 48 100% 50%;
     --hero-foreground: 0 0% 9%;
+    --shadow-dark: 0 0% 0%;
   }
 }
 
@@ -81,9 +81,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
   }
 
   .font-mono {
@@ -97,23 +98,22 @@
   }
 
   .brutalist-shadow {
-    box-shadow: 6px 6px 0 hsl(var(--shadow-dark) / 0.85);
+    box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 
   .info-box {
     background: hsl(var(--info-box));
     color: hsl(var(--info-box-foreground));
-    box-shadow: 6px 6px 0 hsl(var(--shadow-dark) / 0.85);
+    box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 
   .brutalist-card {
     @apply brutalist-border bg-card text-card-foreground;
-    box-shadow: 6px 6px 0 hsl(var(--shadow-dark) / 0.85);
+    box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 
-  /* Brutalist drop shadow – dark, solid offset */
   .loot-drop-shadow {
-    box-shadow: 8px 8px 0 hsl(var(--shadow-dark) / 0.9);
+    box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 
   .file-card {
@@ -124,7 +124,7 @@
 
   .file-card:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 10px 10px 0 hsl(var(--shadow-dark) / 0.95);
+    box-shadow: 8px 8px 0 hsl(var(--shadow-dark));
   }
 
   /* File tab at top-left */
@@ -144,20 +144,19 @@
     z-index: 2;
   }
 
-  /* Overlapping fine badge */
   .fine-stamp {
     position: absolute;
     top: -12px;
     right: -8px;
     background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
-    border: 4px solid hsl(var(--border));
+    border: 3px solid hsl(var(--border));
     padding: 6px 14px;
     font-size: 16px;
     font-weight: 700;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     transform: rotate(4deg);
-    box-shadow: 6px 6px 0 hsl(var(--shadow-dark) / 0.9);
+    box-shadow: 5px 5px 0 hsl(var(--shadow-dark));
     z-index: 3;
     white-space: nowrap;
   }
@@ -176,7 +175,7 @@
   }
 
   .filter-btn:hover {
-    box-shadow: 5px 5px 0 hsl(var(--shadow-dark) / 0.8);
+    box-shadow: 4px 4px 0 hsl(var(--shadow-dark));
     transform: translate(-1px, -1px);
   }
 
@@ -185,24 +184,23 @@
     color: hsl(var(--hero-foreground));
   }
 
-  /* Hero title – blocky, yellow band */
   .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Anton', sans-serif;
     color: hsl(var(--hero-foreground));
     letter-spacing: 0.02em;
-    text-shadow: 0 2px 6px hsl(var(--shadow-dark) / 0.4);
+    line-height: 1.1;
   }
 
   .sidebar-heading {
     @apply font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-2 border-b-4;
-    border-color: hsl(var(--hero-foreground));
+    border-color: hsl(var(--border));
     background: hsl(var(--hero-bg));
     color: hsl(var(--hero-foreground));
   }
 
   .sidebar-btn {
-    @apply w-full text-left px-3 py-1.5 text-xs font-mono transition-colors;
-    border-bottom: 1px solid hsl(var(--foreground) / 0.15);
+    @apply w-full text-left px-3 py-1.5 text-xs font-mono transition-colors text-foreground;
+    border-bottom: 1px solid hsl(var(--border) / 0.2);
   }
 
   .sidebar-btn:hover {
@@ -215,9 +213,9 @@
     font-weight: 700;
   }
 
-  /* Search bar – black border (loot-drop) */
   .search-bar-accent {
+    background: hsl(var(--card));
     border: 4px solid hsl(var(--border));
-    box-shadow: 8px 8px 0 hsl(var(--shadow-dark) / 0.9);
+    box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 }
