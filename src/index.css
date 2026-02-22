@@ -6,61 +6,61 @@
 
 @layer base {
   :root {
-    /* Loot-drop style: dark base + yellow/gold accents */
-    --background: 0 0% 6%;
-    --foreground: 0 0% 96%;
+    /* Loot-drop.io palette: black borders, orange-yellow accent, dark greys */
+    --background: 0 0% 10%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 11%;
-    --card-foreground: 0 0% 96%;
+    --card: 0 0% 14%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 11%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 11%;
-    --primary-foreground: 0 0% 96%;
+    --primary: 0 0% 14%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 18%;
-    --secondary-foreground: 0 0% 96%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 62%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 4 80% 55%;
+    --accent: 4 85% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 96%;
+    --border: 0 0% 0%;
     --input: 0 0% 25%;
-    --ring: 48 100% 50%;
+    --ring: 40 100% 52%;
 
     --radius: 0px;
 
-    --sidebar-background: 0 0% 6%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 0 0% 11%;
-    --sidebar-primary-foreground: 0 0% 96%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 0 0% 96%;
-    --sidebar-ring: 48 100% 50%;
+    --sidebar-background: 0 0% 13%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 14%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 0%;
+    --sidebar-ring: 40 100% 52%;
 
-    /* Custom tokens – loot-drop */
-    --fine-badge: 4 80% 55%;
+    /* Loot-drop: orange-yellow accent, red for $, black borders */
+    --fine-badge: 0 85% 52%;
     --fine-badge-foreground: 0 0% 100%;
-    --severity-fill: 48 100% 50%;
-    --severity-empty: 0 0% 22%;
-    --tag-bg: 0 0% 18%;
-    --tag-foreground: 0 0% 96%;
-    --card-tab: 48 100% 50%;
-    --card-tab-foreground: 0 0% 9%;
-    --info-box: 0 0% 14%;
-    --info-box-foreground: 0 0% 96%;
+    --severity-fill: 40 100% 52%;
+    --severity-empty: 0 0% 24%;
+    --tag-bg: 0 0% 20%;
+    --tag-foreground: 0 0% 98%;
+    --card-tab: 40 100% 52%;
+    --card-tab-foreground: 0 0% 6%;
+    --info-box: 0 0% 16%;
+    --info-box-foreground: 0 0% 98%;
     --label-green: 152 45% 48%;
-    --label-red: 4 80% 55%;
-    --hero-bg: 48 100% 50%;
-    --hero-foreground: 0 0% 9%;
+    --label-red: 0 85% 52%;
+    --hero-bg: 40 100% 52%;
+    --hero-foreground: 0 0% 6%;
     --shadow-dark: 0 0% 0%;
   }
 }
@@ -88,7 +88,7 @@
 
 @layer components {
   .brutalist-border {
-    @apply border-4 border-foreground;
+    @apply border-4 border-border;
   }
 
   .brutalist-shadow {
@@ -113,7 +113,7 @@
 
   .file-card {
     @apply bg-card text-card-foreground relative loot-drop-shadow;
-    border: 4px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--border));
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
@@ -128,7 +128,7 @@
     top: -14px;
     left: 16px;
     background: hsl(var(--card-tab));
-    border: 4px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--border));
     border-bottom: none;
     padding: 2px 14px;
     font-size: 10px;
@@ -146,7 +146,7 @@
     right: -8px;
     background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
-    border: 4px solid hsl(var(--foreground));
+    border: 4px solid hsl(var(--border));
     padding: 6px 14px;
     font-size: 16px;
     font-weight: 700;
@@ -210,9 +210,9 @@
     font-weight: 700;
   }
 
-  /* Search bar – yellow border (loot-drop) */
+  /* Search bar – black border (loot-drop) */
   .search-bar-accent {
-    border: 4px solid hsl(var(--hero-bg));
+    border: 4px solid hsl(var(--border));
     box-shadow: 8px 8px 0 hsl(var(--shadow-dark) / 0.9);
   }
 }

@@ -56,7 +56,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Hero – colored band, tied to sidebar headers */}
       <header
-        className="py-12 px-6 text-center border-b-2 border-foreground"
+        className="py-12 px-6 text-center border-b-4 border-border"
         style={{ background: "hsl(var(--hero-bg))", color: "hsl(var(--hero-foreground))" }}
       >
         <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter uppercase">
@@ -95,7 +95,7 @@ const Index = () => {
           {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
             <div className="flex gap-2 flex-wrap">
               {[...selectedJurisdictions, ...selectedSectors, ...selectedViolations].map((f) => (
-                <span key={f} className="border-2 border-foreground bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
+                <span key={f} className="border-4 border-border bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
                   {f} ×
                 </span>
               ))}

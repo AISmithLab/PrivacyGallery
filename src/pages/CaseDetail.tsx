@@ -39,7 +39,7 @@ const CaseDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-4 border-b-2 border-foreground">
+      <header className="flex items-center justify-between px-6 py-4 border-b-4 border-border">
         <Link to="/" className="brutalist-border bg-card px-4 py-2 text-xs font-mono font-bold uppercase hover:bg-muted transition-colors flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" /> Back to Cases
         </Link>
@@ -73,7 +73,7 @@ const CaseDetail = () => {
         {/* Case Information */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE INFORMATION</h2>
-          <div className="h-[3px] bg-foreground mb-4" />
+          <div className="h-[3px] bg-border mb-4" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { label: "JURISDICTION", value: case_.jurisdiction },
@@ -91,7 +91,7 @@ const CaseDetail = () => {
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">SEVERITY</p>
               <div className="flex gap-1 mt-1">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className={`w-10 h-5 border-2 border-foreground ${i < case_.severityForIndividuals ? "severity-bar-fill" : "severity-bar-empty"}`} />
+                  <div key={i} className={`w-10 h-5 border-2 border-border ${i < case_.severityForIndividuals ? "severity-bar-fill" : "severity-bar-empty"}`} />
                 ))}
               </div>
             </div>
@@ -113,7 +113,7 @@ const CaseDetail = () => {
         {/* Case Context */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE OVERVIEW</h2>
-          <div className="h-[3px] bg-foreground mb-4" />
+          <div className="h-[3px] bg-border mb-4" />
           <div className="brutalist-border info-box p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))" }}>
             <p className="text-[15px] leading-relaxed">{case_.caseDescription}</p>
           </div>
@@ -132,7 +132,7 @@ const CaseDetail = () => {
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-1">\ CLAIM vs REALITY</h2>
           <p className="text-sm text-muted-foreground mb-4">Click a claim to reveal the reality</p>
-          <div className="h-[3px] bg-foreground mb-4" />
+          <div className="h-[3px] bg-border mb-4" />
           <div className="space-y-4">
             {case_.claimsVsReality.map((cr, i) => (
               <div
@@ -162,7 +162,7 @@ const CaseDetail = () => {
         {/* Legal Findings */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ LEGAL FINDINGS</h2>
-          <div className="h-[3px] bg-foreground mb-4" />
+          <div className="h-[3px] bg-border mb-4" />
           {case_.regulatoryFindings.map((rf, i) => (
             <div key={i} className="brutalist-border info-box p-5 mb-4">
               <p className="text-xs font-mono font-bold">{rf.act}</p>
@@ -181,7 +181,7 @@ const CaseDetail = () => {
 
         {/* Tabs: Outcome, Consequences, Company Now, PDFs */}
         <section>
-          <div className="flex border-b-[3px] border-foreground">
+          <div className="flex border-b-[3px] border-border">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -190,7 +190,7 @@ const CaseDetail = () => {
                   activeTab === tab.key
                     ? "bg-accent text-accent-foreground"
                     : "hover:bg-muted"
-                } border-[3px] border-foreground border-b-0 -mb-[3px]`}
+                } border-[3px] border-border border-b-0 -mb-[3px]`}
                 style={{ background: activeTab !== tab.key ? "hsl(var(--info-box))" : undefined }}
               >
                 {tab.label}
