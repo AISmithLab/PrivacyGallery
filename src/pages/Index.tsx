@@ -53,18 +53,18 @@ const Index = () => {
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);
 
   return (
-    <div className="min-h-screen bg-background" style={{ backgroundColor: "hsl(var(--background))" }}>
-      {/* Hero – loot-drop: bright yellow, black text */}
+    <div className="min-h-screen bg-background loot-drop-page" style={{ backgroundColor: "#F5F3EF" }}>
+      {/* Hero – loot-drop: bright yellow, black text (literal colors override any dark theme) */}
       <header
-        className="py-12 px-6 text-center border-b-4 border-border"
-        style={{ background: "hsl(var(--hero-bg))", color: "hsl(var(--hero-foreground))" }}
+        className="py-12 px-6 text-center border-b-4 border-border loot-drop-hero"
+        style={{ background: "#FFD700", color: "#000", borderBottom: "4px solid #000" }}
       >
         <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter uppercase">
           The Privacy
           <br />
           Jury
         </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mt-4 opacity-90" style={{ color: "hsl(var(--hero-foreground))" }}>
+        <p className="text-base md:text-lg max-w-2xl mx-auto mt-4 opacity-90" style={{ color: "#000" }}>
           A global registry of{" "}
           <span className="font-bold">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}

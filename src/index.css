@@ -219,3 +219,22 @@
     box-shadow: 6px 6px 0 hsl(var(--shadow-dark));
   }
 }
+
+/* Override any dark theme (e.g. Lovable): force loot-drop light look */
+html,
+body,
+#root,
+.loot-drop-page {
+  background-color: #F5F3EF !important;
+}
+
+.loot-drop-hero {
+  background: #FFD700 !important;
+  color: #000 !important;
+  border-bottom: 4px solid #000 !important;
+}
+
+.loot-drop-hero .hero-title,
+.loot-drop-hero p {
+  color: #000 !important;
+}
