@@ -58,9 +58,9 @@
     --info-box-foreground: 20 10% 12%;
     --label-green: 152 50% 32%;
     --label-red: 4 80% 50%;
-    /* Hero / title band – ties to sidebar headers (formal court grey) */
-    --hero-bg: 220 12% 36%;
-    --hero-foreground: 0 0% 98%;
+    /* Hero / title band – ties to sidebar headers (#929696) */
+    --hero-bg: 187 2% 58%;
+    --hero-foreground: 0 0% 100%;
   }
 }
 
@@ -176,6 +176,15 @@
 
   .filter-btn.active {
     @apply bg-secondary text-secondary-foreground;
+  }
+
+  /* Hero title: white with outline and slight drop shadow */
+  .hero-title {
+    color: hsl(var(--hero-foreground));
+    -webkit-text-stroke: 1.5px hsl(var(--foreground));
+    text-shadow:
+      0 2px 8px hsl(var(--foreground) / 0.4),
+      0 1px 2px hsl(var(--foreground) / 0.3);
   }
 
   .sidebar-heading {
