@@ -13,7 +13,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
       <div className="file-card relative mt-4 mr-2 flex flex-col">
         {/* Colored category bar at top */}
         <div className="px-4 py-2.5 flex items-center justify-between"
-          style={{ background: "hsl(var(--card-tab))", borderBottom: "4px solid hsl(var(--foreground))" }}>
+          style={{ background: "hsl(var(--card-tab))", color: "hsl(var(--card-tab-foreground))", borderBottom: "2px solid hsl(var(--foreground))" }}>
           <span className="text-sm font-mono font-bold uppercase tracking-wider">{case_.sector}</span>
           <div className="flex items-center gap-1.5 text-xs font-mono font-bold">
             <Eye className="w-3.5 h-3.5" />
@@ -27,7 +27,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             {case_.company} <span className="text-xl font-mono text-muted-foreground">({case_.year})</span>
           </h3>
           <div className="flex items-center gap-6 mt-2">
-            <span className="text-sm font-mono font-bold text-muted-foreground border-4 border-foreground px-3 py-1.5">{case_.jurisdiction}</span>
+            <span className="text-sm font-mono font-bold text-muted-foreground border-2 border-foreground px-3 py-1.5">{case_.jurisdiction}</span>
             <div className="flex items-center gap-2">
               <img src={impactedIcon} alt="Impacted" className="w-6 h-6 object-contain" />
               <span className="text-sm font-mono font-bold">{case_.impactedIndividuals}</span>
@@ -50,7 +50,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         </div>
 
         {/* Dashed divider */}
-        <div className="mx-5 my-2 border-t-2 border-dashed" style={{ borderColor: "hsl(var(--foreground) / 0.15)" }} />
+        <div className="mx-5 my-2 border-t-2 border-dashed" style={{ borderColor: "hsl(var(--foreground) / 0.25)" }} />
 
         {/* Why they were wrong */}
         <div className="px-5 pb-4">

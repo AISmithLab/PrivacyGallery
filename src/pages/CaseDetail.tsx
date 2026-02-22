@@ -39,7 +39,7 @@ const CaseDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-4 border-b-[3px] border-foreground">
+      <header className="flex items-center justify-between px-6 py-4 border-b-2 border-foreground">
         <Link to="/" className="brutalist-border bg-card px-4 py-2 text-xs font-mono font-bold uppercase hover:bg-muted transition-colors flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" /> Back to Cases
         </Link>
