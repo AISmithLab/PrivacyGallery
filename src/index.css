@@ -70,8 +70,14 @@
     @apply border-border;
   }
 
+  html,
+  body,
+  #root {
+    background-color: hsl(var(--background));
+  }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
     font-family: 'Space Grotesk', sans-serif;
   }
 
