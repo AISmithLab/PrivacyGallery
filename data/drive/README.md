@@ -21,7 +21,7 @@ data/drive/
 ```
 
 4. Supported file types:
-   - **.pdf** – One case per PDF. Company name and (if present) year are derived from the filename; jurisdiction from the folder. If `pdf-parse` is installed and text extraction works, the script also extracts fine, violations, legal basis, enforcement strategy, and data type from the document text.
+   - **.pdf** – One case per PDF. The script uses **unpdf** (and optionally **pdftotext** if installed) to extract text. Company name and year come from the document or filename; jurisdiction from the folder. From the extracted text the script fills: violations (jurisdiction-aware), legal basis, outcome/consequences, claim vs reality, number affected, enforcement strategy, and data type.
    - **.csv** – case index (one case per row; columns like `case_title`, `pdf_url`). All jurisdiction folders and subfolders (e.g. EU) are scanned.
    - **.json** – structured case data (see schema below)
    - **.txt** – plain text; the script extracts company, fine, year, violations
@@ -42,15 +42,22 @@ This writes `src/data/generatedCases.json`. The app will use generated cases whe
 
 **To get your Drive cases on the site:** Run `npm run ingest-drive` (after placing the Drive folder here). Commit `src/data/generatedCases.json` so the site build includes it, or run the ingest step in your deployment pipeline.
 
-**Optional – PDF parsing:** To extract text from PDFs, install `pdf-parse` and run the script again. When PDF text is available, the script also extracts:
-- **Legal basis violated** (e.g. GDPR Art. 5/6/32/46, FTC Section 5, CCPA, COPPA, PDPA)
-- **Enforcement strategy** (Ayres & Braithwaite pyramid: Monetary penalty, Compliance order, Processing restriction, etc.)
-- **Data type / context** (e.g. Health, Advertising, Location, Children's data – for Nissenbaum contextual integrity)
+**Optional – PDF parsing:** When PDF text is available (via `pdftotext` if installed, or `pdf-parse`), the script extracts from each document:
+- **Violations** (jurisdiction-aware): e.g. US FTC → deception, COPPA; EU GDPR → Art. 5/6, transfer safeguards; UK ICO, Australia OAIC, Singapore PDPC → matching phrases.
+- **Legal basis violated** (doctrinal): GDPR Art., FTC §5, CCPA, COPPA, PDPA, etc., depending on folder.
+- **Outcome and consequences**: sentences mentioning order, fine, settlement, required to, injunction.
+- **Claim vs reality**: pairs of “claimed/represented that…” with “However/In fact/The Commission found…”.
+- **Number of individuals affected**: e.g. “390 million users”, “4.6M+”.
+- **Enforcement strategy** (Ayres & Braithwaite): Monetary penalty, Compliance order, etc.
+- **Data type / context** (Nissenbaum): Health, Advertising, Location, Children's data.
+
+**Optional – Wikipedia company lookup:** To fill company description, founding year, and (when mentioned) company worth from Wikipedia, set:
 
 ```bash
-npm install pdf-parse
-npm run ingest-drive
+ENABLE_WIKI_LOOKUP=1 WIKI_LOOKUP_LIMIT=100 npm run ingest-drive
 ```
+
+This runs after building the case list and enriches up to `WIKI_LOOKUP_LIMIT` cases (default 100) that have no company description, with a short delay between requests.
 
 ## Optional: JSON schema per case
 
