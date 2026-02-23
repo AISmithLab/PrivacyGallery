@@ -210,6 +210,19 @@ function getRowVal(row, ...possibleKeys) {
   return "";
 }
 
+/** Extract short company name from a long case title for display. */
+function extractCompanyFromTitle(title) {
+  const raw = String(title).trim();
+  const intoMatch = raw.match(/Commissioner Initiated Investigation into\s+([^(]+?)\s*\(/i);
+  if (intoMatch) return intoMatch[1].trim();
+  const andMatch = raw.match(/(?:^|^'[^']+' and |^[^']+ and )([^(]+?)\s*\(Privacy\)/i);
+  if (andMatch) return andMatch[1].replace(/^'|'$/g, "").trim();
+  const entityMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
+  if (entityMatch) return entityMatch[1].trim();
+  if (raw.length <= 80) return raw;
+  return raw.slice(0, 77) + "…";
+}
+
 /** Build case from CSV row. Supports UK/ICO (case_title, case_url, pdf_url), OAIC (case_title, austlii_url, pdf_url), EU (Country, ETid, Source_URL, PDF_URL). */
 function caseFromCsvRow(row, jurisdiction) {
   const c = defaultCase({ jurisdiction });
@@ -217,7 +230,7 @@ function caseFromCsvRow(row, jurisdiction) {
   if (keys.includes("case_title")) {
     const title = String(getRowVal(row, "case_title")).trim();
     if (!title) return null;
-    c.company = title.length > 120 ? title.slice(0, 117) + "…" : title;
+    c.company = extractCompanyFromTitle(title);
     c.caseDescription = title;
     const yearInTitle = title.match(/\b(20\d{2}|19\d{2})\b/);
     if (yearInTitle) {

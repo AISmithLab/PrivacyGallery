@@ -86,6 +86,26 @@ export const SECTORS: Sector[] = [
   "Transportation",
 ];
 
+/**
+ * Extract a short company/organisation name for card display from a long case title.
+ * Used when company field holds the full case title (e.g. from CSV ingest).
+ */
+export function getDisplayCompany(case_: EnforcementCase): string {
+  const raw = case_.company || "";
+  // "Commissioner Initiated Investigation into X (Privacy) ..." → X
+  const intoMatch = raw.match(/Commissioner Initiated Investigation into\s+([^(]+?)\s*\(/i);
+  if (intoMatch) return intoMatch[1].trim();
+  // "'A' and B (Privacy) ..." or "A and B (Privacy) ..." → B (entity after "and")
+  const andMatch = raw.match(/(?:^|^'[^']+' and |^[^']+ and )([^(]+?)\s*\(Privacy\)/i);
+  if (andMatch) return andMatch[1].replace(/^'|'$/g, "").trim();
+  // "X Pty Ltd (Privacy) ..." or "X Limited (Privacy) ..." → keep up to (Privacy)
+  const entityMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
+  if (entityMatch) return entityMatch[1].trim();
+  // Already short or EU-style "Country (ETid-...)"
+  if (raw.length <= 80) return raw;
+  return raw.slice(0, 77) + "…";
+}
+
 import generatedCases from "./generatedCases.json";
 
 const staticCases: EnforcementCase[] = [
