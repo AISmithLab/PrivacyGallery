@@ -207,12 +207,18 @@ const CaseDetail = () => {
                   <p className="text-sm text-muted-foreground">No attached PDFs for this case.</p>
                 ) : (
                   <ul className="space-y-2">
-                    {case_.attachedPDFs.map((pdf) => (
-                      <li key={pdf} className="flex items-center gap-2 text-sm font-mono">
-                        <FileText className="w-4 h-4 text-accent" />
-                        {pdf}
-                      </li>
-                    ))}
+                    {case_.attachedPDFs.map((pdf, i) => {
+                      const href = typeof pdf === "string" ? pdf : pdf.url;
+                      const label = typeof pdf === "string" ? pdf : (pdf.label || pdf.url);
+                      return (
+                        <li key={href + i} className="flex items-center gap-2 text-sm font-mono">
+                          <FileText className="w-4 h-4 text-accent shrink-0" />
+                          <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent underline break-all">
+                            {label}
+                          </a>
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>

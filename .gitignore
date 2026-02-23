@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Drive source data (large; keep locally, run npm run ingest-drive to build generatedCases.json)
+data/drive/*
+!data/drive/README.md

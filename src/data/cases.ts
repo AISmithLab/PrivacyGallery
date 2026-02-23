@@ -6,7 +6,7 @@ export type ViolationType =
   | "Failure of parent control over childrens data"
   | "Failure to obtain parental consent";
 
-export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore PDPC" | "EU GDPR" | "EU EDPB";
+export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore PDPC" | "EU GDPR" | "EU EDPB" | "Australia OAIC";
 
 export type Sector = "Technology" | "Social Media" | "Healthcare" | "E-Commerce" | "Gaming" | "Finance" | "Advertising" | "Food Delivery" | "Hospitality" | "Retail" | "Transportation";
 
@@ -49,7 +49,8 @@ export interface EnforcementCase {
   outcome: string;
   consequences: string;
   companyNow: string;
-  attachedPDFs: string[];
+  /** URLs only (string[]) or objects with url + optional label (from Drive ingest). */
+  attachedPDFs: (string | { url: string; label?: string })[];
 }
 
 export const JURISDICTIONS: Jurisdiction[] = [
@@ -59,6 +60,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
   "Singapore PDPC",
   "EU GDPR",
   "EU EDPB",
+  "Australia OAIC",
 ];
 
 export const VIOLATION_TYPES: ViolationType[] = [
@@ -84,7 +86,9 @@ export const SECTORS: Sector[] = [
   "Transportation",
 ];
 
-export const cases: EnforcementCase[] = [
+import generatedCases from "./generatedCases.json";
+
+const staticCases: EnforcementCase[] = [
   {
     id: "1",
     company: "Snapchat",
@@ -684,3 +688,7 @@ export const cases: EnforcementCase[] = [
     attachedPDFs: [],
   },
 ];
+
+const generated = generatedCases as EnforcementCase[];
+export const cases: EnforcementCase[] =
+  generated && generated.length > 0 ? generated : staticCases;
