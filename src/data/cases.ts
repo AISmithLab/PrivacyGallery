@@ -51,6 +51,12 @@ export interface EnforcementCase {
   companyNow: string;
   /** URLs only (string[]) or objects with url + optional label (from Drive ingest). */
   attachedPDFs: (string | { url: string; label?: string })[];
+  /** Data type / context (Nissenbaum contextual integrity), e.g. Health, Advertising, Location. */
+  dataType?: string;
+  /** Legal basis violated (doctrinal), e.g. "GDPR Art. 46(1)", "FTC Section 5", "CCPA §1798.120". */
+  legalBasisViolated?: string[];
+  /** Enforcement strategy (Ayres & Braithwaite pyramid), e.g. Monetary penalty, Compliance order, Processing restriction. */
+  enforcementStrategy?: string[];
 }
 
 export const JURISDICTIONS: Jurisdiction[] = [
@@ -85,6 +91,28 @@ export const SECTORS: Sector[] = [
   "Retail",
   "Transportation",
 ];
+
+/** Enforcement strategy (Ayres & Braithwaite responsive regulation pyramid). */
+export const ENFORCEMENT_STRATEGIES = [
+  "Monetary penalty",
+  "Compliance order",
+  "Processing restriction",
+  "Structural reform",
+  "Monitoring",
+  "Criminal referral",
+] as const;
+
+/** Common legal bases (doctrinal variable); jurisdiction-dependent. */
+export const LEGAL_BASIS_EXAMPLES = [
+  "GDPR Art. 5",
+  "GDPR Art. 6",
+  "GDPR Art. 32",
+  "GDPR Art. 46(1)",
+  "FTC Act Section 5",
+  "CCPA §1798.120",
+  "PDPA (Singapore)",
+  "COPPA",
+] as const;
 
 /**
  * Extract a short company/organisation name for card display from a long case title.

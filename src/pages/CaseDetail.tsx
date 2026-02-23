@@ -52,8 +52,8 @@ const CaseDetail = () => {
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">{case_.company}</h1>
-              <p className="text-lg font-mono text-muted-foreground mt-1">\{case_.country}</p>
-              <p className="text-sm leading-relaxed mt-4">{case_.companyLongDescription}</p>
+              <p className="text-lg font-mono text-muted-foreground mt-1">{case_.country ? `\\${case_.country}` : "—"}</p>
+              <p className="text-sm leading-relaxed mt-4">{case_.companyLongDescription || "—"}</p>
             </div>
             <div className="space-y-2 shrink-0">
               {[
@@ -78,7 +78,7 @@ const CaseDetail = () => {
             {[
               { label: "JURISDICTION", value: case_.jurisdiction },
               { label: "COMPLAINT ISSUED", value: `${case_.complaintYear} – Decision ${case_.year}` },
-              { label: "NUM IMPACTED", value: case_.impactedIndividuals },
+              { label: "NUM IMPACTED", value: case_.impactedIndividuals || "—" },
             ].map((item) => (
               <div key={item.label} className="brutalist-border info-box p-4">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
@@ -97,17 +97,47 @@ const CaseDetail = () => {
             </div>
             <div className="brutalist-border info-box px-5 py-3">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">FINE</p>
-              <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay}</p>
+              <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay || "—"}</p>
             </div>
             <div className="brutalist-border info-box px-5 py-3 flex-1">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
               <div className="flex flex-wrap gap-1.5 mt-1">
-                {case_.violations.map((v) => (
+                {case_.violations.length > 0 ? case_.violations.map((v) => (
                   <span key={v} className="text-xs font-mono font-bold" style={{ color: "hsl(var(--accent))" }}>{v}</span>
-                ))}
+                )) : <span className="text-xs text-muted-foreground">—</span>}
               </div>
             </div>
           </div>
+          {(case_.dataType || (case_.legalBasisViolated && case_.legalBasisViolated.length > 0) || (case_.enforcementStrategy && case_.enforcementStrategy.length > 0)) && (
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {case_.dataType && (
+                <div className="brutalist-border info-box p-4">
+                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">DATA TYPE / CONTEXT</p>
+                  <p className="text-sm font-bold mt-1">{case_.dataType}</p>
+                </div>
+              )}
+              {(case_.legalBasisViolated?.length ?? 0) > 0 && (
+                <div className="brutalist-border info-box p-4">
+                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">LEGAL BASIS VIOLATED</p>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {case_.legalBasisViolated!.map((lb) => (
+                      <span key={lb} className="text-xs font-mono font-bold" style={{ color: "hsl(var(--accent))" }}>{lb}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {(case_.enforcementStrategy?.length ?? 0) > 0 && (
+                <div className="brutalist-border info-box p-4">
+                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">ENFORCEMENT STRATEGY</p>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {case_.enforcementStrategy!.map((s) => (
+                      <span key={s} className="text-xs font-mono">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </section>
 
         {/* Case Context */}
@@ -115,7 +145,7 @@ const CaseDetail = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ CASE OVERVIEW</h2>
           <div className="h-[3px] bg-border mb-4" />
           <div className="brutalist-border info-box p-6" style={{ borderLeftWidth: "4px", borderLeftColor: "hsl(var(--accent))" }}>
-            <p className="text-[15px] leading-relaxed">{case_.caseDescription}</p>
+            <p className="text-[15px] leading-relaxed">{case_.caseDescription || "No case overview available."}</p>
           </div>
           {case_.violations.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
@@ -133,6 +163,9 @@ const CaseDetail = () => {
           <h2 className="text-2xl font-bold tracking-tight mb-1">\ CLAIM vs REALITY</h2>
           <p className="text-sm text-muted-foreground mb-4">Click a claim to reveal the reality</p>
           <div className="h-[3px] bg-border mb-4" />
+          {case_.claimsVsReality.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No claims vs reality documented for this case.</p>
+          ) : (
           <div className="space-y-4">
             {case_.claimsVsReality.map((cr, i) => (
               <div
@@ -157,12 +190,27 @@ const CaseDetail = () => {
               </div>
             ))}
           </div>
+          )}
         </section>
 
         {/* Legal Findings */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ LEGAL FINDINGS</h2>
           <div className="h-[3px] bg-border mb-4" />
+          {case_.regulatoryFindings.length === 0 && !(case_.legalBasisViolated && case_.legalBasisViolated.length > 0) ? (
+            <p className="text-sm text-muted-foreground">No legal findings documented for this case.</p>
+          ) : (
+          <>
+          {(case_.legalBasisViolated?.length ?? 0) > 0 && case_.regulatoryFindings.length === 0 && (
+            <div className="brutalist-border info-box p-5 mb-4">
+              <p className="text-xs font-mono font-bold">Legal basis violated</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {case_.legalBasisViolated!.map((lb) => (
+                  <span key={lb} className="text-sm font-mono" style={{ color: "hsl(var(--accent))" }}>{lb}</span>
+                ))}
+              </div>
+            </div>
+          )}
           {case_.regulatoryFindings.map((rf, i) => (
             <div key={i} className="brutalist-border info-box p-5 mb-4">
               <p className="text-xs font-mono font-bold">{rf.act}</p>
@@ -177,6 +225,8 @@ const CaseDetail = () => {
               </ul>
             </div>
           ))}
+          </>
+          )}
         </section>
 
         {/* Tabs: Outcome, Consequences, Company Now, PDFs */}
@@ -198,7 +248,7 @@ const CaseDetail = () => {
             ))}
           </div>
           <div className="brutalist-border border-t-0 info-box p-6">
-            {activeTab === "outcome" && <p className="text-sm leading-relaxed">{case_.outcome}</p>}
+            {activeTab === "outcome" && <p className="text-sm leading-relaxed">{case_.outcome || "No outcome documented for this case."}</p>}
             {activeTab === "consequences" && <div className="text-sm leading-relaxed space-y-3"><p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {case_.fineDisplay}</span></p><p>{case_.consequences}</p></div>}
             {activeTab === "company" && <p className="text-sm leading-relaxed">{case_.companyNow}</p>}
             {activeTab === "pdfs" && (

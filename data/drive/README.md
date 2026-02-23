@@ -21,10 +21,10 @@ data/drive/
 ```
 
 4. Supported file types:
+   - **.pdf** – One case per PDF. Company name and (if present) year are derived from the filename; jurisdiction from the folder. If `pdf-parse` is installed and text extraction works, the script also extracts fine, violations, legal basis, enforcement strategy, and data type from the document text.
    - **.csv** – case index (one case per row; columns like `case_title`, `pdf_url`). All jurisdiction folders and subfolders (e.g. EU) are scanned.
    - **.json** – structured case data (see schema below)
    - **.txt** – plain text; the script extracts company, fine, year, violations
-   - **.pdf** – same as .txt if `pdf-parse` is installed (optional)
 
 5. Run the ingest script from the project root:
 
@@ -42,7 +42,10 @@ This writes `src/data/generatedCases.json`. The app will use generated cases whe
 
 **To get your Drive cases on the site:** Run `npm run ingest-drive` (after placing the Drive folder here). Commit `src/data/generatedCases.json` so the site build includes it, or run the ingest step in your deployment pipeline.
 
-**Optional – PDF parsing:** To extract text from PDFs, install `pdf-parse` and run the script again:
+**Optional – PDF parsing:** To extract text from PDFs, install `pdf-parse` and run the script again. When PDF text is available, the script also extracts:
+- **Legal basis violated** (e.g. GDPR Art. 5/6/32/46, FTC Section 5, CCPA, COPPA, PDPA)
+- **Enforcement strategy** (Ayres & Braithwaite pyramid: Monetary penalty, Compliance order, Processing restriction, etc.)
+- **Data type / context** (e.g. Health, Advertising, Location, Children's data – for Nissenbaum contextual integrity)
 
 ```bash
 npm install pdf-parse

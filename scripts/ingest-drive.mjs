@@ -66,9 +66,28 @@ function defaultCase(overrides = {}) {
     consequences: "",
     companyNow: "",
     attachedPDFs: [],
+    dataType: undefined,
+    legalBasisViolated: [],
+    enforcementStrategy: [],
     ...overrides,
   };
 }
+
+const ENFORCEMENT_KEYWORDS = [
+  { key: "Monetary penalty", re: /\b(fine|penalty|settlement|pay\s+\$|€|£|\d+\s*(million|billion|m|b))\b/i },
+  { key: "Compliance order", re: /\b(order|consent decree|injunction|comply|remedy)\b/i },
+  { key: "Processing restriction", re: /\b(cease|stop|suspend|restrict\s+processing|ban)\b/i },
+  { key: "Structural reform", re: /\b(restructure|privacy\s+program|comprehensive\s+program)\b/i },
+  { key: "Monitoring", re: /\b(monitor|audit|assessment|independent\s+review)\b/i },
+  { key: "Criminal referral", re: /\b(criminal|referr?ed\s+to\s+(doj|prosecutor))\b/i },
+];
+const LEGAL_BASIS_PATTERNS = [
+  /\bGDPR\s+Art\.?\s*(\d+(?:\(\d+\))?)/gi,
+  /\bFTC\s+(?:Act\s+)?§?\s*5|Section\s+5\s+of\s+the\s+FTC\s+Act/gi,
+  /\bCCPA\s*§?\s*1798\.\d+/gi,
+  /\bCOPPA\b/gi,
+  /\bPDPA\b/gi,
+];
 
 function extractFromText(text, jurisdiction) {
   const c = defaultCase({ jurisdiction });
@@ -115,6 +134,30 @@ function extractFromText(text, jurisdiction) {
     c.whyTheyWereWrong = firstPara.trim().slice(0, 400);
   }
 
+  // Enforcement strategy (Ayres & Braithwaite pyramid)
+  const strategySet = new Set();
+  for (const { key, re } of ENFORCEMENT_KEYWORDS) {
+    if (re.test(text)) strategySet.add(key);
+  }
+  if (strategySet.size) c.enforcementStrategy = [...strategySet];
+
+  // Legal basis violated (doctrinal)
+  const legalSet = new Set();
+  for (const pattern of LEGAL_BASIS_PATTERNS) {
+    let m;
+    pattern.lastIndex = 0;
+    while ((m = pattern.exec(text)) !== null) {
+      legalSet.add(m[0].trim());
+    }
+  }
+  if (legalSet.size) c.legalBasisViolated = [...legalSet];
+
+  // Data type / context (Nissenbaum) heuristics
+  if (/\b(health|medical|HIPAA|patient|clinical)\b/i.test(text)) c.dataType = "Health";
+  else if (/\b(advertising|ad\s+tech|targeting|retargeting)\b/i.test(text)) c.dataType = "Advertising";
+  else if (/\b(location|geolocation|GPS)\b/i.test(text)) c.dataType = "Location";
+  else if (/\b(children|child|COPPA|minor)\b/i.test(text)) c.dataType = "Children's data";
+
   return c;
 }
 
@@ -148,6 +191,9 @@ function normalizeJsonCase(obj, jurisdiction, index) {
   if (obj.attachedPDFs && Array.isArray(obj.attachedPDFs)) c.attachedPDFs = obj.attachedPDFs;
   if (obj.claimsVsReality && Array.isArray(obj.claimsVsReality)) c.claimsVsReality = obj.claimsVsReality;
   if (obj.regulatoryFindings && Array.isArray(obj.regulatoryFindings)) c.regulatoryFindings = obj.regulatoryFindings;
+  if (obj.dataType) c.dataType = String(obj.dataType);
+  if (obj.legalBasisViolated && Array.isArray(obj.legalBasisViolated)) c.legalBasisViolated = obj.legalBasisViolated.map(String);
+  if (obj.enforcementStrategy && Array.isArray(obj.enforcementStrategy)) c.enforcementStrategy = obj.enforcementStrategy.map(String);
   return c;
 }
 
@@ -304,11 +350,41 @@ async function processFile(filePath, jurisdiction, index) {
     return [];
   }
 
-  if (!text.trim()) return [];
-  const c = extractFromText(text, jurisdiction);
+  let c;
+  if (text.trim()) {
+    c = extractFromText(text, jurisdiction);
+  } else {
+    // No text (e.g. pdf-parse failed or PDF is image-only): create case from filename only
+    c = caseFromPdfFilename(base, jurisdiction);
+  }
   c.id = String(index + 1);
-  if (c.company === "Unknown") c.company = base.replace(/[-_]/g, " ").trim() || "Unknown";
+  if (c.company === "Unknown" || !c.company) c.company = base.replace(/[-_]/g, " ").trim().slice(0, 120) || "Unknown";
   return [c];
+}
+
+/** Build a case from a PDF filename when text extraction isn't available. Jurisdiction from folder; company from filename. */
+function caseFromPdfFilename(baseName, jurisdiction) {
+  const c = defaultCase({ jurisdiction });
+  // Remove common suffixes: _complaint_1, __complaint_1, .pdf already stripped
+  let name = baseName
+    .replace(/_?complaint_?\d*$/i, "")
+    .replace(/_+$/, "")
+    .trim();
+  // "Snapchat_ Inc._ In the Matter of" → take part before " In the Matter" or " In re" or " U.S. v" or " v."
+  const matterMatch = name.match(/^(.+?)\s+(_|\s)(in\s+the\s+matter|in\s+re|u\.?s\.?\s*v\.?|v\.?\s+)/i);
+  if (matterMatch) name = matterMatch[1].trim();
+  // Replace underscores with spaces, collapse spaces, trim
+  name = name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  if (name.length > 120) name = name.slice(0, 117) + "…";
+  c.company = name || "Unknown";
+  c.caseDescription = c.company;
+  // Year from filename if present (e.g. 2015 10-02, or 2020 in text)
+  const yearMatch = baseName.match(/\b(20\d{2}|19\d{2})\b/);
+  if (yearMatch) {
+    const y = parseInt(yearMatch[1], 10);
+    if (y >= 1990 && y <= 2030) c.year = y;
+  }
+  return c;
 }
 
 async function main() {
