@@ -151,14 +151,30 @@
     background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
     border: 3px solid hsl(var(--border));
-    padding: 6px 14px;
-    font-size: 16px;
+    padding: 10px 20px;
+    font-size: 20px;
     font-weight: 700;
     font-family: 'Space Grotesk', sans-serif;
     transform: rotate(4deg);
     box-shadow: 5px 5px 0 hsl(var(--shadow-dark));
     z-index: 3;
     white-space: nowrap;
+  }
+
+  .fine-stamp-compact {
+    font-size: 12px;
+    padding: 6px 10px;
+    max-width: 72px;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* Company name on card: wrap after ~16 characters at word boundaries */
+  .company-name-card {
+    max-width: 32ch;
+    white-space: normal;
+    word-break: normal;
   }
 
   .severity-bar-fill {

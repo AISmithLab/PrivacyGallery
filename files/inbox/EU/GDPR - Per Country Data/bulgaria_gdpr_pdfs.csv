@@ -1,0 +1,58 @@
+Country,ETid,Source_URL,PDF_File
+BULGARIA,ETid-2884,https://cpdp.bg/%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be-%d0%b6%d0%b0%d0%bb%d0%b1%d0%b0-%d1%81-%d1%80%d0%b5%d0%b3-%e2%84%96-%d0%bf%d0%bf%d0%bd-01-169-02-03-2022-%d0%b3/,bulgaria_pdfs/ETid-2884.pdf
+BULGARIA,ETid-2883,https://cpdp.bg/%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be-%d0%b6%d0%b0%d0%bb%d0%b1%d0%b0-%d1%81-%d1%80%d0%b5%d0%b3-%e2%84%96-%d0%bf%d0%bf%d0%bd-01-291-03-05-2022-%d0%b3/,bulgaria_pdfs/ETid-2883.pdf
+BULGARIA,ETid-2882,https://cpdp.bg/%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be-%d0%b6%d0%b0%d0%bb%d0%b1%d0%b8-%d1%81-%d1%80%d0%b5%d0%b3-%e2%84%96-%d0%bf%d0%bf%d0%bd-01-223-12-03-2021-%d0%b3-%d0%bf%d0%bf%d0%bd-01-307-09-0/,bulgaria_pdfs/ETid-2882.pdf
+BULGARIA,ETid-2868,https://cpdp.bg/%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be-%d0%b6%d0%b0%d0%bb%d0%b1%d0%b0-%d1%81-%d1%80%d0%b5%d0%b3-%e2%84%96-%d0%bf%d0%bf%d0%bd-02-214-06-04-2023-%d0%b3/,bulgaria_pdfs/ETid-2868.pdf
+BULGARIA,ETid-2277,https://cpdp.bg/%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be-%d0%b6%d0%b0%d0%bb%d0%b1%d0%b0-%d1%81-%d1%80%d0%b5%d0%b3-%e2%84%96-%d0%bf%d0%bf%d0%bd-01-197-14-03-2022-%d0%b3/,bulgaria_pdfs/ETid-2277.pdf
+BULGARIA,ETid-1833,https://www.cpdp.bg/userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf,"Error downloading PDF: HTTPSConnectionPool(host='www.cpdp.bg', port=443): Max retries exceeded with url: /userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+BULGARIA,ETid-1832,https://www.cpdp.bg/userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf,"Error downloading PDF: HTTPSConnectionPool(host='www.cpdp.bg', port=443): Max retries exceeded with url: /userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+BULGARIA,ETid-1831,https://www.cpdp.bg/userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf,"Error downloading PDF: HTTPSConnectionPool(host='www.cpdp.bg', port=443): Max retries exceeded with url: /userfiles/file/Annual%20Reports/Annual%20report_2022_CPDP.pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+BULGARIA,ETid-906,https://www.cpdp.bg/download.php?part=rubric_element&aid=4786,bulgaria_pdfs/ETid-906.pdf
+BULGARIA,ETid-295,https://www.cpdp.bg/?p=element&aid=1247,bulgaria_pdfs/ETid-295.pdf
+BULGARIA,ETid-270,http://www.cpdp.bg/download.php?part=rubric_element&aid=4563,bulgaria_pdfs/ETid-270.pdf
+BULGARIA,ETid-269,http://www.cpdp.bg/download.php?part=rubric_element&aid=4563,bulgaria_pdfs/ETid-269.pdf
+BULGARIA,ETid-268,http://www.cpdp.bg/download.php?part=rubric_element&aid=4563,bulgaria_pdfs/ETid-268.pdf
+BULGARIA,ETid-168,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-168.pdf
+BULGARIA,ETid-167,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-167.pdf
+BULGARIA,ETid-166,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-166.pdf
+BULGARIA,ETid-165,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-165.pdf
+BULGARIA,ETid-164,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-164.pdf
+BULGARIA,ETid-163,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-163.pdf
+BULGARIA,ETid-162,https://www.cpdp.bg/index.php?p=element&aid=1219,bulgaria_pdfs/ETid-162.pdf
+BULGARIA,ETid-140,https://www.cpdp.bg/?p=element_view&aid=2226,bulgaria_pdfs/ETid-140.pdf
+BULGARIA,ETid-72,https://www.cpdp.bg/index.php?p=news_view&aid=1514,bulgaria_pdfs/ETid-72.pdf
+BULGARIA,ETid-71,https://www.cpdp.bg/index.php?p=news_view&aid=1519,bulgaria_pdfs/ETid-71.pdf
+BULGARIA,ETid-55,https://www.cpdp.bg/?p=element_view&aid=2191,bulgaria_pdfs/ETid-55.pdf
+BULGARIA,ETid-54,https://www.cpdp.bg/?p=element_view&aid=2192,bulgaria_pdfs/ETid-54.pdf
+BULGARIA,ETid-9,https://www.cpdp.bg/?p=element_view&aid=2177,bulgaria_pdfs/ETid-9.pdf
+BULGARIA,ETid-8,https://www.cpdp.bg/?p=element&aid=1195,bulgaria_pdfs/ETid-8.pdf
+BULGARIA,ETid-7,https://www.cpdp.bg/?p=element_view&aid=2180,bulgaria_pdfs/ETid-7.pdf
+BULGARIA,ETid-6,https://gdprtoolkit.eu/first-gdpr-fine-in-bulgaria/,"Error: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=144.0.7559.133)
+Stacktrace:
+0   chromedriver                        0x0000000101263928 cxxbridge1$str$ptr + 3098388
+1   chromedriver                        0x000000010125bc04 cxxbridge1$str$ptr + 3066352
+2   chromedriver                        0x0000000100d3e83c _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 75008
+3   chromedriver                        0x0000000100d36a00 _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 42692
+4   chromedriver                        0x0000000100d2911c cxxbridge1$string$len + 5152
+5   chromedriver                        0x0000000100d2ac24 cxxbridge1$string$len + 12072
+6   chromedriver                        0x0000000100d29588 cxxbridge1$string$len + 6284
+7   chromedriver                        0x0000000100d28d30 cxxbridge1$string$len + 4148
+8   chromedriver                        0x0000000100d28a5c cxxbridge1$string$len + 3424
+9   chromedriver                        0x0000000100d26620 chromedriver + 222752
+10  chromedriver                        0x0000000100d270ec chromedriver + 225516
+11  chromedriver                        0x0000000100d41d30 _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 88564
+12  chromedriver                        0x0000000100dc7ad4 _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 636824
+13  chromedriver                        0x0000000100dc6fe8 _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 634028
+14  chromedriver                        0x0000000100d7c07c _RNvCs5DBLTqoOdVp_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 326976
+15  chromedriver                        0x0000000101222884 cxxbridge1$str$ptr + 2831984
+16  chromedriver                        0x0000000101225fcc cxxbridge1$str$ptr + 2846136
+17  chromedriver                        0x0000000101207578 cxxbridge1$str$ptr + 2720612
+18  chromedriver                        0x0000000101226850 cxxbridge1$str$ptr + 2848316
+19  chromedriver                        0x00000001011f7640 cxxbridge1$str$ptr + 2655276
+20  chromedriver                        0x000000010124a194 cxxbridge1$str$ptr + 2994048
+21  chromedriver                        0x000000010124a310 cxxbridge1$str$ptr + 2994428
+22  chromedriver                        0x000000010125b85c cxxbridge1$str$ptr + 3065416
+23  libsystem_pthread.dylib             0x000000018dbfaf94 _pthread_start + 136
+24  libsystem_pthread.dylib             0x000000018dbf5d34 thread_start + 8
+"

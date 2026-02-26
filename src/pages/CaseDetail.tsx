@@ -1,13 +1,22 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { cases } from "@/data/cases";
+import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, truncateToMaxSentences } from "@/data/cases";
 import { ArrowLeft, ChevronDown, ChevronUp, FileText } from "lucide-react";
+
+const CONSEQUENCE_EXPLANATIONS: Record<string, string> = {
+  "injunctive relief sought": "Injunctive relief is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour (e.g. stop a practice) or take specific steps, rather than only paying a fine.",
+  "consent order": "A consent order is a binding agreement between the regulator and the company. The company agrees to certain terms (e.g. change practices, implement a program) without admitting liability. Failure to comply can lead to further enforcement.",
+  "compliance order": "A compliance order requires the company to take specific actions to comply with the law—for example, updating policies, implementing safeguards, or submitting to monitoring. It is aimed at changing future behaviour.",
+  "reprimand": "A reprimand is an official warning or censure. It is a formal finding of a breach without a monetary penalty, often used when the breach is less serious or the organisation has taken steps to remedy the issue.",
+  "no penalty": "No monetary penalty was imposed. The regulator may have issued a warning, closed the case, or required non-financial remedies such as corrective measures or an undertaking.",
+  "complaint issued": "A formal complaint has been filed by the regulator. The case may be ongoing; no final decision or penalty may have been reached yet.",
+};
 
 const CaseDetail = () => {
   const { id } = useParams();
   const case_ = cases.find((c) => c.id === id);
   const [revealedClaims, setRevealedClaims] = useState<Set<number>>(new Set());
-  const [activeTab, setActiveTab] = useState<"outcome" | "consequences" | "company" | "pdfs">("outcome");
+  const [activeTab, setActiveTab] = useState<"outcome" | "company" | "pdfs">("outcome");
 
   if (!case_) {
     return (
@@ -31,7 +40,6 @@ const CaseDetail = () => {
 
   const tabs = [
     { key: "outcome" as const, label: "Outcome" },
-    { key: "consequences" as const, label: "Consequences" },
     { key: "company" as const, label: "Company Now" },
     { key: "pdfs" as const, label: "Attached PDFs" },
   ];
@@ -51,19 +59,21 @@ const CaseDetail = () => {
         <section className="brutalist-border info-box p-8" style={{ borderLeftWidth: "6px", borderLeftColor: "hsl(var(--accent))" }}>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">{case_.company}</h1>
-              <p className="text-lg font-mono text-muted-foreground mt-1">{case_.country ? `\\${case_.country}` : "—"}</p>
-              <p className="text-sm leading-relaxed mt-4">{case_.companyLongDescription || "—"}</p>
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">{getDisplayCompany(case_)}</h1>
+              {case_.country && (
+                <p className="text-lg font-mono text-muted-foreground mt-1">{case_.country}</p>
+              )}
+              <p className="text-sm leading-relaxed mt-4">{case_.companyLongDescription || case_.companyDescription || "No company synopsis available."}</p>
             </div>
-            <div className="space-y-2 shrink-0">
+            <div className="space-y-2 shrink-0 flex flex-col items-stretch">
               {[
                 { label: "SECTOR", value: case_.sector },
-                { label: "FOUNDING YEAR", value: case_.foundingYear.toString() },
-                { label: "COMPANY WORTH", value: case_.companyWorth },
+                { label: "FOUNDING YEAR", value: case_.foundingYear ? case_.foundingYear.toString() : "—" },
+                { label: "COMPANY WORTH", value: formatCompanyWorth(case_.companyWorth) },
               ].map((item) => (
-                <div key={item.label} className="brutalist-border bg-background px-4 py-3 min-w-[180px]">
+                <div key={item.label} className="brutalist-border bg-background px-4 py-3 w-[180px] min-w-[180px] max-w-[180px]">
                   <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
-                  <p className="text-sm font-bold mt-0.5">{item.value}</p>
+                  <p className="text-sm font-bold mt-0.5 truncate" title={item.value}>{item.value}</p>
                 </div>
               ))}
             </div>
@@ -78,7 +88,7 @@ const CaseDetail = () => {
             {[
               { label: "JURISDICTION", value: case_.jurisdiction },
               { label: "COMPLAINT ISSUED", value: `${case_.complaintYear} – Decision ${case_.year}` },
-              { label: "NUM IMPACTED", value: case_.impactedIndividuals || "—" },
+              { label: "NUM IMPACTED", value: case_.impactedIndividuals || "Unknown" },
             ].map((item) => (
               <div key={item.label} className="brutalist-border info-box p-4">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">{item.label}</p>
@@ -97,7 +107,7 @@ const CaseDetail = () => {
             </div>
             <div className="brutalist-border info-box px-5 py-3">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">FINE</p>
-              <p className="text-2xl font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.fineDisplay || "—"}</p>
+              <p className={`font-bold ${getFineDisplay(case_) === "No fine" ? "text-base" : "text-lg"}`} style={{ color: "hsl(var(--accent))" }}>{getFineDisplay(case_)}</p>
             </div>
             <div className="brutalist-border info-box px-5 py-3 flex-1">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
@@ -108,36 +118,6 @@ const CaseDetail = () => {
               </div>
             </div>
           </div>
-          {(case_.dataType || (case_.legalBasisViolated && case_.legalBasisViolated.length > 0) || (case_.enforcementStrategy && case_.enforcementStrategy.length > 0)) && (
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-              {case_.dataType && (
-                <div className="brutalist-border info-box p-4">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">DATA TYPE / CONTEXT</p>
-                  <p className="text-sm font-bold mt-1">{case_.dataType}</p>
-                </div>
-              )}
-              {(case_.legalBasisViolated?.length ?? 0) > 0 && (
-                <div className="brutalist-border info-box p-4">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">LEGAL BASIS VIOLATED</p>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {case_.legalBasisViolated!.map((lb) => (
-                      <span key={lb} className="text-xs font-mono font-bold" style={{ color: "hsl(var(--accent))" }}>{lb}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {(case_.enforcementStrategy?.length ?? 0) > 0 && (
-                <div className="brutalist-border info-box p-4">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">ENFORCEMENT STRATEGY</p>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {case_.enforcementStrategy!.map((s) => (
-                      <span key={s} className="text-xs font-mono">{s}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </section>
 
         {/* Case Context */}
@@ -214,8 +194,7 @@ const CaseDetail = () => {
           {case_.regulatoryFindings.map((rf, i) => (
             <div key={i} className="brutalist-border info-box p-5 mb-4">
               <p className="text-xs font-mono font-bold">{rf.act}</p>
-              <p className="text-sm text-muted-foreground mt-1 mb-3">{rf.description}</p>
-              <div className="bg-primary text-primary-foreground p-3 mb-3">
+              <div className="mt-2 mb-3">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-wider">HOW THE COMPANY VIOLATED IT</p>
               </div>
               <ul className="space-y-2">
@@ -248,9 +227,24 @@ const CaseDetail = () => {
             ))}
           </div>
           <div className="brutalist-border border-t-0 info-box p-6">
-            {activeTab === "outcome" && <p className="text-sm leading-relaxed">{case_.outcome || "No outcome documented for this case."}</p>}
-            {activeTab === "consequences" && <div className="text-sm leading-relaxed space-y-3"><p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {case_.fineDisplay}</span></p><p>{case_.consequences}</p></div>}
-            {activeTab === "company" && <p className="text-sm leading-relaxed">{case_.companyNow}</p>}
+            {activeTab === "outcome" && (
+              <div className="text-sm leading-relaxed space-y-3">
+                <p>{case_.outcome || "No outcome documented for this case."}</p>
+                {getFineDisplay(case_) !== "No fine" ? (
+                  <p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {getFineDisplay(case_)}</span></p>
+                ) : (
+                  <p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.outcomeSummary || "No monetary penalty"}</span></p>
+                )}
+                {case_.consequences && <p>{case_.consequences}</p>}
+                {case_.outcomeSummary && CONSEQUENCE_EXPLANATIONS[case_.outcomeSummary.toLowerCase()] && (
+                  <div className="mt-3 pt-3 border-t border-border">
+                    <p className="font-mono font-bold text-[10px] uppercase tracking-wider text-muted-foreground mb-1">What does this mean?</p>
+                    <p className="text-muted-foreground">{CONSEQUENCE_EXPLANATIONS[case_.outcomeSummary.toLowerCase()]}</p>
+                  </div>
+                )}
+              </div>
+            )}
+            {activeTab === "company" && <p className="text-sm leading-relaxed">{case_.companyNow || "No company-now information for this case."}</p>}
             {activeTab === "pdfs" && (
               <div>
                 {case_.attachedPDFs.length === 0 ? (
@@ -259,13 +253,16 @@ const CaseDetail = () => {
                   <ul className="space-y-2">
                     {case_.attachedPDFs.map((pdf, i) => {
                       const href = typeof pdf === "string" ? pdf : pdf.url;
-                      const label = typeof pdf === "string" ? pdf : (pdf.label || pdf.url);
+                      const label = typeof pdf === "string" ? pdf : (pdf.label || pdf.url || "");
+                      const hasUrl = href && href.startsWith("http");
                       return (
-                        <li key={href + i} className="flex items-center gap-2 text-sm font-mono">
+                        <li key={String(label) + i} className="flex items-center gap-2 text-sm font-mono">
                           <FileText className="w-4 h-4 text-accent shrink-0" />
-                          <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent underline break-all">
-                            {label}
-                          </a>
+                          {hasUrl ? (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent underline break-all">{label}</a>
+                          ) : (
+                            <span className="break-all">{label || "Source document"}</span>
+                          )}
                         </li>
                       );
                     })}

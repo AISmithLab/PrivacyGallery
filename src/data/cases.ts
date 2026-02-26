@@ -49,6 +49,8 @@ export interface EnforcementCase {
   outcome: string;
   consequences: string;
   companyNow: string;
+  /** When no monetary fine: 1-2 word consequence (e.g. Consent order) for red card. */
+  outcomeSummary?: string;
   /** URLs only (string[]) or objects with url + optional label (from Drive ingest). */
   attachedPDFs: (string | { url: string; label?: string })[];
   /** Data type / context (Nissenbaum contextual integrity), e.g. Health, Advertising, Location. */
@@ -114,24 +116,87 @@ export const LEGAL_BASIS_EXAMPLES = [
   "COPPA",
 ] as const;
 
+/** Short value only for company worth (e.g. "$18B"), to avoid elongated boxes. */
+export function formatCompanyWorth(worth: string | undefined): string {
+  if (!worth || !worth.trim()) return "Unknown";
+  const w = worth.trim();
+  const curSym = w.match(/([$€£])|(SGD\s*)/i);
+  const sym = curSym ? (curSym[1] || (curSym[2]?.trim() + " ") || "") : "";
+  const numMatch = w.match(/(\d[\d.,]*)\s*(B|M|K|billion|million|bn|m)?/i);
+  if (numMatch) {
+    const num = numMatch[1].replace(/\s/g, "");
+    const suffix = (numMatch[2] || "").toUpperCase();
+    if (/^B|BILLION|BN/.test(suffix)) return `${sym}${num}B`;
+    if (/^M|MILLION/.test(suffix)) return `${sym}${num}M`;
+    if (/^K/.test(suffix)) return `${sym}${num}K`;
+    if (suffix) return `${sym}${num}${suffix.charAt(0)}`;
+    return sym + num;
+  }
+  if (w.length <= 18) return w;
+  return w.slice(0, 15) + "…";
+}
+
+/** Fine display: amount or "No fine". Use for Case Information / case page only. */
+export function getFineDisplay(case_: EnforcementCase): string {
+  if (case_.fineAmount && case_.fineAmount > 0) {
+    return case_.fineDisplay || `$${case_.fineAmount.toLocaleString()}`;
+  }
+  const d = (case_.fineDisplay || "").trim();
+  if (!d) return "No fine";
+  if (/^[\d€£$SGD\s,.]+\d|^\d/.test(d) || d.includes("€") || d.includes("£") || d.includes("SGD")) return d;
+  return "No fine";
+}
+
+/** Red stamp on card: amount, or 2-word consequence (e.g. Consent order) when no fine. */
+export function getRedStampDisplay(case_: EnforcementCase): string {
+  if (case_.fineAmount && case_.fineAmount > 0) {
+    return case_.fineDisplay || `$${case_.fineAmount.toLocaleString()}`;
+  }
+  const d = (case_.fineDisplay || "").trim();
+  if (d && (/^[\d€£$SGD\s,.]+\d|^\d/.test(d) || d.includes("€") || d.includes("£") || d.includes("SGD"))) return d;
+  const summary = (case_.outcomeSummary || "").trim();
+  if (summary) {
+    const words = summary.split(/\s+/).slice(0, 2);
+    return words.join(" ") || "No fine";
+  }
+  return "No fine";
+}
+
+/** Keep at most the first maxSentences sentences (default 4). */
+export function truncateToMaxSentences(text: string, maxSentences = 4): string {
+  if (!text || !text.trim()) return text;
+  const trimmed = text.trim();
+  const sentences = trimmed.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if (sentences.length <= maxSentences) return trimmed;
+  return sentences.slice(0, maxSentences).join(" ").trim();
+}
+
+/** Strip common legal suffixes (Pte. Ltd., Ltd., Inc., LLC, etc.) unless they're part of the common name. */
+function stripLegalSuffix(name: string): string {
+  return name
+    .replace(/,?\s+(Pte\.?\s*Ltd\.?|Ltd\.?|Limited|Inc\.?|LLC|L\.L\.C\.?|Corp\.?|Corporation|S\.A\.?|S\.L\.?|S\.L\.U\.?|GmbH|AG)\s*$/i, "")
+    .trim();
+}
+
 /**
- * Extract a short company/organisation name for card display from a long case title.
- * Used when company field holds the full case title (e.g. from CSV ingest).
+ * Extract a short company/organisation name for card and detail display.
+ * Strips legal suffixes (Pte. Ltd., Ltd., Inc., etc.) and long case titles.
  */
 export function getDisplayCompany(case_: EnforcementCase): string {
   const raw = case_.company || "";
   // "Commissioner Initiated Investigation into X (Privacy) ..." → X
   const intoMatch = raw.match(/Commissioner Initiated Investigation into\s+([^(]+?)\s*\(/i);
-  if (intoMatch) return intoMatch[1].trim();
+  if (intoMatch) return stripLegalSuffix(intoMatch[1].trim());
   // "'A' and B (Privacy) ..." or "A and B (Privacy) ..." → B (entity after "and")
   const andMatch = raw.match(/(?:^|^'[^']+' and |^[^']+ and )([^(]+?)\s*\(Privacy\)/i);
-  if (andMatch) return andMatch[1].replace(/^'|'$/g, "").trim();
+  if (andMatch) return stripLegalSuffix(andMatch[1].replace(/^'|'$/g, "").trim());
   // "X Pty Ltd (Privacy) ..." or "X Limited (Privacy) ..." → keep up to (Privacy)
   const entityMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
-  if (entityMatch) return entityMatch[1].trim();
-  // Already short or EU-style "Country (ETid-...)"
-  if (raw.length <= 80) return raw;
-  return raw.slice(0, 77) + "…";
+  if (entityMatch) return stripLegalSuffix(entityMatch[1].trim());
+  // Strip legal suffixes and truncate if very long
+  const shortened = stripLegalSuffix(raw);
+  if (shortened.length <= 80) return shortened;
+  return shortened.slice(0, 77) + "…";
 }
 
 import generatedCases from "./generatedCases.json";
@@ -739,4 +804,4 @@ const staticCases: EnforcementCase[] = [
 
 const generated = generatedCases as EnforcementCase[];
 export const cases: EnforcementCase[] =
-  generated && generated.length > 0 ? generated : staticCases;
+  Array.isArray(generated) && generated.length > 0 ? generated : [];

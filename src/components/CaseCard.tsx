@@ -1,4 +1,4 @@
-import { EnforcementCase, getDisplayCompany } from "@/data/cases";
+import { EnforcementCase, getDisplayCompany, getRedStampDisplay, truncateToMaxSentences } from "@/data/cases";
 import { Link } from "react-router-dom";
 import { Eye } from "lucide-react";
 import impactedIcon from "@/assets/impacted-icon.png";
@@ -27,33 +27,22 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         {/* Company, jurisdiction, violations, year, fine */}
         <div className="px-5 pt-5 pb-1 relative">
           <p className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground mb-1">Company</p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tight pr-28">
+          <h3 className="text-2xl font-bold leading-tight tracking-tight pr-28 company-name-card">
             {displayCompany}
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">({case_.year})</p>
 
-          <div className="mt-3 space-y-1.5">
-            <p className="text-xs font-mono font-bold">
-              <span className="text-muted-foreground">Jurisdiction:</span>{" "}
-              <span className="border-2 border-border px-2 py-0.5">{case_.jurisdiction}</span>
-            </p>
-            {case_.violations.length > 0 && (
-              <p className="text-xs font-mono">
-                <span className="font-bold text-muted-foreground">Violations:</span>{" "}
-                {case_.violations.join("; ")}
-              </p>
-            )}
-            {case_.impactedIndividuals && (
-              <div className="flex items-center gap-2">
-                <img src={impactedIcon} alt="Impacted" className="w-5 h-5 object-contain" />
-                <span className="text-xs font-mono font-bold">{case_.impactedIndividuals}</span>
-              </div>
-            )}
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <span className="border-2 border-border px-2 py-0.5 text-xs font-mono font-bold">{case_.jurisdiction}</span>
+            <div className="flex items-center gap-2">
+              <img src={impactedIcon} alt="Impacted" className="w-5 h-5 object-contain" />
+              <span className="text-xs font-mono font-bold">{case_.impactedIndividuals || "Unknown"}</span>
+            </div>
           </div>
 
-          {/* Fine badge */}
-          <div className="fine-stamp" style={{ top: "-4px", right: "-6px", fontSize: 22, padding: "10px 18px" }}>
-            {case_.fineDisplay || "—"}
+          {/* Red stamp: amount or 2-word consequence (e.g. Consent order) when no fine */}
+          <div className="fine-stamp">
+            {getRedStampDisplay(case_)}
           </div>
         </div>
 
@@ -63,13 +52,13 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
             {case_.whatTheyDid && (
               <div className="px-5 pt-2">
                 <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5" style={{ color: "hsl(var(--label-green))" }}>What they did</p>
-                <p className="text-[15px] leading-relaxed">{case_.whatTheyDid}</p>
+                <p className="text-[15px] leading-relaxed">{truncateToMaxSentences(case_.whatTheyDid, 1)}</p>
               </div>
             )}
             {case_.whyTheyWereWrong && (
               <div className="px-5 pb-4 pt-2">
                 <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5" style={{ color: "hsl(var(--label-red))" }}>Why they were wrong</p>
-                <p className="text-[15px] leading-relaxed">{case_.whyTheyWereWrong}</p>
+                <p className="text-[15px] leading-relaxed">{truncateToMaxSentences(case_.whyTheyWereWrong, 1)}</p>
               </div>
             )}
           </>
