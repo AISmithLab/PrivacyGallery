@@ -157,7 +157,8 @@ export function getRedStampDisplay(case_: EnforcementCase): string {
   const summary = (case_.outcomeSummary || "").trim();
   if (summary) {
     const words = summary.split(/\s+/).slice(0, 2);
-    return words.join(" ") || "No fine";
+    const result = words.join(" ").replace(/;\s*$/, "").trim();
+    return result || "No fine";
   }
   return "No fine";
 }
@@ -180,10 +181,10 @@ function stripLegalSuffix(name: string): string {
 
 /**
  * Extract a short company/organisation name for card and detail display.
- * Strips legal suffixes (Pte. Ltd., Ltd., Inc., etc.) and long case titles.
+ * Strips legal suffixes, d/b/a aliases, "and" second entities, and long case titles.
  */
 export function getDisplayCompany(case_: EnforcementCase): string {
-  const raw = case_.company || "";
+  let raw = case_.company || "";
   // "Commissioner Initiated Investigation into X (Privacy) ..." → X
   const intoMatch = raw.match(/Commissioner Initiated Investigation into\s+([^(]+?)\s*\(/i);
   if (intoMatch) return stripLegalSuffix(intoMatch[1].trim());
@@ -193,10 +194,45 @@ export function getDisplayCompany(case_: EnforcementCase): string {
   // "X Pty Ltd (Privacy) ..." or "X Limited (Privacy) ..." → keep up to (Privacy)
   const entityMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
   if (entityMatch) return stripLegalSuffix(entityMatch[1].trim());
-  // Strip legal suffixes and truncate if very long
+
+  // Strip parenthetical aliases: (also doing business as X), (d/b/a X), (TURSS), etc.
+  raw = raw
+    .replace(/\s*\(also\s+(?:doing\s+business\s+as|d\/b\/a)\s+[^)]+\)/gi, "")
+    .replace(/\s*\(d\/b\/a\s+[^)]+\)/gi, "")
+    .replace(/\s*\([A-Z]{2,6}\)\s*(?=\s+and\s+)/gi, "")
+    .replace(/\s*\([A-Z]{2,6}\)\s*$/g, "")
+    .trim();
+
+  // "X and Y" → take first entity (main name)
+  const andIdx = raw.search(/\s+and\s+/i);
+  if (andIdx > 0) raw = raw.slice(0, andIdx).trim();
+
   const shortened = stripLegalSuffix(raw);
   if (shortened.length <= 80) return shortened;
   return shortened.slice(0, 77) + "…";
+}
+
+/** True if "what they did" is substantive (not just company name, not truncated). */
+export function isSubstantiveWhatTheyDid(case_: EnforcementCase): boolean {
+  const text = (case_.whatTheyDid || "").trim();
+  if (!text || text.length < 40) return false;
+  const displayCompany = getDisplayCompany(case_);
+  const company = (case_.company || "").trim();
+  const norm = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, " ").replace(/\s+/g, " ").trim();
+  const normText = norm(text);
+  const normCompany = norm(company);
+  const normDisplay = norm(displayCompany);
+  if (normText === normCompany || normText === normDisplay) return false;
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length <= 3 && normDisplay && normText.startsWith(normDisplay)) return false;
+  return true;
+}
+
+/** True if "why they were wrong" is substantive (not truncated or too short). */
+export function isSubstantiveWhyTheyWereWrong(case_: EnforcementCase): boolean {
+  const text = (case_.whyTheyWereWrong || "").trim();
+  if (!text || text.length < 40) return false;
+  return true;
 }
 
 import generatedCases from "./generatedCases.json";

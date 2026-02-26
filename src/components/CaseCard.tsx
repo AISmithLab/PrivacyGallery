@@ -1,4 +1,4 @@
-import { EnforcementCase, getDisplayCompany, getRedStampDisplay, truncateToMaxSentences } from "@/data/cases";
+import { EnforcementCase, getDisplayCompany, getRedStampDisplay, isSubstantiveWhatTheyDid, isSubstantiveWhyTheyWereWrong, truncateToMaxSentences } from "@/data/cases";
 import { Link } from "react-router-dom";
 import { Eye } from "lucide-react";
 import impactedIcon from "@/assets/impacted-icon.png";
@@ -9,7 +9,9 @@ interface CaseCardProps {
 
 const CaseCard = ({ case_ }: CaseCardProps) => {
   const displayCompany = getDisplayCompany(case_);
-  const hasDetails = case_.whatTheyDid || case_.whyTheyWereWrong;
+  const showWhat = isSubstantiveWhatTheyDid(case_);
+  const showWhy = isSubstantiveWhyTheyWereWrong(case_);
+  const hasDetails = showWhat || showWhy;
 
   return (
     <Link to={`/case/${case_.id}`} className="block group h-full">
@@ -47,16 +49,16 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         </div>
 
         {hasDetails ? (
-          <div className="flex flex-1 flex-col min-h-0">
-            <div className="mx-5 my-2 border-t-2 border-dashed shrink-0" style={{ borderColor: "hsl(var(--border) / 0.5)" }} />
-            {case_.whatTheyDid && (
-              <div className="px-5 pt-2 shrink-0">
+          <div className="flex flex-1 flex-col min-h-0 px-5">
+            <div className="w-full border-t-2 border-dashed my-2 shrink-0" style={{ borderColor: "hsl(var(--border) / 0.5)" }} />
+            {showWhat && (
+              <div className="pt-2 shrink-0">
                 <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5" style={{ color: "hsl(var(--label-green))" }}>What they did</p>
                 <p className="text-[15px] leading-relaxed">{truncateToMaxSentences(case_.whatTheyDid, 1)}</p>
               </div>
             )}
-            {case_.whyTheyWereWrong && (
-              <div className="px-5 pb-4 pt-2 shrink-0">
+            {showWhy && (
+              <div className="pb-4 pt-2 shrink-0">
                 <p className="text-xs font-mono font-bold uppercase tracking-wider mb-1.5" style={{ color: "hsl(var(--label-red))" }}>Why they were wrong</p>
                 <p className="text-[15px] leading-relaxed">{truncateToMaxSentences(case_.whyTheyWereWrong, 1)}</p>
               </div>
