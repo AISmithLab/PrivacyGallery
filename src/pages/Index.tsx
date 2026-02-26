@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { cases, Jurisdiction, ViolationType, Sector } from "@/data/cases";
+import { cases, Jurisdiction, ViolationType, Sector, JURISDICTIONS } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import SearchBar from "@/components/SearchBar";
 import FilterSidebar from "@/components/FilterSidebar";
@@ -47,6 +47,14 @@ const Index = () => {
       case "severity": result.sort((a, b) => b.severityForIndividuals - a.severityForIndividuals); break;
     }
 
+    // Put US FTC and California DOJ first (no filter; just ordering)
+    const jurisdictionOrder: Record<string, number> = { "US FTC": 0, "California DOJ": 1 };
+    result.sort((a, b) => {
+      const orderA = jurisdictionOrder[a.jurisdiction] ?? 2;
+      const orderB = jurisdictionOrder[b.jurisdiction] ?? 2;
+      return orderA - orderB;
+    });
+
     return result;
   }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors]);
 
@@ -91,6 +99,25 @@ const Index = () => {
         <div className="flex-1 space-y-4">
           <SearchBar value={search} onChange={setSearch} />
 
+          {/* Jurisdiction filter under search */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground mr-1">Jurisdiction:</span>
+            {JURISDICTIONS.map((j) => (
+              <button
+                key={j}
+                type="button"
+                onClick={() => toggle(setSelectedJurisdictions)(j)}
+                className={`border-2 px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  selectedJurisdictions.includes(j)
+                    ? "border-border bg-primary text-primary-foreground"
+                    : "border-border/50 bg-card text-muted-foreground hover:border-border"
+                }`}
+              >
+                {j}
+              </button>
+            ))}
+          </div>
+
           {/* Active filter pills */}
           {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
             <div className="flex gap-2 flex-wrap">
@@ -106,7 +133,7 @@ const Index = () => {
             Showing {filtered.length} of {cases.length} cases • {formatTotalFines(totalFines)} in total fines
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {filtered.map((c) => (
               <CaseCard key={c.id} case_={c} />
             ))}
