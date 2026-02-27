@@ -77,10 +77,13 @@ const Index = () => {
 
       {/* Hero */}
       <header
-        className="py-10 px-6 text-center border-b-4 border-border loot-drop-hero"
+        className="py-12 px-6 text-center border-b-4 border-border loot-drop-hero"
         style={{ background: "#FFD700", color: "#000", borderBottom: "4px solid #000" }}
       >
-        <p className="text-base md:text-lg max-w-2xl mx-auto opacity-90" style={{ color: "#000" }}>
+        <h1 className="hero-title text-7xl sm:text-9xl font-bold tracking-tighter uppercase leading-none">
+          Privacy Jury
+        </h1>
+        <p className="text-base md:text-lg max-w-2xl mx-auto opacity-90 mt-4" style={{ color: "#000" }}>
           A global registry of{" "}
           <span className="font-bold">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
