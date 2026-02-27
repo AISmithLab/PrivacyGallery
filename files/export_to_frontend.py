@@ -165,7 +165,16 @@ def norm_sector(s: str | None) -> str:
     return "Technology"
 
 
-def map_violation_type(solove_type: str | None) -> List[str]:
+_HEALTH_KEYWORDS = {"health", "medical", "patient", "clinical", "hipaa", "phi", "hospital",
+                    "diagnosis", "prescription", "mental health", "wellness", "healthcare"}
+
+def _involves_health_data(data_types: str) -> bool:
+    """True if data_types mentions health/medical data."""
+    d = (data_types or "").lower()
+    return any(k in d for k in _HEALTH_KEYWORDS)
+
+
+def map_violation_type(solove_type: str | None, data_types: str = "") -> List[str]:
     """Map Solove taxonomy string (from agent) into our ViolationType[] approximations."""
     if not solove_type:
         return []
@@ -175,11 +184,12 @@ def map_violation_type(solove_type: str | None) -> List[str]:
 
     if any(k in t for k in ["disclosure", "exposure", "accessibility", "breach of confidentiality", "secondary use"]):
         result.append("Failure to disclose practices")
-    if any(k in t for k in ["insecurity", "security", "breach"]):
+    # Only tag health breach when the data actually involves health/medical information
+    if any(k in t for k in ["insecurity", "security"]) and _involves_health_data(data_types):
         result.append("Health breach notification failure")
     if any(k in t for k in ["children", "child", "minor", "coppa"]):
         result.append("Failure to obtain parental consent")
-    if any(k in t for k in ["surveillance", "interrogation", "intrusion", "decisional interference"]):
+    if any(k in t for k in ["surveillance", "interrogation", "intrusion", "decisional interference", "aggregation", "identification"]):
         result.append("Misrepresentation of practices")
 
     if not result:
@@ -356,7 +366,7 @@ def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
     outcome = data.get("outcome") or row.get("outcome") or ""
 
     sector = norm_sector(data.get("sector") or row.get("sector"))
-    violations = map_violation_type(violation_type)
+    violations = map_violation_type(violation_type, data_types)
     impacted_individuals = format_impacted(individuals_int) if (individuals_int and individuals_int > 0) else "Unknown"
     # Severity: use people affected + type of data as main factors
     severity = severity_from_impact_and_data(individuals_int, data_types)
