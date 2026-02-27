@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { cases, Jurisdiction, ViolationType, Sector, JURISDICTIONS } from "@/data/cases";
+import { cases, Jurisdiction, ViolationType, Sector, JURISDICTIONS, parseCompanyWorth } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import SearchBar from "@/components/SearchBar";
 import FilterSidebar from "@/components/FilterSidebar";
@@ -12,7 +12,7 @@ const formatTotalFines = (total: number): string => {
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("newest");
+  const [sort, setSort] = useState("popular");
   const [selectedJurisdictions, setSelectedJurisdictions] = useState<Jurisdiction[]>([]);
   const [selectedViolations, setSelectedViolations] = useState<ViolationType[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
@@ -41,36 +41,34 @@ const Index = () => {
     if (selectedSectors.length > 0)
       result = result.filter((c) => selectedSectors.includes(c.sector));
 
-    switch (sort) {
-      case "newest": result.sort((a, b) => b.year - a.year); break;
-      case "fined": result.sort((a, b) => b.fineAmount - a.fineAmount); break;
-      case "severity": result.sort((a, b) => b.severityForIndividuals - a.severityForIndividuals); break;
-    }
-
-    // Put US FTC and California DOJ first (no filter; just ordering)
-    const jurisdictionOrder: Record<string, number> = { "US FTC": 0, "California DOJ": 1 };
-    result.sort((a, b) => {
-      const orderA = jurisdictionOrder[a.jurisdiction] ?? 2;
-      const orderB = jurisdictionOrder[b.jurisdiction] ?? 2;
-      return orderA - orderB;
-    });
-
-    // Pair similar-height cards: sort by total text length within each jurisdiction group
-    // so adjacent pairs in the 2-col grid are similar sizes and rows look balanced
     const cardTextLen = (c: typeof result[0]) =>
       (c.whatTheyDid || "").length + (c.whyTheyWereWrong || "").length;
+    const worth = (c: typeof result[0]) => parseCompanyWorth(c.companyWorth);
 
-    const groups: typeof result[] = [];
-    let i = 0;
-    while (i < result.length) {
-      const jur = result[i].jurisdiction;
-      const jurisdictionGroup = jurisdictionOrder[jur] ?? 2;
-      const j = result.findIndex((c, idx) => idx >= i && (jurisdictionOrder[c.jurisdiction] ?? 2) !== jurisdictionGroup);
-      const end = j === -1 ? result.length : j;
-      groups.push(result.slice(i, end).sort((a, b) => cardTextLen(a) - cardTextLen(b)));
-      i = end;
+    // Primary sort within the full result
+    switch (sort) {
+      case "popular":
+        result.sort((a, b) => b.views - a.views || worth(b) - worth(a) || cardTextLen(b) - cardTextLen(a));
+        break;
+      case "newest":
+        result.sort((a, b) => b.year - a.year || worth(b) - worth(a) || cardTextLen(b) - cardTextLen(a));
+        break;
+      case "fined":
+        result.sort((a, b) => b.fineAmount - a.fineAmount || worth(b) - worth(a) || cardTextLen(b) - cardTextLen(a));
+        break;
+      case "severity":
+        result.sort((a, b) => b.severityForIndividuals - a.severityForIndividuals || worth(b) - worth(a) || cardTextLen(b) - cardTextLen(a));
+        break;
     }
-    return groups.flat();
+
+    // Jurisdiction grouping: US FTC → California DOJ → UK ICO → EU GDPR → others
+    const jurOrder: Record<string, number> = {
+      "US FTC": 0, "California DOJ": 1, "UK ICO": 2, "EU GDPR": 3, "EU EDPB": 4,
+      "Singapore PDPC": 5, "Australia OAIC": 6,
+    };
+    result.sort((a, b) => (jurOrder[a.jurisdiction] ?? 99) - (jurOrder[b.jurisdiction] ?? 99));
+
+    return result;
   }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors]);
 
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);

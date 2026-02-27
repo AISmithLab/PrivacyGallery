@@ -1,3 +1,19 @@
+/** Parse a company worth string like "$1.7T", "$340B", "€15B", "£5.8B", "$500M–$1B" → number (USD approx). Returns 0 if unknown. */
+export function parseCompanyWorth(worth: string): number {
+  if (!worth) return 0;
+  // Strip currency symbols, commas, spaces, parentheticals, "+" and trailing text after first number-unit pair
+  const clean = worth.replace(/\([^)]*\)/g, "").replace(/[£€¥₹]/g, "$").trim();
+  // Take lower bound of ranges like "$500M–$1B"
+  const rangeMatch = clean.match(/([\d.,]+)\s*([KMBT]?)\s*[–\-~to]+/i);
+  const singleMatch = clean.match(/\$?([\d.,]+)\s*([KMBT])\+?/i);
+  const m = rangeMatch || singleMatch;
+  if (!m) return 0;
+  const num = parseFloat(m[1].replace(/,/g, ""));
+  const unit = (m[2] || "").toUpperCase();
+  const multiplier = unit === "T" ? 1e12 : unit === "B" ? 1e9 : unit === "M" ? 1e6 : unit === "K" ? 1e3 : 1;
+  return isNaN(num) ? 0 : num * multiplier;
+}
+
 export type ViolationType =
   | "Misrepresentation of practices"
   | "Failure to disclose practices"
@@ -226,6 +242,41 @@ export function truncateToMaxLines(text: string, _maxLines = 3): string {
   return stripTrailingConjunction(out);
 }
 
+/** Well-known brand overrides: if the cleaned name starts with one of these, use the short form. */
+const BRAND_OVERRIDES: [RegExp, string][] = [
+  [/^Disney\b/i, "Disney"],
+  [/^Walt Disney\b/i, "Disney"],
+  [/^Google\b/i, "Google"],
+  [/^Meta\b/i, "Meta"],
+  [/^Facebook\b/i, "Facebook"],
+  [/^Instagram\b/i, "Instagram"],
+  [/^WhatsApp\b/i, "WhatsApp"],
+  [/^Amazon\b/i, "Amazon"],
+  [/^Apple\b/i, "Apple"],
+  [/^Microsoft\b/i, "Microsoft"],
+  [/^Twitter\b/i, "Twitter"],
+  [/^Uber\b/i, "Uber"],
+  [/^Lyft\b/i, "Lyft"],
+  [/^Marriott\b/i, "Marriott"],
+  [/^LinkedIn\b/i, "LinkedIn"],
+  [/^Snapchat\b/i, "Snapchat"],
+  [/^TikTok\b/i, "TikTok"],
+  [/^ByteDance\b/i, "ByteDance"],
+  [/^Spotify\b/i, "Spotify"],
+  [/^Netflix\b/i, "Netflix"],
+  [/^YouTube\b/i, "YouTube"],
+  [/^PayPal\b/i, "PayPal"],
+  [/^eBay\b/i, "eBay"],
+  [/^Yahoo\b/i, "Yahoo"],
+  [/^AOL\b/i, "AOL"],
+  [/^Zoom\b/i, "Zoom"],
+  [/^Twitter\b/i, "Twitter"],
+  [/^Vodafone\b/i, "Vodafone"],
+  [/^AT&T\b/i, "AT&T"],
+  [/^Verizon\b/i, "Verizon"],
+  [/^T-Mobile\b/i, "T-Mobile"],
+];
+
 /** Strip common legal suffixes (Pte. Ltd., Ltd., Inc., LLC, etc.) */
 function stripLegalSuffix(name: string): string {
   return name
@@ -279,8 +330,13 @@ export function getDisplayCompany(case_: EnforcementCase): string {
   raw = raw.replace(/\s+(?:d\/b\/a|doing\s+business\s+as|f\/k\/a|formerly)\s+.*/i, "").trim();
 
   const shortened = stripLegalSuffix(raw);
-  if (shortened.length <= 80) return shortened || raw;
-  return shortened.slice(0, 77) + "…";
+  const display = shortened.length <= 80 ? (shortened || raw) : shortened.slice(0, 77) + "…";
+
+  // Apply well-known brand overrides
+  for (const [pattern, brand] of BRAND_OVERRIDES) {
+    if (pattern.test(display)) return brand;
+  }
+  return display;
 }
 
 /** True if "what they did" is substantive (not just company name, not truncated). */

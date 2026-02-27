@@ -10,6 +10,7 @@ interface FilterSidebarProps {
 }
 
 const SORT_OPTIONS = [
+  { key: "popular", label: "Most Popular" },
   { key: "newest", label: "Newest Case" },
   { key: "fined", label: "Cost of Fine" },
   { key: "severity", label: "Severity" },
