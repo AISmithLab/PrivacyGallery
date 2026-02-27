@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import ControlBar from "@/components/ControlBar";
@@ -11,7 +12,13 @@ const formatTotalFines = (total: number): string => {
 };
 
 const Index = () => {
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState(() => searchParams.get("search") || "");
+
+  useEffect(() => {
+    const q = searchParams.get("search");
+    if (q) setSearch(q);
+  }, [searchParams]);
   const [sort, setSort] = useState("popular");
   const [selectedJurisdictions, setSelectedJurisdictions] = useState<Jurisdiction[]>([]);
   const [selectedViolations, setSelectedViolations] = useState<ViolationType[]>([]);

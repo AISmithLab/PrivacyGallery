@@ -155,7 +155,7 @@ const Leaderboard = () => {
             {stats.topOffenders.map((c, i) => (
               <Link
                 key={c.company}
-                to={`/case/${c.id}`}
+                to={`/?search=${encodeURIComponent(c.company)}`}
                 className={`flex items-center gap-4 brutalist-border p-4 transition-all hover:translate-x-1 ${
                   i === 0 ? "bg-[#FFD700]/20 border-[#FFD700]" : "bg-card"
                 }`}
