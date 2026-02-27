@@ -12,29 +12,39 @@ const formatFine = (n: number): string => {
 
 const Leaderboard = () => {
   const stats = useMemo(() => {
-    // Top companies by total fines
-    const companyFines = new Map<string, { total: number; id: string; company: string }>();
+    // Top 5 companies by total fines
+    const companyFines = new Map<string, { total: number; count: number; id: string; company: string }>();
     cases.forEach((c) => {
       const name = getDisplayCompany(c);
       const existing = companyFines.get(name);
       if (existing) {
         existing.total += c.fineAmount;
+        existing.count += 1;
       } else {
-        companyFines.set(name, { total: c.fineAmount, id: c.id, company: name });
+        companyFines.set(name, { total: c.fineAmount, count: 1, id: c.id, company: name });
       }
     });
     const topCompanies = [...companyFines.values()]
       .sort((a, b) => b.total - a.total)
-      .slice(0, 10);
+      .slice(0, 5);
 
-    // Top jurisdictions by total fines
+    // Top 5 repeat offenders (most cases)
+    const topOffenders = [...companyFines.values()]
+      .filter((c) => c.count > 1)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    // Top 5 jurisdictions by average fine
     const jurFines = new Map<string, number>();
+    const jurCounts = new Map<string, number>();
     cases.forEach((c) => {
       jurFines.set(c.jurisdiction, (jurFines.get(c.jurisdiction) || 0) + c.fineAmount);
+      jurCounts.set(c.jurisdiction, (jurCounts.get(c.jurisdiction) || 0) + 1);
     });
     const topJurisdictions = [...jurFines.entries()]
-      .map(([j, total]) => ({ jurisdiction: j, total }))
-      .sort((a, b) => b.total - a.total);
+      .map(([j, total]) => ({ jurisdiction: j, avg: total / (jurCounts.get(j) || 1), count: jurCounts.get(j) || 0 }))
+      .sort((a, b) => b.avg - a.avg)
+      .slice(0, 5);
 
     // Most common violation type
     const violationCounts = new Map<string, number>();
@@ -46,17 +56,13 @@ const Leaderboard = () => {
     // Largest single fine
     const largestFineCase = [...cases].sort((a, b) => b.fineAmount - a.fineAmount)[0];
 
-    // Average fine per jurisdiction
-    const jurCounts = new Map<string, number>();
-    cases.forEach((c) => {
-      jurCounts.set(c.jurisdiction, (jurCounts.get(c.jurisdiction) || 0) + 1);
-    });
+    // Average fine per jurisdiction (full list)
     const avgFinePerJurisdiction = [...jurFines.entries()].map(([j, total]) => ({
       jurisdiction: j,
       avg: total / (jurCounts.get(j) || 1),
     })).sort((a, b) => b.avg - a.avg);
 
-    return { topCompanies, topJurisdictions, topViolation, largestFineCase, avgFinePerJurisdiction };
+    return { topCompanies, topOffenders, topJurisdictions, topViolation, largestFineCase, avgFinePerJurisdiction };
   }, []);
 
   return (
@@ -64,11 +70,11 @@ const Leaderboard = () => {
       <TopNav />
 
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-10">
-        <header className="text-center">
-          <h1 className="hero-title text-5xl sm:text-6xl font-bold tracking-tighter uppercase">
+        <header className="text-center mb-4">
+          <h1 className="hero-title text-6xl sm:text-8xl font-bold tracking-tighter uppercase leading-none">
             Leaderboard
           </h1>
-          <p className="text-sm font-mono text-muted-foreground mt-2">
+          <p className="text-sm font-mono text-muted-foreground mt-3">
             The stats vault — aggregated enforcement data across {cases.length} cases
           </p>
         </header>
@@ -113,7 +119,7 @@ const Leaderboard = () => {
 
         {/* Top Companies */}
         <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top Companies by Total Fines</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 5 Companies by Total Fines</h2>
           <div className="h-[3px] bg-border mb-4" />
           <div className="space-y-2">
             {stats.topCompanies.map((c, i) => (
@@ -141,9 +147,39 @@ const Leaderboard = () => {
           </div>
         </section>
 
-        {/* Top Jurisdictions */}
+        {/* Top 5 Repeat Offenders */}
         <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top Jurisdictions by Total Fines</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 5 Repeat Offenders</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <div className="space-y-2">
+            {stats.topOffenders.map((c, i) => (
+              <Link
+                key={c.company}
+                to={`/case/${c.id}`}
+                className={`flex items-center gap-4 brutalist-border p-4 transition-all hover:translate-x-1 ${
+                  i === 0 ? "bg-[#FFD700]/20 border-[#FFD700]" : "bg-card"
+                }`}
+                style={i === 0 ? { borderColor: "#D4A800", borderWidth: "4px" } : {}}
+              >
+                <span
+                  className={`w-8 h-8 flex items-center justify-center font-bold text-sm font-mono shrink-0 border-2 border-black ${
+                    i === 0 ? "bg-[#FFD700] text-black" : i === 1 ? "bg-gray-300 text-black" : i === 2 ? "bg-orange-300 text-black" : "bg-card"
+                  }`}
+                >
+                  {i + 1}
+                </span>
+                <span className="flex-1 font-bold text-lg">{c.company}</span>
+                <span className="font-mono font-bold text-sm text-muted-foreground">
+                  {c.count} cases
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Top Jurisdictions by Average Fine */}
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 5 Jurisdictions by Avg Fine</h2>
           <div className="h-[3px] bg-border mb-4" />
           <div className="space-y-2">
             {stats.topJurisdictions.map((j, i) => (
@@ -162,25 +198,12 @@ const Leaderboard = () => {
                   {i + 1}
                 </span>
                 <span className="flex-1 font-bold">{j.jurisdiction}</span>
-                <span className="font-mono font-bold text-sm" style={{ color: "hsl(var(--accent))" }}>
-                  {formatFine(j.total)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Average Fine per Jurisdiction */}
-        <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Average Fine per Jurisdiction</h2>
-          <div className="h-[3px] bg-border mb-4" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {stats.avgFinePerJurisdiction.map((j) => (
-              <div key={j.jurisdiction} className="brutalist-border bg-card p-4 flex items-center justify-between">
-                <span className="font-mono text-xs font-bold uppercase">{j.jurisdiction}</span>
-                <span className="font-mono font-bold text-sm" style={{ color: "hsl(var(--accent))" }}>
-                  {formatFine(j.avg)}
-                </span>
+                <div className="text-right">
+                  <span className="font-mono font-bold text-sm" style={{ color: "hsl(var(--accent))" }}>
+                    {formatFine(j.avg)}
+                  </span>
+                  <span className="font-mono text-xs text-muted-foreground ml-2">avg ({j.count} cases)</span>
+                </div>
               </div>
             ))}
           </div>
