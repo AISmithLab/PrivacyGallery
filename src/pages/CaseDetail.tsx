@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, getSimilarCases, truncateToMaxSentences } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
+import TopNav from "@/components/TopNav";
 import { ArrowLeft, ChevronDown, ChevronUp, FileText, Plus, Minus } from "lucide-react";
 
 function formatClaimForDisplay(company: string, claim: string): string {
@@ -66,13 +67,13 @@ const CaseDetail = () => {
 
   return (
     <div className="min-h-screen bg-background case-detail-page">
-      {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-4 border-b-4 border-border bg-[#FFD700] text-black">
-        <Link to="/" className="brutalist-border bg-white px-4 py-2 text-xs font-mono font-bold uppercase hover:bg-black hover:text-white transition-colors flex items-center gap-2 text-black border-2 border-black">
+      <TopNav />
+      {/* Back link */}
+      <div className="px-6 py-3">
+        <Link to="/" className="inline-flex items-center gap-2 border-2 border-black bg-card px-4 py-2 text-xs font-mono font-bold uppercase hover:bg-black hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Cases
         </Link>
-        <h2 className="text-xl font-bold tracking-tighter">THE PRIVACY JURY</h2>
-      </header>
+      </div>
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
         {/* Company hero section */}
