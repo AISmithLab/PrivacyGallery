@@ -1,8 +1,6 @@
-import { Jurisdiction, JURISDICTIONS, ViolationType, VIOLATION_TYPES, Sector, SECTORS } from "@/data/cases";
+import { ViolationType, VIOLATION_TYPES, Sector, SECTORS } from "@/data/cases";
 
 interface FilterSidebarProps {
-  selectedJurisdictions: Jurisdiction[];
-  onToggleJurisdiction: (j: Jurisdiction) => void;
   selectedViolations: ViolationType[];
   onToggleViolation: (v: ViolationType) => void;
   selectedSectors: Sector[];
@@ -18,8 +16,6 @@ const SORT_OPTIONS = [
 ];
 
 const FilterSidebar = ({
-  selectedJurisdictions,
-  onToggleJurisdiction,
   selectedViolations,
   onToggleViolation,
   selectedSectors,
@@ -77,22 +73,6 @@ const FilterSidebar = ({
               className={`sidebar-btn ${selectedViolations.includes(v) ? "active" : ""}`}
             >
               {selectedViolations.includes(v) ? "☑ " : "☐ "}{v}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Jurisdiction */}
-      <div className="brutalist-border bg-card loot-drop-shadow">
-        <p className="sidebar-heading">Jurisdiction</p>
-        <div>
-          {JURISDICTIONS.map((j) => (
-            <button
-              key={j}
-              onClick={() => onToggleJurisdiction(j)}
-              className={`sidebar-btn ${selectedJurisdictions.includes(j) ? "active" : ""}`}
-            >
-              {selectedJurisdictions.includes(j) ? "☑ " : "☐ "}{j}
             </button>
           ))}
         </div>

@@ -86,8 +86,6 @@ const Index = () => {
       {/* Main layout */}
       <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">
         <FilterSidebar
-          selectedJurisdictions={selectedJurisdictions}
-          onToggleJurisdiction={toggle(setSelectedJurisdictions)}
           selectedViolations={selectedViolations}
           onToggleViolation={toggle(setSelectedViolations)}
           selectedSectors={selectedSectors}

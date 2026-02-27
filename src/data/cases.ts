@@ -163,11 +163,12 @@ export function getRedStampDisplay(case_: EnforcementCase): string {
   return "No fine";
 }
 
-/** Keep at most the first maxSentences sentences (default 4). */
+/** Keep at most the first maxSentences sentences (default 4). Avoids splitting on abbreviations (e.g. U.S., EU-U.S.). */
 export function truncateToMaxSentences(text: string, maxSentences = 4): string {
   if (!text || !text.trim()) return text;
   const trimmed = text.trim();
-  const sentences = trimmed.split(/(?<=[.!?])\s+/).filter(Boolean);
+  // Split on . ! ? but not when period is part of abbreviation (e.g. U.S., EU-U.S.)
+  const sentences = trimmed.split(/(?<=[.!?])(?<![A-Z]\.)\s+/).filter(Boolean);
   if (sentences.length <= maxSentences) return trimmed;
   return sentences.slice(0, maxSentences).join(" ").trim();
 }
@@ -225,6 +226,8 @@ export function isSubstantiveWhatTheyDid(case_: EnforcementCase): boolean {
   if (normText === normCompany || normText === normDisplay) return false;
   const words = text.split(/\s+/).filter(Boolean);
   if (words.length <= 3 && normDisplay && normText.startsWith(normDisplay)) return false;
+  const displayed = truncateToMaxSentences(text, 1);
+  if (displayed.length < 40) return false;
   return true;
 }
 
@@ -232,6 +235,8 @@ export function isSubstantiveWhatTheyDid(case_: EnforcementCase): boolean {
 export function isSubstantiveWhyTheyWereWrong(case_: EnforcementCase): boolean {
   const text = (case_.whyTheyWereWrong || "").trim();
   if (!text || text.length < 40) return false;
+  const displayed = truncateToMaxSentences(text, 1);
+  if (displayed.length < 40) return false;
   return true;
 }
 
