@@ -146,7 +146,7 @@
 
   .fine-stamp {
     position: absolute;
-    top: -12px;
+    top: 28px;
     right: -8px;
     background: hsl(var(--fine-badge));
     color: hsl(var(--fine-badge-foreground));
@@ -155,7 +155,7 @@
     font-size: 20px;
     font-weight: 700;
     font-family: 'Space Grotesk', sans-serif;
-    transform: rotate(4deg);
+    transform: rotate(8deg);
     box-shadow: 5px 5px 0 hsl(var(--shadow-dark));
     z-index: 3;
     white-space: nowrap;

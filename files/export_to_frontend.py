@@ -18,10 +18,62 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any, Dict, List
 
 import psycopg2
+
+
+MAX_SUMMARY_CHARS = 195
+
+
+def _strip_trailing_conjunction(text: str) -> str:
+    """Remove trailing ', and', ', or', ', but' etc. that leave text cut off mid-thought."""
+    for bad in (", and", ", or", ", but", " and", " or", " but"):
+        while text.rstrip().endswith(bad):
+            text = text.rstrip()[:- len(bad)].rstrip()
+            if text.endswith(","):
+                text = text[:-1].rstrip()
+    for bad in (" of.", " user.", " approximately", " from", " to", " in", " on", " for", " with", " without", " by", " of", " regardless of", " user", " the", " a", " an"):
+        while text.rstrip().endswith(bad):
+            text = text.rstrip()[:- len(bad)].rstrip()
+            if text.endswith(","):
+                text = text[:-1].rstrip()
+    t = text.rstrip()
+    if t and t[-1] not in ".?!":
+        for sep in (" and ", ", ", ",' "):
+            idx = t.rfind(sep)
+            if idx > len(t) * 0.5:
+                t = t[:idx].rstrip()
+                if t.endswith(","):
+                    t = t[:-1].rstrip()
+                break
+        if t and t[-1] not in ".?!":
+            t = t + "."
+    return t.strip()
+
+
+def _truncate_to_complete_summary(text: str, max_chars: int = MAX_SUMMARY_CHARS) -> str:
+    """Keep complete sentences only, max max_chars. Never cut mid-sentence."""
+    if not text or not (t := (text or "").strip()):
+        return ""
+    if len(t) <= max_chars:
+        return _strip_trailing_conjunction(t)
+    sentences = re.split(r"(?<=[.!?])\s+", t)
+    result = []
+    for s in sentences:
+        candidate = " ".join(result + [s]).strip()
+        if len(candidate) <= max_chars:
+            result.append(s)
+        else:
+            break
+    if result:
+        return _strip_trailing_conjunction(" ".join(result).strip())
+    cut = t[:max_chars]
+    last_space = cut.rfind(" ")
+    out = cut[: last_space + 1].strip() if last_space > max_chars * 0.5 else cut.strip()
+    return _strip_trailing_conjunction(out)
 import psycopg2.extras
 from dotenv import load_dotenv
 
@@ -31,6 +83,9 @@ load_dotenv()
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "src" / "data" / "generatedCases.json"
 DATABASE_URL = os.getenv("DATABASE_URL")
+# Optional: base URL for local PDF server (e.g. http://localhost:8765)
+# Start server with: cd files/processed && python3 -m http.server 8765
+PDF_SERVER_URL = (os.getenv("PDF_SERVER_URL") or "").rstrip("/")
 
 
 JURISDICTION_ENUM = [
@@ -162,6 +217,32 @@ def severity_from_penalty_and_outcomes(penalty: float | None, outcomes: List[str
     return 3
 
 
+def severity_from_impact_and_data(individuals: int | None, data_types: str) -> int:
+    """Severity 1-5 based mainly on people affected and type of data."""
+    dt_lower = (data_types or "").lower()
+    # Data sensitivity: 1-3 (higher = more sensitive)
+    if any(k in dt_lower for k in ["health", "medical", "biometric", "children", "child", "ssn", "social security", "financial", "bank"]):
+        data_score = 3
+    elif any(k in dt_lower for k in ["location", "identity", "credit", "genetic"]):
+        data_score = 2
+    else:
+        data_score = 1
+
+    # People impacted: 0-2 (higher = more people)
+    if individuals is None or individuals <= 0:
+        people_score = 0
+    elif individuals >= 1_000_000:
+        people_score = 2
+    elif individuals >= 10_000:
+        people_score = 1
+    else:
+        people_score = 0
+
+    # Combined: 1-5 (data_score 1-3 + people_score 0-2)
+    severity = data_score + people_score
+    return max(1, min(5, severity))
+
+
 def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
     raw = row.get("raw_json")
     if isinstance(raw, str):
@@ -211,8 +292,8 @@ def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
     except Exception:
         individuals_int = None
 
-    what_they_did = data.get("what_they_did") or summary
-    why_they_were_wrong = data.get("why_they_were_wrong") or violation_notes
+    what_they_did = _truncate_to_complete_summary(data.get("what_they_did") or summary)
+    why_they_were_wrong = _truncate_to_complete_summary(data.get("why_they_were_wrong") or violation_notes)
 
     claims_vs_reality = data.get("claims_vs_reality") or []
     if not isinstance(claims_vs_reality, list):
@@ -277,12 +358,8 @@ def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
     sector = norm_sector(data.get("sector") or row.get("sector"))
     violations = map_violation_type(violation_type)
     impacted_individuals = format_impacted(individuals_int) if (individuals_int and individuals_int > 0) else "Unknown"
-    severity_raw = data.get("severity_1_to_5")
-    try:
-        severity = int(severity_raw) if severity_raw is not None else severity_from_penalty_and_outcomes(penalty_amount, enforcement_outcomes)
-        severity = max(1, min(5, severity))
-    except Exception:
-        severity = severity_from_penalty_and_outcomes(penalty_amount, enforcement_outcomes)
+    # Severity: use people affected + type of data as main factors
+    severity = severity_from_impact_and_data(individuals_int, data_types)
 
     # Total fine only (no breakdown): prefer penalty_total_display, else parse "= X total" from penalty_original, else format from amount
     if penalty_total_display:
@@ -306,7 +383,33 @@ def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
         fine_display = fine_display.replace("S$", "SGD ").strip()
 
     file_name = row.get("file_name") or ""
-    attached_pdfs = [{"label": file_name}] if file_name else []
+    attached_pdfs: List[Dict[str, Any]] = []
+    case_source_url = (data.get("case_source_url") or "").strip()
+    # Reject press release / news URLs — only use legal library / case pages
+    _bad = ("/news-events/", "/press-releases/", "/news/")
+    _skip_url = False
+    if case_source_url and case_source_url.startswith("http"):
+        if any(b in case_source_url.lower() for b in _bad):
+            _skip_url = True
+        elif "ftc.gov" in case_source_url.lower() and "legal-library" not in case_source_url.lower() and "cases-proceedings" not in case_source_url.lower():
+            _skip_url = True
+    if case_source_url and case_source_url.startswith("http") and not _skip_url:
+        source_label = {
+            "US FTC": "View case on FTC",
+            "California DOJ": "View case on CA DOJ",
+            "UK ICO": "View case on ICO",
+            "Singapore PDPC": "View case on PDPC",
+            "EU GDPR": "View case on regulator",
+            "EU EDPB": "View case on EDPB",
+            "Australia OAIC": "View case on OAIC",
+        }.get(jurisdiction, "View case on regulator")
+        attached_pdfs.append({"url": case_source_url, "label": source_label})
+
+    # PDF download link — only when local PDF server is running
+    if PDF_SERVER_URL and file_name:
+        from urllib.parse import quote
+        pdf_url = f"{PDF_SERVER_URL}/{quote(file_name)}"
+        attached_pdfs.append({"url": pdf_url, "label": "Download source PDF"})
 
     # Build EnforcementCase object
     case: Dict[str, Any] = {

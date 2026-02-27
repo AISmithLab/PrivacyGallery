@@ -14,6 +14,7 @@ Config via .env file (see .env.example)
 """
 
 import os
+import re
 import time
 import json
 import base64
@@ -68,9 +69,9 @@ Always return ONLY a valid JSON object — no markdown, no explanation, no pream
 EXTRACTION_PROMPT = """Analyse this legal/regulatory document and extract the following fields.
 Return ONLY a valid JSON object with exactly these keys.
 
-IMPORTANT: Do not leave null for fine, num impacted, or founding year if you can infer or estimate from the document or reasonable public knowledge. Use an estimate, "Unknown", or outcome_summary_short (e.g. Consent order) so the UI is never blank.
+IMPORTANT: Do not leave null for fine, num impacted, founding year, or company_worth if you can infer or estimate from the document or reasonable public knowledge. Use an estimate, "Unknown", or outcome_summary_short (e.g. Consent order) so the UI is never blank.
 
-Keep "what_they_did" and "why_they_were_wrong" to a maximum of 4 sentences each.
+Keep "what_they_did" and "why_they_were_wrong" to a maximum of 195 characters each. Summarize and condense — do not cut off mid-sentence.
 Use "penalty_total_display" for the total fine only (e.g. "€1,380,000" or "$520,000") — no breakdown by article. If no monetary fine, use null for penalty fields and set outcome_summary_short (e.g. "Consent order", "No penalty").
 
 {
@@ -80,11 +81,11 @@ Use "penalty_total_display" for the total fine only (e.g. "€1,380,000" or "$52
   "company":                "Respondent company or organisation name (string)",
   "sector":                 "Industry sector — e.g. Healthcare, Advertising/AdTech, Finance, Social Media, Retail, Telecom, Education (string)",
   "data_types":             "Types of personal data involved — e.g. health data, location, financial, biometric (string)",
-  "founding_year":          "Year company was founded (integer or null). Infer from document or public knowledge if possible; do not leave null if inferable.",
+  "founding_year":          "Year company was founded (integer or null). CRITICAL: Infer from document or public knowledge whenever possible. Use your knowledge of well-known companies (e.g. Meta=2004, Google=1998). Do not leave null if inferable.",
 
   "summary":                "2-3 sentence plain-English summary of what went wrong (string)",
-  "what_they_did":          "What the company/organisation did (string, max 4 sentences)",
-  "why_they_were_wrong":     "Why this was wrong under the law (string, max 4 sentences)",
+  "what_they_did":          "What the company/organisation did (string, max 195 chars). Summarize to fit — no truncation.",
+  "why_they_were_wrong":     "Why this was wrong under the law (string, max 195 chars). CRITICAL: Must be 100% company-specific — describe what THIS company exposed, harmed, or failed to protect. NEVER start with 'Section X requires...', 'The Act prohibits...', or any description of what the law says. Instead write what actually happened to real people because of this company's failure. E.g. 'X million users' financial data was left exposed because the company ignored known vulnerabilities for 18 months.' Summarize to fit — no truncation.",
 
   "violation_type":         "Primary category from Solove Privacy Taxonomy (string). Must be one of:
                                'Information Collection – Surveillance',
@@ -127,7 +128,7 @@ Use "penalty_total_display" for the total fine only (e.g. "€1,380,000" or "$52
   "outcome":                "Description of the final resolution, any remediation required, and current status (string)",
   "outcome_summary_short":  "When there is NO monetary fine: 1-2 word consequence (e.g. Consent order, Compliance order, No penalty). When there is a fine, use null. (string or null)",
   "company_now":            "Brief status of the company/organisation today (1-2 sentences, or null if unknown) (string or null)",
-  "company_worth":          "Company valuation or 'Unknown' (string or null)",
+  "company_worth":          "Company valuation (string). CRITICAL: Infer from public knowledge whenever possible. Use market cap, revenue, or valuation e.g. '$24B', '€500M', '$1.7T'. For well-known companies (Meta, Google, Amazon, Uber, etc.) use your knowledge. Use parent/subsidiary valuation when the entity itself is private. Use 'Unknown' only if the company is obscure and no public data exists.",
   "company_synopsis":       "Brief company description (1-2 sentences) (string or null)",
   "claims_vs_reality":      "Array of { \"claim\": \"What the company claimed\", \"reality\": \"What was actually true\" } — infer from document where possible.",
   "severity_1_to_5":        "Severity of harm to individuals (integer 1-5, 5 = most severe). WEIGHT BY: (1) Type of data — health, biometric, financial, children = higher; messaging, general browsing = lower. (2) Number impacted — more people = higher. (3) Nature of violations — deception, breach, misuse = higher. Output 1-5."
@@ -203,6 +204,30 @@ ON CONFLICT (file_hash) DO UPDATE SET
     outcome              = EXCLUDED.outcome,
     raw_json             = EXCLUDED.raw_json;
 """
+
+
+MAX_SUMMARY_CHARS = 195
+
+
+def _truncate_to_complete_summary(text: str, max_chars: int = MAX_SUMMARY_CHARS) -> str:
+    """Keep complete sentences only, max max_chars. Never cut mid-sentence."""
+    if not text or not (t := (text or "").strip()):
+        return ""
+    if len(t) <= max_chars:
+        return t
+    sentences = re.split(r"(?<=[.!?])\s+", t)
+    result = []
+    for s in sentences:
+        candidate = " ".join(result + [s]).strip()
+        if len(candidate) <= max_chars:
+            result.append(s)
+        else:
+            break
+    if result:
+        return " ".join(result).strip()
+    cut = t[:max_chars]
+    last_space = cut.rfind(" ")
+    return cut[: last_space + 1].strip() if last_space > max_chars * 0.5 else cut.strip()
 
 
 def get_db():
@@ -292,7 +317,13 @@ def extract_from_pdf(pdf_path: Path) -> dict:
         raw = raw.split("\n", 1)[1]
         raw = raw.rsplit("```", 1)[0]
 
-    return json.loads(raw)
+    data = json.loads(raw)
+    # Enforce 195-char complete-sentence summaries
+    if data.get("what_they_did"):
+        data["what_they_did"] = _truncate_to_complete_summary(data["what_they_did"])
+    if data.get("why_they_were_wrong"):
+        data["why_they_were_wrong"] = _truncate_to_complete_summary(data["why_they_were_wrong"])
+    return data
 
 
 # ── File processing ───────────────────────────────────────────────────────────

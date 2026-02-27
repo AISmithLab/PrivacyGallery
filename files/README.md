@@ -41,3 +41,18 @@ files/
 - penalty_amount_usd, penalty_original, individuals_affected, outcome  
 
 See `queries.sql` for example queries against the `cases` table.
+
+## Revising what_they_did and why_they_were_wrong
+
+To re-call Claude for all cases and make these fields company-specific (instead of generic legal boilerplate):
+
+```bash
+cd files
+python revise_what_why.py
+```
+
+Optional env vars:
+- `REVISE_LIMIT=N` — process only first N cases (for testing)
+- `REVISE_DRY=1` — don't write to DB, just print
+
+After running, refresh the frontend data: `python export_to_frontend.py`

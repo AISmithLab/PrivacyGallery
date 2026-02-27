@@ -173,43 +173,113 @@ export function truncateToMaxSentences(text: string, maxSentences = 4): string {
   return sentences.slice(0, maxSentences).join(" ").trim();
 }
 
-/** Strip common legal suffixes (Pte. Ltd., Ltd., Inc., LLC, etc.) unless they're part of the common name. */
+/** Strip trailing ', and', ', or', ', but' etc. that leave text cut off mid-thought. */
+function stripTrailingConjunction(text: string): string {
+  const bad = [", and", ", or", ", but", " and", " or", " but"];
+  let t = text.trim();
+  for (const b of bad) {
+    while (t.endsWith(b)) {
+      t = t.slice(0, -b.length).trim();
+      if (t.endsWith(",")) t = t.slice(0, -1).trim();
+    }
+  }
+  const incomplete = [" user.", " approximately", " from", " to", " in", " on", " for", " with", " without", " by", " of", " regardless of", " user", " the", " a", " an"];
+  for (const b of incomplete) {
+    while (t.endsWith(b)) {
+      t = t.slice(0, -b.length).trim();
+      if (t.endsWith(",")) t = t.slice(0, -1).trim();
+    }
+  }
+    if (t && !/^.*[.?!]$/.test(t)) {
+      for (const sep of [" and ", ", ", ",' "]) {
+      const idx = t.lastIndexOf(sep);
+      if (idx > t.length * 0.5) {
+        t = t.slice(0, idx).trim();
+        if (t.endsWith(",")) t = t.slice(0, -1).trim();
+        break;
+      }
+    }
+    if (t && !/^.*[.?!]$/.test(t)) t = t + ".";
+  }
+  return t;
+}
+
+/** Truncate to max 130 chars (≈3 lines on cards), keeping complete sentences only. Never cut mid-sentence. */
+export function truncateToMaxLines(text: string, _maxLines = 3): string {
+  const maxChars = 130;
+  if (!text || !text.trim()) return text;
+  const trimmed = text.trim();
+  if (trimmed.length <= maxChars) return stripTrailingConjunction(trimmed);
+  const sentences = trimmed.split(/(?<=[.!?])(?<![A-Z]\.)\s+/).filter(Boolean);
+  const result: string[] = [];
+  for (const s of sentences) {
+    const candidate = [...result, s].join(" ").trim();
+    if (candidate.length <= maxChars) result.push(s);
+    else break;
+  }
+  let out = result.length > 0 ? result.join(" ").trim() : "";
+  if (!out) {
+    const cut = trimmed.slice(0, maxChars);
+    const lastSpace = cut.lastIndexOf(" ");
+    out = lastSpace > maxChars * 0.5 ? cut.slice(0, lastSpace).trim() : cut.trim();
+  }
+  return stripTrailingConjunction(out);
+}
+
+/** Strip common legal suffixes (Pte. Ltd., Ltd., Inc., LLC, etc.) */
 function stripLegalSuffix(name: string): string {
   return name
-    .replace(/,?\s+(Pte\.?\s*Ltd\.?|Ltd\.?|Limited|Inc\.?|LLC|L\.L\.C\.?|Corp\.?|Corporation|S\.A\.?|S\.L\.?|S\.L\.U\.?|GmbH|AG)\s*$/i, "")
+    .replace(/,?\s+(Pte\.?\s*Ltd\.?|Ltd\.?|Limited|Inc\.?|LLC|L\.L\.C\.?|Corp\.?|Corporation|S\.A\.?|S\.L\.?|S\.L\.U\.?|S\.A\.U\.?|GmbH|AG|PLC|plc|A\.E\.?|MAE|ΑΕ|ΙΚΕ|HF|B\.V\.?|N\.V\.?|Oy)\s*$/i, "")
     .trim();
 }
 
 /**
- * Extract a short company/organisation name for card and detail display.
- * Strips legal suffixes, d/b/a aliases, "and" second entities, and long case titles.
+ * Extract a short base company name for card display.
+ * Strips legal suffixes, parentheticals, d/b/a aliases, formerly, and second entities.
  */
 export function getDisplayCompany(case_: EnforcementCase): string {
-  let raw = case_.company || "";
-  // "Commissioner Initiated Investigation into X (Privacy) ..." → X
+  let raw = (case_.company || "").trim();
+
+  // "Commissioner Initiated Investigation into X (Privacy)..." → X
   const intoMatch = raw.match(/Commissioner Initiated Investigation into\s+([^(]+?)\s*\(/i);
   if (intoMatch) return stripLegalSuffix(intoMatch[1].trim());
-  // "'A' and B (Privacy) ..." or "A and B (Privacy) ..." → B (entity after "and")
-  const andMatch = raw.match(/(?:^|^'[^']+' and |^[^']+ and )([^(]+?)\s*\(Privacy\)/i);
-  if (andMatch) return stripLegalSuffix(andMatch[1].replace(/^'|'$/g, "").trim());
-  // "X Pty Ltd (Privacy) ..." or "X Limited (Privacy) ..." → keep up to (Privacy)
-  const entityMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
-  if (entityMatch) return stripLegalSuffix(entityMatch[1].trim());
 
-  // Strip parenthetical aliases: (also doing business as X), (d/b/a X), (TURSS), etc.
-  raw = raw
-    .replace(/\s*\(also\s+(?:doing\s+business\s+as|d\/b\/a)\s+[^)]+\)/gi, "")
-    .replace(/\s*\(d\/b\/a\s+[^)]+\)/gi, "")
-    .replace(/\s*\([A-Z]{2,6}\)\s*(?=\s+and\s+)/gi, "")
-    .replace(/\s*\([A-Z]{2,6}\)\s*$/g, "")
-    .trim();
+  // "'A' and B (Privacy)..." or "A and B (Privacy)..." → B
+  const andPrivacyMatch = raw.match(/(?:^'[^']+' and |^[^(]+ and )([^(]+?)\s*\(Privacy\)/i);
+  if (andPrivacyMatch) return stripLegalSuffix(andPrivacyMatch[1].replace(/^'|'$/g, "").trim());
 
-  // "X and Y" → take first entity (main name)
+  // "X (Privacy)..." → X
+  const privacyMatch = raw.match(/^([^(]+?)\s*\(Privacy\)/);
+  if (privacyMatch) return stripLegalSuffix(privacyMatch[1].trim());
+
+  // Non-English name with English translation in parens: "Γεωργίου (George Co.)" → English part
+  // Detect: first char is non-ASCII, parens contain ASCII-majority text
+  if (/^[^\x00-\x7F]/.test(raw)) {
+    const parenMatch = raw.match(/\(([^)]{4,})\)/);
+    if (parenMatch && /[a-zA-Z]/.test(parenMatch[1])) {
+      raw = parenMatch[1].trim();
+    }
+  }
+
+  // Strip "and related entities:..." suffix
+  raw = raw.replace(/\s*(?:and\s+)?related\s+entities\s*:[^)]*$/i, "").trim();
+
+  // Strip all parenthetical content: (formerly X), (d/b/a X), (also known as X), (UK), (Pharmacy), etc.
+  raw = raw.replace(/\s*\([^)]*\)/g, "").trim();
+
+  // Strip semicolon or slash-separated second entities: "X; Y" or "X / Y" → X
+  const semiIdx = raw.search(/\s*[;/]\s*/);
+  if (semiIdx > 0) raw = raw.slice(0, semiIdx).trim();
+
+  // Strip "and Y" second entities: "X and Y" → X
   const andIdx = raw.search(/\s+and\s+/i);
   if (andIdx > 0) raw = raw.slice(0, andIdx).trim();
 
+  // Strip "d/b/a X" or "doing business as X" suffix without parens
+  raw = raw.replace(/\s+(?:d\/b\/a|doing\s+business\s+as|f\/k\/a|formerly)\s+.*/i, "").trim();
+
   const shortened = stripLegalSuffix(raw);
-  if (shortened.length <= 80) return shortened;
+  if (shortened.length <= 80) return shortened || raw;
   return shortened.slice(0, 77) + "…";
 }
 
@@ -231,12 +301,25 @@ export function isSubstantiveWhatTheyDid(case_: EnforcementCase): boolean {
   return true;
 }
 
-/** True if "why they were wrong" is substantive (not truncated or too short). */
+/** Generic legal boilerplate that repeats across cases — hide when this is all we have. */
+function isGenericWhyTheyWereWrong(text: string): boolean {
+  const displayed = truncateToMaxSentences(text, 1).trim();
+  if (displayed.length > 150) return false;
+  const lower = displayed.toLowerCase().replace(/\s+/g, " ");
+  const hasFtc5 = /ftc act.*section 5|section 5.*ftc act/i.test(lower);
+  const hasUnfairDeceptive = /unfair.*deceptive|deceptive.*unfair/i.test(lower);
+  const hasCommerce = /commerce/i.test(lower);
+  if (hasFtc5 && hasUnfairDeceptive && hasCommerce) return true;
+  return false;
+}
+
+/** True if "why they were wrong" is substantive (not truncated, too short, or generic boilerplate). */
 export function isSubstantiveWhyTheyWereWrong(case_: EnforcementCase): boolean {
   const text = (case_.whyTheyWereWrong || "").trim();
   if (!text || text.length < 40) return false;
   const displayed = truncateToMaxSentences(text, 1);
   if (displayed.length < 40) return false;
+  if (isGenericWhyTheyWereWrong(text)) return false;
   return true;
 }
 

@@ -55,7 +55,22 @@ const Index = () => {
       return orderA - orderB;
     });
 
-    return result;
+    // Pair similar-height cards: sort by total text length within each jurisdiction group
+    // so adjacent pairs in the 2-col grid are similar sizes and rows look balanced
+    const cardTextLen = (c: typeof result[0]) =>
+      (c.whatTheyDid || "").length + (c.whyTheyWereWrong || "").length;
+
+    const groups: typeof result[] = [];
+    let i = 0;
+    while (i < result.length) {
+      const jur = result[i].jurisdiction;
+      const jurisdictionGroup = jurisdictionOrder[jur] ?? 2;
+      const j = result.findIndex((c, idx) => idx >= i && (jurisdictionOrder[c.jurisdiction] ?? 2) !== jurisdictionGroup);
+      const end = j === -1 ? result.length : j;
+      groups.push(result.slice(i, end).sort((a, b) => cardTextLen(a) - cardTextLen(b)));
+      i = end;
+    }
+    return groups.flat();
   }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors]);
 
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);
@@ -131,7 +146,7 @@ const Index = () => {
             Showing {filtered.length} of {cases.length} cases • {formatTotalFines(totalFines)} in total fines
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filtered.map((c) => (
               <CaseCard key={c.id} case_={c} />
             ))}

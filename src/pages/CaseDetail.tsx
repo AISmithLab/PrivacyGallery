@@ -4,6 +4,26 @@ import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, getSimila
 import CaseCard from "@/components/CaseCard";
 import { ArrowLeft, ChevronDown, ChevronUp, FileText, Plus, Minus } from "lucide-react";
 
+function formatClaimForDisplay(company: string, claim: string): string {
+  const c = claim.trim();
+  if (!c) return "";
+  const companyNorm = company.toLowerCase().replace(/[^\w]/g, "");
+  const claimStart = c.slice(0, 50).toLowerCase();
+  if (claimStart.startsWith(companyNorm) || /^(the company|the organization) (claimed|stated|said|asserted)/i.test(c)) {
+    return c;
+  }
+  const rest = c
+    .replace(/^\s*we\s+/i, "they ")
+    .replace(/\bwe\b/gi, "they")
+    .replace(/\bour\s+/gi, "their ")
+    .replace(/\bours\b/gi, "theirs")
+    .replace(/\bus\b/gi, "them")
+    .replace(/^\s*i\s+/i, "the company ")
+    .replace(/\bmy\s+/gi, "the company's ")
+    .trim();
+  return `${company} claimed that ${rest}`;
+}
+
 const CONSEQUENCE_EXPLANATIONS: Record<string, string> = {
   "injunctive relief sought": "Injunctive relief is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour (e.g. stop a practice) or take specific steps, rather than only paying a fine.",
   "consent order": "A consent order is a binding agreement between the regulator and the company. The company agrees to certain terms (e.g. change practices, implement a program) without admitting liability. Failure to comply can lead to further enforcement.",
@@ -68,7 +88,7 @@ const CaseDetail = () => {
             <div className="space-y-2 shrink-0 flex flex-col items-stretch">
               {[
                 { label: "SECTOR", value: case_.sector },
-                { label: "FOUNDING YEAR", value: case_.foundingYear ? case_.foundingYear.toString() : "—" },
+                { label: "FOUNDING YEAR", value: case_.foundingYear ? case_.foundingYear.toString() : "Unknown" },
                 { label: "COMPANY WORTH", value: formatCompanyWorth(case_.companyWorth) },
               ].map((item) => (
                 <div key={item.label} className="detail-yellow-box px-4 py-3 w-[180px] min-w-[180px] max-w-[180px]">
@@ -127,15 +147,6 @@ const CaseDetail = () => {
           <div className="brutalist-border info-box p-6">
             <p className="text-[15px] leading-relaxed">{case_.caseDescription || "No case overview available."}</p>
           </div>
-          {case_.violations.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {case_.violations.map((v) => (
-                <span key={v} className="brutalist-border px-3 py-1.5 text-xs font-mono font-bold uppercase" style={{ background: "hsl(var(--accent) / 0.1)", color: "hsl(var(--accent))" }}>
-                  ⚠️ {v}
-                </span>
-              ))}
-            </div>
-          )}
         </section>
 
         {/* Claim vs Reality – loot-drop: click header to expand */}
@@ -166,7 +177,9 @@ const CaseDetail = () => {
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
                           <p className="text-[10px] font-mono font-bold uppercase tracking-wider mb-1" style={{ color: "hsl(var(--label-green))" }}>CLAIM</p>
-                          <p className="text-sm font-medium">{cr.claim}</p>
+                          <p className="text-sm font-medium">
+                            {formatClaimForDisplay(getDisplayCompany(case_), cr.claim)}
+                          </p>
                         </div>
                         {revealedClaims.has(i) ? <ChevronUp className="w-5 h-5 shrink-0 text-accent" /> : <ChevronDown className="w-5 h-5 shrink-0 text-muted-foreground" />}
                       </div>
