@@ -19,7 +19,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
         {/* Sector bar */}
         <div className="px-4 py-2.5 flex items-center justify-between shrink-0"
           style={{ background: "hsl(var(--card-tab))", color: "hsl(var(--card-tab-foreground))", borderBottom: "4px solid hsl(var(--border))" }}>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider">Sector: {case_.sector}</span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider">{case_.sector}</span>
           <div className="flex items-center gap-1.5 text-xs font-mono font-bold">
             <Eye className="w-3.5 h-3.5" />
             {case_.views.toLocaleString()}

@@ -846,3 +846,18 @@ const staticCases: EnforcementCase[] = [
 const generated = generatedCases as EnforcementCase[];
 export const cases: EnforcementCase[] =
   Array.isArray(generated) && generated.length > 0 ? generated : [];
+
+/** Find top similar cases by sector, jurisdiction, and violation overlap. */
+export function getSimilarCases(case_: EnforcementCase, limit = 2): EnforcementCase[] {
+  const others = cases.filter((c) => c.id !== case_.id);
+  const violationSet = new Set(case_.violations);
+  const scored = others.map((c) => {
+    let score = 0;
+    if (c.sector === case_.sector) score += 3;
+    if (c.jurisdiction === case_.jurisdiction) score += 2;
+    score += c.violations.filter((v) => violationSet.has(v)).length * 2;
+    return { case: c, score };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit).map((s) => s.case);
+}

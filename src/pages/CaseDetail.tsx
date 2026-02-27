@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, truncateToMaxSentences } from "@/data/cases";
+import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, getSimilarCases, truncateToMaxSentences } from "@/data/cases";
+import CaseCard from "@/components/CaseCard";
 import { ArrowLeft, ChevronDown, ChevronUp, FileText, Plus, Minus } from "lucide-react";
 
 const CONSEQUENCE_EXPLANATIONS: Record<string, string> = {
@@ -40,6 +41,8 @@ const CaseDetail = () => {
       return next;
     });
   };
+
+  const similarCases = getSimilarCases(case_, 2);
 
   return (
     <div className="min-h-screen bg-background case-detail-page">
@@ -288,6 +291,19 @@ const CaseDetail = () => {
             </div>
           )}
         </section>
+
+        {/* Similar Cases */}
+        {similarCases.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-bold tracking-tight mb-4">\ SIMILAR CASES</h2>
+            <div className="h-[3px] bg-border mb-4" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {similarCases.map((c) => (
+                <CaseCard key={c.id} case_={c} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
