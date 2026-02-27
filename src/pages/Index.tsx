@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
-import { cases, Jurisdiction, ViolationType, Sector, JURISDICTIONS, parseCompanyWorth } from "@/data/cases";
+import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
-import SearchBar from "@/components/SearchBar";
-import FilterSidebar from "@/components/FilterSidebar";
+import ControlBar from "@/components/ControlBar";
+import TopNav from "@/components/TopNav";
 
 const formatTotalFines = (total: number): string => {
   if (total >= 1_000_000_000) return `$${(total / 1_000_000_000).toFixed(1)}B+`;
@@ -45,7 +45,6 @@ const Index = () => {
       (c.whatTheyDid || "").length + (c.whyTheyWereWrong || "").length;
     const worth = (c: typeof result[0]) => parseCompanyWorth(c.companyWorth);
 
-    // Primary sort within the full result
     switch (sort) {
       case "popular":
         result.sort((a, b) => b.views - a.views || worth(b) - worth(a) || cardTextLen(b) - cardTextLen(a));
@@ -61,7 +60,6 @@ const Index = () => {
         break;
     }
 
-    // Jurisdiction grouping: US FTC → California DOJ → UK ICO → EU GDPR → others
     const jurOrder: Record<string, number> = {
       "US FTC": 0, "California DOJ": 1, "UK ICO": 2, "EU GDPR": 3, "EU EDPB": 4,
       "Singapore PDPC": 5, "Australia OAIC": 6,
@@ -75,17 +73,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background loot-drop-page" style={{ backgroundColor: "#F5F3EF" }}>
-      {/* Hero – loot-drop: bright yellow, black text (literal colors override any dark theme) */}
+      <TopNav />
+
+      {/* Hero */}
       <header
-        className="py-12 px-6 text-center border-b-4 border-border loot-drop-hero"
+        className="py-10 px-6 text-center border-b-4 border-border loot-drop-hero"
         style={{ background: "#FFD700", color: "#000", borderBottom: "4px solid #000" }}
       >
-        <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter uppercase">
-          The Privacy
-          <br />
-          Jury
-        </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mt-4 opacity-90" style={{ color: "#000" }}>
+        <p className="text-base md:text-lg max-w-2xl mx-auto opacity-90" style={{ color: "#000" }}>
           A global registry of{" "}
           <span className="font-bold">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
@@ -96,67 +91,37 @@ const Index = () => {
         </p>
       </header>
 
-      {/* Main layout */}
-      <div className="flex gap-8 px-6 py-8 max-w-[1400px] mx-auto">
-        <FilterSidebar
+      {/* Main layout — no sidebar */}
+      <div className="max-w-[1200px] mx-auto px-6 py-6 space-y-4">
+        <ControlBar
+          search={search}
+          onSearchChange={setSearch}
+          selectedJurisdictions={selectedJurisdictions}
+          onToggleJurisdiction={toggle(setSelectedJurisdictions)}
+          sort={sort}
+          onSortChange={setSort}
           selectedViolations={selectedViolations}
           onToggleViolation={toggle(setSelectedViolations)}
           selectedSectors={selectedSectors}
           onToggleSector={toggle(setSelectedSectors)}
-          sortMode={sort}
-          onSortChange={setSort}
         />
 
-        <div className="flex-1 space-y-4">
-          <SearchBar value={search} onChange={setSearch} />
+        <p className="text-xs font-mono text-muted-foreground">
+          Showing {filtered.length} of {cases.length} cases • {formatTotalFines(totalFines)} in total fines
+        </p>
 
-          {/* Jurisdiction filter under search */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground mr-1">Jurisdiction:</span>
-            {JURISDICTIONS.map((j) => (
-              <button
-                key={j}
-                type="button"
-                onClick={() => toggle(setSelectedJurisdictions)(j)}
-                className={`border-2 px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider transition-all ${
-                  selectedJurisdictions.includes(j)
-                    ? "border-border bg-primary text-primary-foreground"
-                    : "border-border/50 bg-card text-muted-foreground hover:border-border"
-                }`}
-              >
-                {j}
-              </button>
-            ))}
-          </div>
-
-          {/* Active filter pills */}
-          {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
-            <div className="flex gap-2 flex-wrap">
-              {[...selectedJurisdictions, ...selectedSectors, ...selectedViolations].map((f) => (
-                <span key={f} className="border-4 border-border bg-secondary text-secondary-foreground px-3 py-1 text-xs font-mono font-bold">
-                  {f} ×
-                </span>
-              ))}
-            </div>
-          )}
-
-          <p className="text-xs font-mono text-muted-foreground">
-            Showing {filtered.length} of {cases.length} cases • {formatTotalFines(totalFines)} in total fines
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filtered.map((c) => (
-              <CaseCard key={c.id} case_={c} />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="brutalist-border bg-card loot-drop-shadow p-12 text-center">
-              <p className="text-lg font-bold">No cases found.</p>
-              <p className="text-sm text-muted-foreground mt-1">Try adjusting your filters.</p>
-            </div>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filtered.map((c) => (
+            <CaseCard key={c.id} case_={c} />
+          ))}
         </div>
+
+        {filtered.length === 0 && (
+          <div className="brutalist-border bg-card loot-drop-shadow p-12 text-center">
+            <p className="text-lg font-bold">No cases found.</p>
+            <p className="text-sm text-muted-foreground mt-1">Try adjusting your filters.</p>
+          </div>
+        )}
       </div>
     </div>
   );
