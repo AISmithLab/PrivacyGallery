@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth } from "@/data/cases";
+import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth, getDisplayCompany } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import ControlBar from "@/components/ControlBar";
 import TopNav from "@/components/TopNav";
@@ -36,8 +36,7 @@ const Index = () => {
       result = result.filter(
         (c) =>
           c.company.toLowerCase().includes(q) ||
-          c.violationSummary.toLowerCase().includes(q) ||
-          c.companyDescription.toLowerCase().includes(q)
+          getDisplayCompany(c).toLowerCase().includes(q)
       );
     }
 

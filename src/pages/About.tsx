@@ -39,6 +39,19 @@ const About = () => {
             of the original enforcement decisions.
           </p>
         </div>
+
+        <p className="text-xs text-muted-foreground text-center font-mono">
+          Created by{" "}
+          <a
+            href="https://aismithlab.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:opacity-70 transition-opacity"
+          >
+            AI Smith Lab
+          </a>{" "}
+          @ UC San Diego
+        </p>
       </div>
     </div>
   );
