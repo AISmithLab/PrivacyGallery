@@ -32,18 +32,18 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
 
         {/* Company, jurisdiction, year */}
         <div className="px-5 pt-4 pb-3 shrink-0">
-          <h3 className="text-2xl font-bold leading-tight tracking-tight [hyphens:none] company-name-card line-clamp-2 overflow-hidden pr-16">
+          <h3 className="text-3xl font-bold leading-tight tracking-tight [hyphens:none] company-name-card line-clamp-2 overflow-hidden pr-16">
             {displayCompany}
           </h3>
-          <p className="text-sm font-mono text-muted-foreground mt-1">
+          <p className="text-base font-mono text-muted-foreground mt-1">
             ({case_.foundingYear && case_.foundingYear > 0 ? case_.foundingYear : case_.year})
           </p>
 
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <span className="border-2 border-border px-2 py-0.5 text-xs font-mono font-bold">{case_.jurisdiction}</span>
+            <span className="border-2 border-border px-2 py-0.5 text-sm font-mono font-bold">{case_.jurisdiction}</span>
             <div className="flex items-center gap-2">
               <img src={impactedIcon} alt="Impacted" className="w-5 h-5 object-contain" />
-              <span className="text-xs font-mono font-bold">{case_.impactedIndividuals || "Unknown"}</span>
+              <span className="text-sm font-mono font-bold">{case_.impactedIndividuals || "Unknown"}</span>
             </div>
           </div>
         </div>
