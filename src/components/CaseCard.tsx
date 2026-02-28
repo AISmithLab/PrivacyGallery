@@ -32,7 +32,7 @@ const CaseCard = ({ case_ }: CaseCardProps) => {
 
         {/* Company, jurisdiction, year */}
         <div className="px-5 pt-4 pb-3 shrink-0">
-          <h3 className="text-2xl font-bold leading-tight tracking-tight max-w-[14ch] [hyphens:none] company-name-card line-clamp-2 overflow-hidden">
+          <h3 className="text-2xl font-bold leading-tight tracking-tight [hyphens:none] company-name-card line-clamp-2 overflow-hidden pr-16">
             {displayCompany}
           </h3>
           <p className="text-sm font-mono text-muted-foreground mt-1">
