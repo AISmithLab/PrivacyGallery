@@ -23,6 +23,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/case/:id" element={<CaseDetail />} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
