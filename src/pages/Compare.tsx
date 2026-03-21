@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { cases, JURISDICTIONS, VIOLATION_TYPES, SECTORS, type EnforcementCase, type Jurisdiction, type ViolationType, type Sector, getDisplayCompany } from "@/data/cases";
 import TopNav from "@/components/TopNav";
 import { Link } from "react-router-dom";
@@ -13,9 +13,96 @@ const formatFine = (n: number): string => {
   return `$${n.toLocaleString()}`;
 };
 
-type ViewMode = "matrix" | "side-by-side" | "patterns";
+const median = (nums: number[]): number => {
+  if (!nums.length) return 0;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
 
+type ViewMode = "matrix" | "side-by-side" | "patterns";
 const CASES_PER_PAGE = 12;
+
+/* ────────── Dimension & Metric config ────────── */
+
+type DimensionKey = "jurisdiction" | "violation" | "sector" | "outcome" | "country" | "severity";
+
+const DIMENSIONS: { key: DimensionKey; label: string }[] = [
+  { key: "jurisdiction", label: "Jurisdiction" },
+  { key: "violation", label: "Violation Type" },
+  { key: "sector", label: "Sector" },
+  { key: "outcome", label: "Enforcement Outcome" },
+  { key: "country", label: "Country" },
+  { key: "severity", label: "Severity Band" },
+];
+
+const getDimensionValues = (key: DimensionKey, data: EnforcementCase[]): string[] => {
+  const set = new Set<string>();
+  data.forEach((c) => {
+    switch (key) {
+      case "jurisdiction": set.add(c.jurisdiction); break;
+      case "violation": c.violations.forEach((v) => set.add(v)); break;
+      case "sector": set.add(c.sector); break;
+      case "outcome": set.add(c.outcomeSummary || (c.fineAmount > 0 ? "Monetary fine" : "Non-monetary")); break;
+      case "country": set.add(c.country); break;
+      case "severity":
+        if (c.severityForIndividuals >= 8) set.add("High (8-10)");
+        else if (c.severityForIndividuals >= 5) set.add("Medium (5-7)");
+        else set.add("Low (1-4)");
+        break;
+    }
+  });
+  return [...set].sort();
+};
+
+const getCaseValue = (c: EnforcementCase, key: DimensionKey): string[] => {
+  switch (key) {
+    case "jurisdiction": return [c.jurisdiction];
+    case "violation": return c.violations;
+    case "sector": return [c.sector];
+    case "outcome": return [c.outcomeSummary || (c.fineAmount > 0 ? "Monetary fine" : "Non-monetary")];
+    case "country": return [c.country];
+    case "severity":
+      if (c.severityForIndividuals >= 8) return ["High (8-10)"];
+      if (c.severityForIndividuals >= 5) return ["Medium (5-7)"];
+      return ["Low (1-4)"];
+  }
+};
+
+type MetricKey = "count" | "avg_fine" | "median_fine" | "max_fine" | "pct_fined" | "pct_reprimand" | "avg_severity";
+
+const METRICS: { key: MetricKey; label: string }[] = [
+  { key: "count", label: "Case Count" },
+  { key: "avg_fine", label: "Average Fine" },
+  { key: "median_fine", label: "Median Fine" },
+  { key: "max_fine", label: "Max Fine" },
+  { key: "pct_fined", label: "% Fined" },
+  { key: "pct_reprimand", label: "% Reprimand" },
+  { key: "avg_severity", label: "Avg Severity" },
+];
+
+const computeMetric = (cs: EnforcementCase[], metric: MetricKey): number => {
+  if (!cs.length) return 0;
+  switch (metric) {
+    case "count": return cs.length;
+    case "avg_fine": return cs.reduce((s, c) => s + c.fineAmount, 0) / cs.length;
+    case "median_fine": return median(cs.map((c) => c.fineAmount));
+    case "max_fine": return Math.max(...cs.map((c) => c.fineAmount));
+    case "pct_fined": return (cs.filter((c) => c.fineAmount > 0).length / cs.length) * 100;
+    case "pct_reprimand": return (cs.filter((c) => c.fineAmount === 0).length / cs.length) * 100;
+    case "avg_severity": return cs.reduce((s, c) => s + c.severityForIndividuals, 0) / cs.length;
+  }
+};
+
+const formatMetric = (val: number, metric: MetricKey): string => {
+  if (val === 0 && metric !== "count") return "—";
+  switch (metric) {
+    case "count": return String(val);
+    case "avg_fine": case "median_fine": case "max_fine": return formatFine(val);
+    case "pct_fined": case "pct_reprimand": return `${val.toFixed(0)}%`;
+    case "avg_severity": return val.toFixed(1);
+  }
+};
 
 /* ────────── component ────────── */
 
@@ -28,10 +115,11 @@ const Compare = () => {
   const [selectedCases, setSelectedCases] = useState<string[]>([]);
   const [casesShown, setCasesShown] = useState(CASES_PER_PAGE);
 
-  // Matrix: selectable violation types
-  const [selectedMatrixViolations, setSelectedMatrixViolations] = useState<ViolationType[]>([]);
+  // Matrix config
+  const [rowDimension, setRowDimension] = useState<DimensionKey>("violation");
+  const [colDimension, setColDimension] = useState<DimensionKey>("jurisdiction");
+  const [metric, setMetric] = useState<MetricKey>("count");
 
-  /* Filtered dataset */
   const filtered = useMemo(() => {
     return cases.filter((c) => {
       if (filterJurisdiction && c.jurisdiction !== filterJurisdiction) return false;
@@ -41,25 +129,37 @@ const Compare = () => {
     });
   }, [filterJurisdiction, filterViolation, filterSector]);
 
-  /* ── Matrix data: violations × jurisdictions ── */
+  /* ── Dynamic matrix ── */
   const matrixData = useMemo(() => {
-    const jurisdictions = JURISDICTIONS.filter((j) => filtered.some((c) => c.jurisdiction === j));
-    const allViolations = VIOLATION_TYPES;
-    const activeViolations = selectedMatrixViolations.length > 0
-      ? allViolations.filter((v) => selectedMatrixViolations.includes(v))
-      : allViolations;
+    const rowValues = getDimensionValues(rowDimension, filtered);
+    const colValues = getDimensionValues(colDimension, filtered);
 
-    const cells = new Map<string, { cases: EnforcementCase[]; avgFine: number; count: number }>();
-    activeViolations.forEach((v) => {
-      jurisdictions.forEach((j) => {
-        const matching = filtered.filter((c) => c.jurisdiction === j && c.violations.includes(v));
-        const avg = matching.length ? matching.reduce((s, c) => s + c.fineAmount, 0) / matching.length : 0;
-        cells.set(`${v}|${j}`, { cases: matching, avgFine: avg, count: matching.length });
+    const cells = new Map<string, { cases: EnforcementCase[]; value: number }>();
+    let maxVal = 0;
+
+    rowValues.forEach((rv) => {
+      colValues.forEach((cv) => {
+        const matching = filtered.filter((c) => {
+          const rVals = getCaseValue(c, rowDimension);
+          const cVals = getCaseValue(c, colDimension);
+          return rVals.includes(rv) && cVals.includes(cv);
+        });
+        const val = computeMetric(matching, metric);
+        if (val > maxVal) maxVal = val;
+        cells.set(`${rv}|${cv}`, { cases: matching, value: val });
       });
     });
 
-    return { jurisdictions, violations: activeViolations, allViolations, cells };
-  }, [filtered, selectedMatrixViolations]);
+    return { rowValues, colValues, cells, maxVal };
+  }, [filtered, rowDimension, colDimension, metric]);
+
+  const heatColor = useCallback((val: number, maxVal: number) => {
+    if (val === 0) return "transparent";
+    const intensity = Math.min(val / Math.max(maxVal, 1), 1);
+    if (intensity > 0.7) return "rgba(220, 38, 38, 0.22)";
+    if (intensity > 0.3) return "rgba(245, 158, 11, 0.15)";
+    return "rgba(34, 197, 94, 0.1)";
+  }, []);
 
   /* ── Pattern data ── */
   const patterns = useMemo(() => {
@@ -99,7 +199,6 @@ const Compare = () => {
       .sort((a, b) => b.totalCases - a.totalCases);
   }, [filtered]);
 
-  /* Toggle case for side-by-side (max 3) */
   const toggleCase = (id: string) => {
     setSelectedCases((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : prev.length < 3 ? [...prev, id] : prev
@@ -108,32 +207,15 @@ const Compare = () => {
 
   const selectedCaseObjects = cases.filter((c) => selectedCases.includes(c.id));
 
-  const toggleMatrixViolation = (v: ViolationType) => {
-    setSelectedMatrixViolations((prev) =>
-      prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]
-    );
-  };
-
-  /* ────────── severity color ────────── */
   const severityColor = (sev: number) => {
     if (sev >= 8) return "#dc2626";
     if (sev >= 5) return "#f59e0b";
     return "#22c55e";
   };
 
-  const heatColor = (count: number, maxCount: number) => {
-    if (count === 0) return "transparent";
-    const intensity = Math.min(count / Math.max(maxCount, 1), 1);
-    if (intensity > 0.7) return "rgba(220, 38, 38, 0.25)";
-    if (intensity > 0.3) return "rgba(245, 158, 11, 0.15)";
-    return "rgba(34, 197, 94, 0.1)";
-  };
-
-  const maxCellCount = useMemo(() => {
-    let max = 0;
-    matrixData.cells.forEach((v) => { if (v.count > max) max = v.count; });
-    return max;
-  }, [matrixData]);
+  const rowLabel = DIMENSIONS.find((d) => d.key === rowDimension)?.label || "";
+  const colLabel = DIMENSIONS.find((d) => d.key === colDimension)?.label || "";
+  const metricLabel = METRICS.find((m) => m.key === metric)?.label || "";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -148,15 +230,14 @@ const Compare = () => {
           Compare Enforcement
         </h1>
         <p className="mt-2 text-sm font-mono uppercase tracking-widest text-black/70">
-          Cross-jurisdiction analysis · {filtered.length} cases
+          Exploration Lab · {filtered.length} cases loaded
         </p>
       </div>
 
-      {/* Filters + view toggle */}
+      {/* Global filters + view toggle */}
       <div className="border-b-2 border-border bg-card">
-        <div className="max-w-[1400px] mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+        <div className="max-w-[1800px] mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
           <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">Filter:</span>
-
           <select
             value={filterJurisdiction}
             onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
@@ -165,7 +246,6 @@ const Compare = () => {
             <option value="">All Jurisdictions</option>
             {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
           </select>
-
           <select
             value={filterViolation}
             onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
@@ -174,7 +254,6 @@ const Compare = () => {
             <option value="">All Violations</option>
             {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
           </select>
-
           <select
             value={filterSector}
             onChange={(e) => setFilterSector(e.target.value as Sector | "")}
@@ -183,16 +262,13 @@ const Compare = () => {
             <option value="">All Sectors</option>
             {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
-
           <div className="flex-1" />
-
-          {/* View toggle */}
           <div className="flex border-2 border-border">
             {(["matrix", "patterns", "side-by-side"] as ViewMode[]).map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors ${
+                className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition-colors ${
                   view === v ? "bg-black text-[#FFD700]" : "bg-background text-foreground hover:bg-muted"
                 }`}
               >
@@ -204,91 +280,147 @@ const Compare = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-[1400px] mx-auto px-4 py-8">
+      <div className="max-w-[1800px] mx-auto px-4 py-8">
 
         {/* ═══ MATRIX VIEW ═══ */}
         {view === "matrix" && (
           <div>
-            <h2 className="text-lg font-mono font-bold uppercase tracking-wider mb-4">
-              Violation × Jurisdiction Matrix
-            </h2>
-            <p className="text-xs font-mono text-muted-foreground mb-4">
-              Cell shows case count and average fine. Color intensity = case frequency.
-            </p>
-
-            {/* Violation type selector */}
-            <div className="mb-6">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                Select violation types to display ({selectedMatrixViolations.length === 0 ? "all shown" : `${selectedMatrixViolations.length} selected`})
+            {/* Axis & Metric Control Panel */}
+            <div className="border-2 border-border bg-card p-6 mb-8">
+              <h2 className="text-xl font-mono font-bold uppercase tracking-wider mb-1">
+                Configure Comparison
+              </h2>
+              <p className="text-xs font-mono text-muted-foreground mb-6">
+                Choose what to compare. Select rows, columns, and the metric to display in each cell.
               </p>
-              <div className="flex flex-wrap gap-1.5">
-                {VIOLATION_TYPES.map((v) => {
-                  const isActive = selectedMatrixViolations.includes(v);
-                  return (
-                    <button
-                      key={v}
-                      onClick={() => toggleMatrixViolation(v)}
-                      className={`px-3 py-1.5 text-[11px] font-mono font-bold border-2 transition-all ${
-                        isActive
-                          ? "border-black bg-black text-[#FFD700]"
-                          : "border-border bg-card text-foreground hover:border-black"
-                      }`}
-                    >
-                      {v}
-                    </button>
-                  );
-                })}
-                {selectedMatrixViolations.length > 0 && (
-                  <button
-                    onClick={() => setSelectedMatrixViolations([])}
-                    className="px-3 py-1.5 text-[11px] font-mono font-bold border-2 border-border text-muted-foreground hover:border-black transition-all"
-                  >
-                    Reset All
-                  </button>
-                )}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Rows */}
+                <div>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
+                    Rows
+                  </label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {DIMENSIONS.map((d) => (
+                      <button
+                        key={d.key}
+                        onClick={() => { if (d.key === colDimension) setColDimension(rowDimension); setRowDimension(d.key); }}
+                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
+                          rowDimension === d.key
+                            ? "border-black bg-black text-[#FFD700]"
+                            : "border-border bg-background hover:border-black"
+                        }`}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Columns */}
+                <div>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
+                    Columns
+                  </label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {DIMENSIONS.map((d) => (
+                      <button
+                        key={d.key}
+                        onClick={() => { if (d.key === rowDimension) setRowDimension(colDimension); setColDimension(d.key); }}
+                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
+                          colDimension === d.key
+                            ? "border-black bg-black text-[#FFD700]"
+                            : "border-border bg-background hover:border-black"
+                        }`}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Metric */}
+                <div>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
+                    Cell Metric
+                  </label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {METRICS.map((m) => (
+                      <button
+                        key={m.key}
+                        onClick={() => setMetric(m.key)}
+                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
+                          metric === m.key
+                            ? "border-black bg-black text-[#FFD700]"
+                            : "border-border bg-background hover:border-black"
+                        }`}
+                      >
+                        {m.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5 pt-4 border-t border-border flex items-center gap-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">
+                  Current view:
+                </span>
+                <span className="text-sm font-mono font-bold uppercase" style={{ color: "#000" }}>
+                  {rowLabel} × {colLabel}
+                </span>
+                <span className="text-[10px] font-mono text-muted-foreground mx-1">showing</span>
+                <span className="text-sm font-mono font-bold uppercase" style={{ color: "#000" }}>
+                  {metricLabel}
+                </span>
               </div>
             </div>
 
+            {/* Matrix Table */}
             <div className="overflow-x-auto border-2 border-border">
-              <table className="w-full border-collapse">
+              <table className="w-full border-collapse" style={{ minWidth: `${Math.max(matrixData.colValues.length * 180, 800)}px` }}>
                 <thead>
                   <tr className="bg-black text-[#FFD700]">
-                    <th className="text-left p-4 text-xs font-mono font-bold uppercase tracking-wider border-r-2 border-border min-w-[240px]">
-                      Violation Type
+                    <th className="text-left p-5 text-sm font-mono font-bold uppercase tracking-wider border-r-2 border-border/50" style={{ minWidth: 260 }}>
+                      {rowLabel}
                     </th>
-                    {matrixData.jurisdictions.map((j) => (
+                    {matrixData.colValues.map((cv) => (
                       <th
-                        key={j}
-                        className="p-4 text-xs font-mono font-bold uppercase tracking-wider text-center border-r border-border/30 min-w-[150px]"
+                        key={cv}
+                        className="p-5 text-sm font-mono font-bold uppercase tracking-wider text-center border-r border-border/30"
+                        style={{ minWidth: 170 }}
                       >
-                        {j}
+                        {cv}
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {matrixData.violations.map((v, vi) => (
-                    <tr key={v} className={vi % 2 === 0 ? "bg-card" : "bg-background"}>
-                      <td className="p-4 text-sm font-mono font-bold border-r-2 border-border">
-                        {v}
+                  {matrixData.rowValues.map((rv, ri) => (
+                    <tr key={rv} className={ri % 2 === 0 ? "bg-card" : "bg-background"}>
+                      <td className="p-5 text-sm font-mono font-bold border-r-2 border-border/50 whitespace-nowrap">
+                        {rv}
                       </td>
-                      {matrixData.jurisdictions.map((j) => {
-                        const cell = matrixData.cells.get(`${v}|${j}`);
+                      {matrixData.colValues.map((cv) => {
+                        const cell = matrixData.cells.get(`${rv}|${cv}`);
+                        const val = cell?.value || 0;
                         return (
                           <td
-                            key={j}
-                            className="p-4 text-center border-r border-border/20"
-                            style={{ background: heatColor(cell?.count || 0, maxCellCount) }}
+                            key={cv}
+                            className="p-5 text-center border-r border-border/20"
+                            style={{ background: heatColor(val, matrixData.maxVal) }}
                           >
-                            {cell && cell.count > 0 ? (
+                            {cell && cell.cases.length > 0 ? (
                               <div>
-                                <div className="text-lg font-bold font-mono">{cell.count}</div>
-                                <div className="text-xs font-mono text-muted-foreground">
-                                  avg {formatFine(cell.avgFine)}
-                                </div>
+                                <div className="text-2xl font-bold font-mono">{formatMetric(val, metric)}</div>
+                                {metric !== "count" && (
+                                  <div className="text-xs font-mono text-muted-foreground mt-1">
+                                    {cell.cases.length} case{cell.cases.length !== 1 ? "s" : ""}
+                                  </div>
+                                )}
                               </div>
                             ) : (
-                              <span className="text-muted-foreground/30 text-lg">—</span>
+                              <span className="text-muted-foreground/30 text-2xl">—</span>
                             )}
                           </td>
                         );
@@ -297,6 +429,14 @@ const Compare = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Legend */}
+            <div className="mt-4 flex items-center gap-4 text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
+              <span>Intensity →</span>
+              <span className="inline-block w-5 h-3" style={{ background: "rgba(34, 197, 94, 0.1)" }} /> Low
+              <span className="inline-block w-5 h-3" style={{ background: "rgba(245, 158, 11, 0.15)" }} /> Med
+              <span className="inline-block w-5 h-3" style={{ background: "rgba(220, 38, 38, 0.22)" }} /> High
             </div>
           </div>
         )}
@@ -357,7 +497,6 @@ const Compare = () => {
                                   {data.cases.length} {data.cases.length === 1 ? "case" : "cases"}
                                 </span>
                               </div>
-
                               <div className="space-y-2 mb-3">
                                 <div className="flex justify-between text-[10px] font-mono">
                                   <span className="text-muted-foreground uppercase">Avg Fine</span>
@@ -372,7 +511,6 @@ const Compare = () => {
                                   <span className="font-bold text-right max-w-[60%]">{data.outcomes.join(", ")}</span>
                                 </div>
                               </div>
-
                               <div className="border-t border-border pt-2 space-y-1.5">
                                 {data.cases.slice(0, 3).map((c) => (
                                   <Link
@@ -431,7 +569,6 @@ const Compare = () => {
               Select up to 3 cases to compare.
             </p>
 
-            {/* Selected cards — 3 columns */}
             {selectedCaseObjects.length > 0 && (
               <div className="mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
@@ -447,7 +584,6 @@ const Compare = () => {
                         {getDisplayCompany(c)}
                       </h3>
                       <p className="text-xs font-mono text-muted-foreground mt-1">{c.jurisdiction} · {c.year}</p>
-
                       <div className="mt-4 space-y-2.5">
                         <Row label="Fine" value={c.fineAmount > 0 ? c.fineDisplay : c.outcomeSummary || "—"} />
                         <Row label="Severity" value={`${c.severityForIndividuals}/10`} color={severityColor(c.severityForIndividuals)} />
@@ -455,7 +591,6 @@ const Compare = () => {
                         <Row label="Violations" value={c.violations.join("; ")} />
                         <Row label="Outcome" value={c.outcomeSummary || "Fine"} />
                       </div>
-
                       {c.regulatoryFindings && c.regulatoryFindings.length > 0 && (
                         <div className="mt-4 pt-3 border-t border-border">
                           <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">Legal Basis</span>
@@ -468,7 +603,6 @@ const Compare = () => {
                           </div>
                         </div>
                       )}
-
                       <Link
                         to={`/case/${c.id}`}
                         className="block mt-4 text-xs font-mono font-bold uppercase text-center py-2 border-2 border-border hover:bg-black hover:text-[#FFD700] transition-colors"
@@ -479,7 +613,6 @@ const Compare = () => {
                   ))}
                 </div>
 
-                {/* Comparison summary table */}
                 {selectedCaseObjects.length >= 2 && (
                   <div className="border-2 border-border overflow-x-auto">
                     <table className="w-full border-collapse">
@@ -524,12 +657,10 @@ const Compare = () => {
               </div>
             )}
 
-            {/* Case picker — moved under heading, with "load more" */}
             <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-2">
               {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
             </h3>
 
-            {/* Filter bar under heading */}
             <div className="flex flex-wrap items-center gap-2 mb-4 pb-3 border-b border-border">
               <select
                 value={filterJurisdiction}
