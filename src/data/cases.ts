@@ -110,6 +110,21 @@ export const SECTORS: Sector[] = [
   "Transportation",
 ];
 
+/** Canonical outcome categories for outcomeSummary. */
+export const OUTCOME_CATEGORIES = [
+  "Monetary Penalty",
+  "Compliance Order",
+  "Consent Order",
+  "Warning",
+  "Reprimand",
+  "Injunctive Relief",
+  "Complaint Filed",
+  "Guidance / Advisory",
+  "No Formal Penalty",
+] as const;
+
+export type OutcomeCategory = typeof OUTCOME_CATEGORIES[number];
+
 /** Enforcement strategy (Ayres & Braithwaite responsive regulation pyramid). */
 export const ENFORCEMENT_STRATEGIES = [
   "Monetary penalty",

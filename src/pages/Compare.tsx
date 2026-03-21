@@ -43,7 +43,7 @@ const getDimensionValues = (key: DimensionKey, data: EnforcementCase[]): string[
       case "jurisdiction": set.add(c.jurisdiction); break;
       case "violation": c.violations.forEach((v) => set.add(v)); break;
       case "sector": set.add(c.sector); break;
-      case "outcome": set.add(c.outcomeSummary || (c.fineAmount > 0 ? "Monetary fine" : "Non-monetary")); break;
+      case "outcome": set.add(c.outcomeSummary || "Other"); break;
       case "country": set.add(c.country); break;
       case "severity":
         if (c.severityForIndividuals >= 8) set.add("High (8-10)");
@@ -60,7 +60,7 @@ const getCaseValue = (c: EnforcementCase, key: DimensionKey): string[] => {
     case "jurisdiction": return [c.jurisdiction];
     case "violation": return c.violations;
     case "sector": return [c.sector];
-    case "outcome": return [c.outcomeSummary || (c.fineAmount > 0 ? "Monetary fine" : "Non-monetary")];
+    case "outcome": return [c.outcomeSummary || "Other"];
     case "country": return [c.country];
     case "severity":
       if (c.severityForIndividuals >= 8) return ["High (8-10)"];

@@ -37,14 +37,7 @@ const Leaderboard = () => {
     // Enforcement outcomes breakdown
     const outcomeMap = new Map<string, number>();
     const normalizeOutcome = (c: typeof cases[0]): string => {
-      const s = (c.outcomeSummary || "").toLowerCase();
-      if (c.fineAmount > 0) return "Monetary Fine";
-      if (s.includes("consent order")) return "Consent Order";
-      if (s.includes("compliance order") || s.includes("enforcement notice") || s.includes("binding order")) return "Compliance Order";
-      if (s.includes("reprimand")) return "Reprimand";
-      if (s.includes("warning")) return "Warning";
-      if (s.includes("complaint")) return "Complaint Filed";
-      return "Other / No Penalty";
+      return c.outcomeSummary || "Other / No Penalty";
     };
     cases.forEach((c) => {
       const label = normalizeOutcome(c);

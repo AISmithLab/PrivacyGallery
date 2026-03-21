@@ -26,12 +26,15 @@ function formatClaimForDisplay(company: string, claim: string): string {
 }
 
 const CONSEQUENCE_EXPLANATIONS: Record<string, string> = {
-  "injunctive relief sought": "Injunctive relief is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour (e.g. stop a practice) or take specific steps, rather than only paying a fine.",
+  "monetary penalty": "A monetary penalty (fine) has been imposed on the company for its violations. The amount reflects the severity of the breach and the regulator's enforcement posture.",
+  "injunctive relief": "Injunctive relief is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour (e.g. stop a practice) or take specific steps, rather than only paying a fine.",
   "consent order": "A consent order is a binding agreement between the regulator and the company. The company agrees to certain terms (e.g. change practices, implement a program) without admitting liability. Failure to comply can lead to further enforcement.",
   "compliance order": "A compliance order requires the company to take specific actions to comply with the law—for example, updating policies, implementing safeguards, or submitting to monitoring. It is aimed at changing future behaviour.",
   "reprimand": "A reprimand is an official warning or censure. It is a formal finding of a breach without a monetary penalty, often used when the breach is less serious or the organisation has taken steps to remedy the issue.",
-  "no penalty": "No monetary penalty was imposed. The regulator may have issued a warning, closed the case, or required non-financial remedies such as corrective measures or an undertaking.",
-  "complaint issued": "A formal complaint has been filed by the regulator. The case may be ongoing; no final decision or penalty may have been reached yet.",
+  "warning": "A formal warning has been issued by the regulator. It signals that a breach was found but no monetary penalty or binding order was imposed at this time.",
+  "no formal penalty": "No formal penalty was imposed. The regulator may have issued guidance, closed the case, or required non-financial remedies such as corrective measures or an undertaking.",
+  "complaint filed": "A formal complaint has been filed by the regulator. The case may be ongoing; no final decision or penalty may have been reached yet.",
+  "guidance / advisory": "The regulator issued non-binding guidance or advisory recommendations rather than a formal enforcement action.",
 };
 
 const CaseDetail = () => {
