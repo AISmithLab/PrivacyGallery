@@ -7,6 +7,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import CaseDetail from "./pages/CaseDetail";
 import Leaderboard from "./pages/Leaderboard";
+import Compare from "./pages/Compare";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
