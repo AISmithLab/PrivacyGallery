@@ -20,7 +20,7 @@ const median = (nums: number[]): number => {
   return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 };
 
-type ViewMode = "matrix" | "side-by-side" | "patterns";
+type ViewMode = "matrix" | "side-by-side";
 const CASES_PER_PAGE = 12;
 
 /* ────────── Dimension & Metric config ────────── */
@@ -111,7 +111,6 @@ const Compare = () => {
   const [filterJurisdiction, setFilterJurisdiction] = useState<Jurisdiction | "">("");
   const [filterViolation, setFilterViolation] = useState<ViolationType | "">("");
   const [filterSector, setFilterSector] = useState<Sector | "">("");
-  const [expandedPattern, setExpandedPattern] = useState<string | null>(null);
   const [selectedCases, setSelectedCases] = useState<string[]>([]);
   const [casesShown, setCasesShown] = useState(CASES_PER_PAGE);
 
@@ -160,44 +159,6 @@ const Compare = () => {
     if (intensity > 0.3) return "rgba(245, 158, 11, 0.15)";
     return "rgba(34, 197, 94, 0.1)";
   }, []);
-
-  /* ── Pattern data ── */
-  const patterns = useMemo(() => {
-    const byViolation = new Map<string, EnforcementCase[]>();
-    filtered.forEach((c) => {
-      c.violations.forEach((v) => {
-        const arr = byViolation.get(v) || [];
-        arr.push(c);
-        byViolation.set(v, arr);
-      });
-    });
-
-    return [...byViolation.entries()]
-      .map(([violation, cs]) => {
-        const byJuris = new Map<string, { cases: EnforcementCase[]; avgFine: number; maxFine: number; outcomes: string[] }>();
-        cs.forEach((c) => {
-          const existing = byJuris.get(c.jurisdiction) || { cases: [], avgFine: 0, maxFine: 0, outcomes: [] };
-          existing.cases.push(c);
-          existing.maxFine = Math.max(existing.maxFine, c.fineAmount);
-          const outcome = c.outcomeSummary || (c.fineAmount > 0 ? "Monetary fine" : "Non-monetary");
-          if (!existing.outcomes.includes(outcome)) existing.outcomes.push(outcome);
-          byJuris.set(c.jurisdiction, existing);
-        });
-        byJuris.forEach((v) => {
-          v.avgFine = v.cases.reduce((s, c) => s + c.fineAmount, 0) / v.cases.length;
-        });
-
-        const commonFindings: string[] = [];
-        cs.forEach((c) => {
-          c.regulatoryFindings?.forEach((f) => {
-            if (!commonFindings.includes(f.act) && commonFindings.length < 5) commonFindings.push(f.act);
-          });
-        });
-
-        return { violation, totalCases: cs.length, jurisdictions: byJuris, commonFindings };
-      })
-      .sort((a, b) => b.totalCases - a.totalCases);
-  }, [filtered]);
 
   const toggleCase = (id: string) => {
     setSelectedCases((prev) =>
@@ -263,7 +224,7 @@ const Compare = () => {
         {/* View toggle */}
         <div className="flex justify-center">
           <div className="flex border-2 border-border">
-            {(["matrix", "patterns", "side-by-side"] as ViewMode[]).map((v) => (
+            {(["matrix", "side-by-side"] as ViewMode[]).map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
@@ -271,7 +232,7 @@ const Compare = () => {
                   view === v ? "bg-black text-[#FFD700]" : "bg-background text-foreground hover:bg-muted"
                 }`}
               >
-                {v === "matrix" ? "Matrix" : v === "patterns" ? "Patterns" : "Compare"}
+                {v === "matrix" ? "Matrix" : "Compare"}
               </button>
             ))}
           </div>
@@ -429,124 +390,6 @@ const Compare = () => {
               <span className="inline-block w-5 h-3" style={{ background: "rgba(245, 158, 11, 0.15)" }} /> Med
               <span className="inline-block w-5 h-3" style={{ background: "rgba(220, 38, 38, 0.22)" }} /> High
             </div>
-          </div>
-        )}
-
-        {/* ═══ PATTERNS VIEW ═══ */}
-        {view === "patterns" && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-lg font-mono font-bold uppercase tracking-wider mb-1">
-                Enforcement Patterns
-              </h2>
-              <p className="text-xs font-mono text-muted-foreground mb-6">
-                How the same violation type is treated across jurisdictions.
-              </p>
-            </div>
-
-            {patterns.map((p) => {
-              const isExpanded = expandedPattern === p.violation;
-              return (
-                <div key={p.violation} className="border-2 border-border bg-card brutalist-shadow">
-                  <button
-                    onClick={() => setExpandedPattern(isExpanded ? null : p.violation)}
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/50 transition-colors"
-                  >
-                    <div>
-                      <h3 className="text-sm font-mono font-bold uppercase tracking-wider">{p.violation}</h3>
-                      <p className="text-[10px] font-mono text-muted-foreground mt-0.5">
-                        {p.totalCases} cases across {p.jurisdictions.size} jurisdictions
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {p.commonFindings.length > 0 && (
-                        <div className="hidden sm:flex gap-1">
-                          {p.commonFindings.slice(0, 3).map((f) => (
-                            <span key={f} className="text-[9px] font-mono px-2 py-0.5 bg-muted border border-border">
-                              {f}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      <span className="text-lg font-mono">{isExpanded ? "−" : "+"}</span>
-                    </div>
-                  </button>
-
-                  {isExpanded && (
-                    <div className="border-t-2 border-border p-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {[...p.jurisdictions.entries()]
-                          .sort((a, b) => b[1].avgFine - a[1].avgFine)
-                          .map(([jurisdiction, data]) => (
-                            <div key={jurisdiction} className="border-2 border-border bg-background p-4 brutalist-shadow">
-                              <div className="flex items-center justify-between mb-3">
-                                <h4 className="text-xs font-mono font-bold uppercase tracking-wider">{jurisdiction}</h4>
-                                <span
-                                  className="text-xs font-mono font-bold px-2 py-0.5"
-                                  style={{ background: "#FFD700", color: "#000" }}
-                                >
-                                  {data.cases.length} {data.cases.length === 1 ? "case" : "cases"}
-                                </span>
-                              </div>
-                              <div className="space-y-2 mb-3">
-                                <div className="flex justify-between text-[10px] font-mono">
-                                  <span className="text-muted-foreground uppercase">Avg Fine</span>
-                                  <span className="font-bold">{formatFine(data.avgFine)}</span>
-                                </div>
-                                <div className="flex justify-between text-[10px] font-mono">
-                                  <span className="text-muted-foreground uppercase">Max Fine</span>
-                                  <span className="font-bold">{formatFine(data.maxFine)}</span>
-                                </div>
-                                <div className="flex justify-between text-[10px] font-mono">
-                                  <span className="text-muted-foreground uppercase">Outcomes</span>
-                                  <span className="font-bold text-right max-w-[60%]">{data.outcomes.join(", ")}</span>
-                                </div>
-                              </div>
-                              <div className="border-t border-border pt-2 space-y-1.5">
-                                {data.cases.slice(0, 3).map((c) => (
-                                  <Link
-                                    key={c.id}
-                                    to={`/case/${c.id}`}
-                                    className="block text-[10px] font-mono hover:underline"
-                                  >
-                                    <span className="font-bold">{getDisplayCompany(c)}</span>
-                                    <span className="text-muted-foreground ml-1">
-                                      ({c.year}) {c.fineAmount > 0 ? formatFine(c.fineAmount) : c.outcomeSummary || "—"}
-                                    </span>
-                                  </Link>
-                                ))}
-                                {data.cases.length > 3 && (
-                                  <span className="text-[9px] font-mono text-muted-foreground">
-                                    +{data.cases.length - 3} more
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-
-                      {p.commonFindings.length > 0 && (
-                        <div className="mt-4 border-t-2 border-border pt-4">
-                          <h4 className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                            Common Legal Rationale
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {p.commonFindings.map((f) => (
-                              <span
-                                key={f}
-                                className="text-[10px] font-mono px-2 py-1 border-2 border-border bg-muted"
-                              >
-                                {f}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
           </div>
         )}
 
