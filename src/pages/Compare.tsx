@@ -194,27 +194,27 @@ const Compare = () => {
         </header>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="grid grid-cols-3 gap-3 max-w-2xl mx-auto">
           <select
             value={filterJurisdiction}
-            onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
-            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
+            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Jurisdictions</option>
             {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
           </select>
           <select
             value={filterViolation}
-            onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
-            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            onChange={(e) => { setFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
+            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Violations</option>
             {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
           </select>
           <select
             value={filterSector}
-            onChange={(e) => setFilterSector(e.target.value as Sector | "")}
-            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            onChange={(e) => { setFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
+            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Sectors</option>
             {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -414,17 +414,10 @@ const Compare = () => {
                       >
                         ×
                       </button>
-                      <h3 className="text-base font-mono font-bold uppercase tracking-wider pr-8">
+                      <h3 className="text-lg font-mono font-bold uppercase tracking-wider pr-8">
                         {getDisplayCompany(c)}
                       </h3>
                       <p className="text-xs font-mono text-muted-foreground mt-1">{c.jurisdiction} · {c.year}</p>
-                      <div className="mt-4 space-y-2.5">
-                        <Row label="Fine" value={c.fineAmount > 0 ? c.fineDisplay : c.outcomeSummary || "—"} />
-                        <Row label="Severity" value={`${c.severityForIndividuals}/10`} color={severityColor(c.severityForIndividuals)} />
-                        <Row label="Sector" value={c.sector} />
-                        <Row label="Violations" value={c.violations.join("; ")} />
-                        <Row label="Outcome" value={c.outcomeSummary || "Fine"} />
-                      </div>
                       {c.whatTheyDid && (
                         <div className="mt-4 pt-3 border-t border-border">
                           <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">What They Did</span>
@@ -452,7 +445,7 @@ const Compare = () => {
                     <table className="w-full border-collapse">
                       <thead>
                         <tr className="bg-black text-[#FFD700]">
-                          <th className="p-3 text-[10px] font-mono font-bold uppercase text-left border-r border-border/30 min-w-[120px]">
+                          <th className="p-4 text-sm font-mono font-bold uppercase text-left border-r border-border/30 min-w-[140px]">
                             Attribute
                           </th>
                           {selectedCaseObjects.map((c) => (
@@ -474,11 +467,11 @@ const Compare = () => {
                           { label: "Violation", fn: (c: EnforcementCase) => c.violations.join(", ") },
                         ].map((row, ri) => (
                           <tr key={row.label} className={ri % 2 === 0 ? "bg-card" : "bg-background"}>
-                            <td className="p-3 text-[10px] font-mono font-bold uppercase border-r-2 border-border">
+                            <td className="p-4 text-sm font-mono font-bold uppercase border-r-2 border-border">
                               {row.label}
                             </td>
                             {selectedCaseObjects.map((c) => (
-                              <td key={c.id} className="p-3 text-xs font-mono text-center border-r border-border/20">
+                              <td key={c.id} className="p-4 text-sm font-mono text-center border-r border-border/20">
                                 {row.fn(c)}
                               </td>
                             ))}
@@ -491,36 +484,9 @@ const Compare = () => {
               </div>
             )}
 
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-2">
+            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-4">
               {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
             </h3>
-
-            <div className="flex flex-wrap items-center gap-2 mb-4 pb-3 border-b border-border">
-              <select
-                value={filterJurisdiction}
-                onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
-                className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
-              >
-                <option value="">All Jurisdictions</option>
-                {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
-              </select>
-              <select
-                value={filterViolation}
-                onChange={(e) => { setFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
-                className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
-              >
-                <option value="">All Violations</option>
-                {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
-              </select>
-              <select
-                value={filterSector}
-                onChange={(e) => { setFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
-                className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
-              >
-                <option value="">All Sectors</option>
-                {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {filtered.slice(0, casesShown).map((c) => {
@@ -530,7 +496,7 @@ const Compare = () => {
                     key={c.id}
                     onClick={() => toggleCase(c.id)}
                     disabled={!isSelected && selectedCases.length >= 3}
-                    className={`text-left p-4 border-2 transition-all ${
+                    className={`text-left p-4 border-2 transition-all brutalist-shadow ${
                       isSelected
                         ? "border-black bg-black text-[#FFD700]"
                         : selectedCases.length >= 3
@@ -538,7 +504,7 @@ const Compare = () => {
                         : "border-border bg-card hover:border-black"
                     }`}
                   >
-                    <div className="text-sm font-mono font-bold uppercase tracking-wider">
+                    <div className="text-base font-mono font-bold uppercase tracking-wider">
                       {getDisplayCompany(c)}
                     </div>
                     <div className="text-xs font-mono mt-1 opacity-70">
