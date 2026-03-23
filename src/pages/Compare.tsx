@@ -425,16 +425,16 @@ const Compare = () => {
                         <Row label="Violations" value={c.violations.join("; ")} />
                         <Row label="Outcome" value={c.outcomeSummary || "Fine"} />
                       </div>
-                      {c.regulatoryFindings && c.regulatoryFindings.length > 0 && (
+                      {c.whatTheyDid && (
                         <div className="mt-4 pt-3 border-t border-border">
-                          <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">Legal Basis</span>
-                          <div className="mt-1.5 flex flex-wrap gap-1">
-                            {c.regulatoryFindings.slice(0, 3).map((f, i) => (
-                              <span key={i} className="text-[10px] font-mono px-2 py-0.5 bg-muted border border-border">
-                                {f.act}
-                              </span>
-                            ))}
-                          </div>
+                          <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">What They Did</span>
+                          <p className="text-xs font-mono mt-1.5 leading-relaxed">{c.whatTheyDid}</p>
+                        </div>
+                      )}
+                      {c.whyTheyWereWrong && (
+                        <div className="mt-3 pt-3 border-t border-border">
+                          <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">Why They Were Wrong</span>
+                          <p className="text-xs font-mono mt-1.5 leading-relaxed">{c.whyTheyWereWrong}</p>
                         </div>
                       )}
                       <Link
