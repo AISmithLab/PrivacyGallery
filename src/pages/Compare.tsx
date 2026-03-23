@@ -27,13 +27,19 @@ const CASES_PER_PAGE = 12;
 
 type DimensionKey = "jurisdiction" | "violation" | "sector" | "outcome" | "country" | "severity";
 
-const DIMENSIONS: { key: DimensionKey; label: string }[] = [
+const ROW_DIMENSIONS: { key: DimensionKey; label: string }[] = [
   { key: "jurisdiction", label: "Jurisdiction" },
   { key: "violation", label: "Violation Type" },
   { key: "sector", label: "Sector" },
   { key: "outcome", label: "Enforcement Outcome" },
   { key: "country", label: "Country" },
-  { key: "severity", label: "Severity Band" },
+];
+
+const COL_DIMENSIONS: { key: DimensionKey; label: string }[] = [
+  { key: "jurisdiction", label: "Jurisdiction" },
+  { key: "violation", label: "Violation Type" },
+  { key: "sector", label: "Sector" },
+  { key: "outcome", label: "Enforcement Outcome" },
 ];
 
 const getDimensionValues = (key: DimensionKey, data: EnforcementCase[]): string[] => {
@@ -74,11 +80,6 @@ type MetricKey = "count" | "avg_fine" | "median_fine" | "max_fine" | "pct_fined"
 const METRICS: { key: MetricKey; label: string }[] = [
   { key: "count", label: "Case Count" },
   { key: "avg_fine", label: "Average Fine" },
-  { key: "median_fine", label: "Median Fine" },
-  { key: "max_fine", label: "Max Fine" },
-  { key: "pct_fined", label: "% Fined" },
-  { key: "pct_reprimand", label: "% Reprimand" },
-  { key: "avg_severity", label: "Avg Severity" },
 ];
 
 const computeMetric = (cs: EnforcementCase[], metric: MetricKey): number => {
@@ -213,35 +214,31 @@ const Compare = () => {
     return "#22c55e";
   };
 
-  const rowLabel = DIMENSIONS.find((d) => d.key === rowDimension)?.label || "";
-  const colLabel = DIMENSIONS.find((d) => d.key === colDimension)?.label || "";
+  const rowLabel = ROW_DIMENSIONS.find((d) => d.key === rowDimension)?.label || "";
+  const colLabel = COL_DIMENSIONS.find((d) => d.key === colDimension)?.label || "";
   const metricLabel = METRICS.find((m) => m.key === metric)?.label || "";
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background" style={{ backgroundColor: "#F5F3EF" }}>
       <TopNav />
 
-      {/* Hero */}
-      <div className="border-b-4 border-border py-10 text-center" style={{ background: "#FFD700" }}>
-        <h1
-          className="text-5xl sm:text-7xl font-bold tracking-tighter uppercase"
-          style={{ fontFamily: "'Anton', sans-serif", color: "#000" }}
-        >
-          Compare Enforcement
-        </h1>
-        <p className="mt-2 text-sm font-mono uppercase tracking-widest text-black/70">
-          Exploration Lab · {filtered.length} cases loaded
-        </p>
-      </div>
+      <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
+        {/* Header */}
+        <header className="text-center mb-4">
+          <h1 className="hero-title text-6xl sm:text-8xl font-bold tracking-tighter uppercase leading-none">
+            Compare Case Features
+          </h1>
+          <p className="text-sm font-mono text-muted-foreground mt-3">
+            Explore relationships across jurisdictions, violations, sectors, and outcomes
+          </p>
+        </header>
 
-      {/* Global filters + view toggle */}
-      <div className="border-b-2 border-border bg-card">
-        <div className="max-w-[1800px] mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">Filter:</span>
+        {/* Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <select
             value={filterJurisdiction}
             onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
-            className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
+            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Jurisdictions</option>
             {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
@@ -249,7 +246,7 @@ const Compare = () => {
           <select
             value={filterViolation}
             onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
-            className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
+            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Violations</option>
             {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
@@ -257,12 +254,15 @@ const Compare = () => {
           <select
             value={filterSector}
             onChange={(e) => setFilterSector(e.target.value as Sector | "")}
-            className="border-2 border-border bg-background px-3 py-1.5 text-xs font-mono font-bold uppercase"
+            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Sectors</option>
             {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
-          <div className="flex-1" />
+        </div>
+
+        {/* View toggle */}
+        <div className="flex justify-center">
           <div className="flex border-2 border-border">
             {(["matrix", "patterns", "side-by-side"] as ViewMode[]).map((v) => (
               <button
@@ -277,10 +277,6 @@ const Compare = () => {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-[1800px] mx-auto px-4 py-8">
 
         {/* ═══ MATRIX VIEW ═══ */}
         {view === "matrix" && (
@@ -301,7 +297,7 @@ const Compare = () => {
                     Rows
                   </label>
                   <div className="flex flex-wrap gap-1.5">
-                    {DIMENSIONS.map((d) => (
+                    {ROW_DIMENSIONS.map((d) => (
                       <button
                         key={d.key}
                         onClick={() => { if (d.key === colDimension) setColDimension(rowDimension); setRowDimension(d.key); }}
@@ -323,7 +319,7 @@ const Compare = () => {
                     Columns
                   </label>
                   <div className="flex flex-wrap gap-1.5">
-                    {DIMENSIONS.map((d) => (
+                    {COL_DIMENSIONS.map((d) => (
                       <button
                         key={d.key}
                         onClick={() => { if (d.key === rowDimension) setRowDimension(colDimension); setColDimension(d.key); }}
@@ -344,15 +340,15 @@ const Compare = () => {
                   <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
                     Cell Metric
                   </label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="inline-flex border-2 border-black">
                     {METRICS.map((m) => (
                       <button
                         key={m.key}
                         onClick={() => setMetric(m.key)}
-                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
+                        className={`px-4 py-2 text-xs font-mono font-bold transition-all ${
                           metric === m.key
-                            ? "border-black bg-black text-[#FFD700]"
-                            : "border-border bg-background hover:border-black"
+                            ? "bg-black text-[#FFD700]"
+                            : "bg-background hover:bg-muted"
                         }`}
                       >
                         {m.label}
