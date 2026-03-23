@@ -200,7 +200,7 @@ const Compare = () => {
         {/* Header */}
         <header className="text-center mb-4">
           <h1 className="hero-title text-6xl sm:text-8xl font-bold tracking-tighter uppercase leading-none">
-            Compare Case Features
+            {view === "matrix" ? "Compare Features" : "Compare Cases"}
           </h1>
           <p className="text-sm font-mono text-muted-foreground mt-3">
             Explore relationships across jurisdictions, violations, sectors, and outcomes
@@ -218,7 +218,7 @@ const Compare = () => {
                   view === v ? "bg-black text-[#FFD700]" : "bg-background text-foreground hover:bg-muted"
                 }`}
               >
-                {v === "matrix" ? "Matrix" : "Compare"}
+                {v === "matrix" ? "Features" : "Cases"}
               </button>
             ))}
           </div>
