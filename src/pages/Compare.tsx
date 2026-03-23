@@ -237,7 +237,7 @@ const Compare = () => {
           <select
             value={filterJurisdiction}
             onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
-            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Jurisdictions</option>
             {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
@@ -245,7 +245,7 @@ const Compare = () => {
           <select
             value={filterViolation}
             onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
-            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Violations</option>
             {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
@@ -253,7 +253,7 @@ const Compare = () => {
           <select
             value={filterSector}
             onChange={(e) => setFilterSector(e.target.value as Sector | "")}
-            className="border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+            className="w-56 border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
           >
             <option value="">All Sectors</option>
             {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -281,7 +281,7 @@ const Compare = () => {
         {view === "matrix" && (
           <div>
             {/* Axis & Metric Control Panel */}
-            <div className="border-2 border-border bg-card p-6 mb-8 shadow-md">
+            <div className="border-2 border-border bg-card p-6 mb-8 brutalist-shadow">
               <h2 className="text-xl font-mono font-bold uppercase tracking-wider mb-1">
                 Configure Comparison
               </h2>
@@ -368,7 +368,7 @@ const Compare = () => {
             </div>
 
             {/* Matrix Table */}
-            <div className="overflow-x-auto border-2 border-border shadow-md">
+            <div className="overflow-x-auto border-2 border-border brutalist-shadow">
               <table className="w-full border-collapse" style={{ minWidth: `${Math.max(matrixData.colValues.length * 180, 800)}px` }}>
                 <thead>
                   <tr className="bg-black text-[#FFD700]">
@@ -447,7 +447,7 @@ const Compare = () => {
             {patterns.map((p) => {
               const isExpanded = expandedPattern === p.violation;
               return (
-                <div key={p.violation} className="border-2 border-border bg-card shadow-md">
+                <div key={p.violation} className="border-2 border-border bg-card brutalist-shadow">
                   <button
                     onClick={() => setExpandedPattern(isExpanded ? null : p.violation)}
                     className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/50 transition-colors"
@@ -478,7 +478,7 @@ const Compare = () => {
                         {[...p.jurisdictions.entries()]
                           .sort((a, b) => b[1].avgFine - a[1].avgFine)
                           .map(([jurisdiction, data]) => (
-                            <div key={jurisdiction} className="border-2 border-border bg-background p-4 shadow-sm">
+                            <div key={jurisdiction} className="border-2 border-border bg-background p-4 brutalist-shadow">
                               <div className="flex items-center justify-between mb-3">
                                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider">{jurisdiction}</h4>
                                 <span
@@ -564,7 +564,7 @@ const Compare = () => {
               <div className="mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
                   {selectedCaseObjects.map((c) => (
-                    <div key={c.id} className="border-2 border-black bg-card p-5 relative shadow-md">
+                    <div key={c.id} className="border-2 border-black bg-card p-5 relative brutalist-shadow">
                       <button
                         onClick={() => toggleCase(c.id)}
                         className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center text-sm font-mono font-bold bg-black text-white hover:bg-red-600 transition-colors"
@@ -605,7 +605,7 @@ const Compare = () => {
                 </div>
 
                 {selectedCaseObjects.length >= 2 && (
-                  <div className="border-2 border-border overflow-x-auto shadow-md">
+                  <div className="border-2 border-border overflow-x-auto brutalist-shadow">
                     <table className="w-full border-collapse">
                       <thead>
                         <tr className="bg-black text-[#FFD700]">
