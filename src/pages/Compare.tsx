@@ -32,7 +32,6 @@ const ROW_DIMENSIONS: { key: DimensionKey; label: string }[] = [
   { key: "violation", label: "Violation Type" },
   { key: "sector", label: "Sector" },
   { key: "outcome", label: "Enforcement Outcome" },
-  { key: "country", label: "Country" },
 ];
 
 const COL_DIMENSIONS: { key: DimensionKey; label: string }[] = [
@@ -222,7 +221,7 @@ const Compare = () => {
     <div className="min-h-screen bg-background" style={{ backgroundColor: "#F5F3EF" }}>
       <TopNav />
 
-      <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
+      <div className="max-w-[1400px] mx-auto px-6 py-8 space-y-8">
         {/* Header */}
         <header className="text-center mb-4">
           <h1 className="hero-title text-6xl sm:text-8xl font-bold tracking-tighter uppercase leading-none">
@@ -296,21 +295,19 @@ const Compare = () => {
                   <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
                     Rows
                   </label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <select
+                    value={rowDimension}
+                    onChange={(e) => {
+                      const key = e.target.value as DimensionKey;
+                      if (key === colDimension) setColDimension(rowDimension);
+                      setRowDimension(key);
+                    }}
+                    className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+                  >
                     {ROW_DIMENSIONS.map((d) => (
-                      <button
-                        key={d.key}
-                        onClick={() => { if (d.key === colDimension) setColDimension(rowDimension); setRowDimension(d.key); }}
-                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
-                          rowDimension === d.key
-                            ? "border-black bg-black text-[#FFD700]"
-                            : "border-border bg-background hover:border-black"
-                        }`}
-                      >
-                        {d.label}
-                      </button>
+                      <option key={d.key} value={d.key}>{d.label}</option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 {/* Columns */}
@@ -318,21 +315,19 @@ const Compare = () => {
                   <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground block mb-2">
                     Columns
                   </label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <select
+                    value={colDimension}
+                    onChange={(e) => {
+                      const key = e.target.value as DimensionKey;
+                      if (key === rowDimension) setRowDimension(colDimension);
+                      setColDimension(key);
+                    }}
+                    className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+                  >
                     {COL_DIMENSIONS.map((d) => (
-                      <button
-                        key={d.key}
-                        onClick={() => { if (d.key === rowDimension) setRowDimension(colDimension); setColDimension(d.key); }}
-                        className={`px-3 py-2 text-xs font-mono font-bold border-2 transition-all ${
-                          colDimension === d.key
-                            ? "border-black bg-black text-[#FFD700]"
-                            : "border-border bg-background hover:border-black"
-                        }`}
-                      >
-                        {d.label}
-                      </button>
+                      <option key={d.key} value={d.key}>{d.label}</option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 {/* Metric */}
