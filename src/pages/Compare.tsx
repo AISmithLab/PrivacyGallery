@@ -193,34 +193,6 @@ const Compare = () => {
           </p>
         </header>
 
-        {/* Filters */}
-        <div className="grid grid-cols-3 gap-3 max-w-2xl mx-auto">
-          <select
-            value={filterJurisdiction}
-            onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
-            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-          >
-            <option value="">All Jurisdictions</option>
-            {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
-          </select>
-          <select
-            value={filterViolation}
-            onChange={(e) => { setFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
-            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-          >
-            <option value="">All Violations</option>
-            {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
-          </select>
-          <select
-            value={filterSector}
-            onChange={(e) => { setFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
-            className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-          >
-            <option value="">All Sectors</option>
-            {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
-        </div>
-
         {/* View toggle */}
         <div className="flex justify-center">
           <div className="flex border-2 border-border">
@@ -246,9 +218,37 @@ const Compare = () => {
               <h2 className="text-xl font-mono font-bold uppercase tracking-wider mb-1">
                 Configure Comparison
               </h2>
-              <p className="text-xs font-mono text-muted-foreground mb-6">
+              <p className="text-xs font-mono text-muted-foreground mb-4">
                 Choose what to compare. Select rows, columns, and the metric to display in each cell.
               </p>
+
+              {/* Filters */}
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                <select
+                  value={filterJurisdiction}
+                  onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
+                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+                >
+                  <option value="">All Jurisdictions</option>
+                  {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
+                </select>
+                <select
+                  value={filterViolation}
+                  onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
+                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+                >
+                  <option value="">All Violations</option>
+                  {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
+                </select>
+                <select
+                  value={filterSector}
+                  onChange={(e) => setFilterSector(e.target.value as Sector | "")}
+                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+                >
+                  <option value="">All Sectors</option>
+                  {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Rows */}
@@ -432,7 +432,7 @@ const Compare = () => {
                       )}
                       <Link
                         to={`/case/${c.id}`}
-                        className="block mt-4 text-xs font-mono font-bold uppercase text-center py-2 border-2 border-border hover:bg-black hover:text-[#FFD700] transition-colors"
+                        className="block mt-4 text-xs font-mono font-bold uppercase text-center py-2 border-2 border-border hover:bg-[#FFD700] hover:border-[#D4A800] transition-colors"
                       >
                         View Full Case →
                       </Link>
@@ -484,6 +484,34 @@ const Compare = () => {
               </div>
             )}
 
+            {/* Filters */}
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              <select
+                value={filterJurisdiction}
+                onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
+                className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+              >
+                <option value="">All Jurisdictions</option>
+                {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
+              </select>
+              <select
+                value={filterViolation}
+                onChange={(e) => { setFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
+                className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+              >
+                <option value="">All Violations</option>
+                {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
+              </select>
+              <select
+                value={filterSector}
+                onChange={(e) => { setFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
+                className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
+              >
+                <option value="">All Sectors</option>
+                {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+
             <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-4">
               {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
             </h3>
@@ -496,9 +524,9 @@ const Compare = () => {
                     key={c.id}
                     onClick={() => toggleCase(c.id)}
                     disabled={!isSelected && selectedCases.length >= 3}
-                    className={`text-left p-4 border-2 transition-all brutalist-shadow ${
+                    className={`text-left p-4 border-2 transition-all ${
                       isSelected
-                        ? "border-black bg-black text-[#FFD700]"
+                        ? "border-[#D4A800] bg-[#FFD700]/20"
                         : selectedCases.length >= 3
                         ? "border-border bg-muted opacity-40 cursor-not-allowed"
                         : "border-border bg-card hover:border-black"
