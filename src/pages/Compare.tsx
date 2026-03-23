@@ -515,7 +515,7 @@ const Compare = () => {
                     key={c.id}
                     onClick={() => toggleCase(c.id)}
                     disabled={!isSelected && selectedCases.length >= 3}
-                    className={`text-left p-4 border-2 transition-all ${
+                    className={`text-left p-4 border-2 transition-all shadow-sm ${
                       isSelected
                         ? "border-[#D4A800] bg-[#FFD700]/20"
                         : selectedCases.length >= 3
