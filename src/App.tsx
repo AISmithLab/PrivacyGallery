@@ -9,6 +9,7 @@ import CaseDetail from "./pages/CaseDetail";
 import Leaderboard from "./pages/Leaderboard";
 import Compare from "./pages/Compare";
 import About from "./pages/About";
+import Explore from "./pages/Explore";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/case/:id" element={<CaseDetail />} />
           <Route path="/compare" element={<Compare />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />

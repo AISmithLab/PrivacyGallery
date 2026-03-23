@@ -523,7 +523,7 @@ const Compare = () => {
                         : "border-border bg-card hover:border-black"
                     }`}
                   >
-                    <div className="text-base font-mono font-bold uppercase tracking-wider">
+                    <div className="text-base font-mono font-black uppercase tracking-wider">
                       {getDisplayCompany(c)}
                     </div>
                     <div className="text-xs font-mono mt-1 opacity-70">
