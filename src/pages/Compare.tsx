@@ -218,37 +218,9 @@ const Compare = () => {
               <h2 className="text-xl font-mono font-bold uppercase tracking-wider mb-1">
                 Configure Comparison
               </h2>
-              <p className="text-xs font-mono text-muted-foreground mb-4">
+              <p className="text-xs font-mono text-muted-foreground mb-6">
                 Choose what to compare. Select rows, columns, and the metric to display in each cell.
               </p>
-
-              {/* Filters */}
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                <select
-                  value={filterJurisdiction}
-                  onChange={(e) => setFilterJurisdiction(e.target.value as Jurisdiction | "")}
-                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-                >
-                  <option value="">All Jurisdictions</option>
-                  {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
-                </select>
-                <select
-                  value={filterViolation}
-                  onChange={(e) => setFilterViolation(e.target.value as ViolationType | "")}
-                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-                >
-                  <option value="">All Violations</option>
-                  {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
-                </select>
-                <select
-                  value={filterSector}
-                  onChange={(e) => setFilterSector(e.target.value as Sector | "")}
-                  className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
-                >
-                  <option value="">All Sectors</option>
-                  {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
-                </select>
-              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Rows */}
@@ -418,16 +390,17 @@ const Compare = () => {
                         {getDisplayCompany(c)}
                       </h3>
                       <p className="text-xs font-mono text-muted-foreground mt-1">{c.jurisdiction} · {c.year}</p>
+                      <div className="mt-4 border-t-2 border-dashed border-border" />
                       {c.whatTheyDid && (
-                        <div className="mt-4 pt-3 border-t border-border">
-                          <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">What They Did</span>
-                          <p className="text-xs font-mono mt-1.5 leading-relaxed">{c.whatTheyDid}</p>
+                        <div className="mt-3">
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider" style={{ color: "#B8860B" }}>What They Did</span>
+                          <p className="text-sm font-mono mt-1.5 leading-relaxed">{c.whatTheyDid}</p>
                         </div>
                       )}
                       {c.whyTheyWereWrong && (
-                        <div className="mt-3 pt-3 border-t border-border">
-                          <span className="text-[10px] font-mono font-bold uppercase text-muted-foreground">Why They Were Wrong</span>
-                          <p className="text-xs font-mono mt-1.5 leading-relaxed">{c.whyTheyWereWrong}</p>
+                        <div className="mt-4">
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider" style={{ color: "#dc2626" }}>Why They Were Wrong</span>
+                          <p className="text-sm font-mono mt-1.5 leading-relaxed">{c.whyTheyWereWrong}</p>
                         </div>
                       )}
                       <Link
@@ -484,8 +457,11 @@ const Compare = () => {
               </div>
             )}
 
-            {/* Filters */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
+            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-3">
+              {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
+            </h3>
+
+            <div className="grid grid-cols-3 gap-3 mb-4">
               <select
                 value={filterJurisdiction}
                 onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
@@ -511,10 +487,6 @@ const Compare = () => {
                 {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
-
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-4">
-              {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
-            </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {filtered.slice(0, casesShown).map((c) => {
@@ -546,7 +518,7 @@ const Compare = () => {
             {casesShown < filtered.length && (
               <button
                 onClick={() => setCasesShown((prev) => prev + CASES_PER_PAGE)}
-                className="mt-4 w-full py-3 text-xs font-mono font-bold uppercase tracking-wider border-2 border-border bg-card hover:bg-black hover:text-[#FFD700] transition-colors"
+                className="mt-4 w-full py-3 text-xs font-mono font-bold uppercase tracking-wider border-2 border-[#D4A800] bg-[#FFD700] hover:bg-[#E6C200] transition-colors"
               >
                 Show More ({filtered.length - casesShown} remaining)
               </button>
