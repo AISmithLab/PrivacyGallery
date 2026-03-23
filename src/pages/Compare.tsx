@@ -208,7 +208,7 @@ const Compare = () => {
         </header>
 
         {/* View toggle */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center">
           <div className="flex border-2 border-border">
             {(["matrix", "side-by-side"] as ViewMode[]).map((v) => (
               <button
