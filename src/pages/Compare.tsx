@@ -108,9 +108,10 @@ const formatMetric = (val: number, metric: MetricKey): string => {
 
 const Compare = () => {
   const [view, setView] = useState<ViewMode>("matrix");
-  const [filterJurisdiction, setFilterJurisdiction] = useState<Jurisdiction | "">("US FTC");
-  const [filterViolation, setFilterViolation] = useState<ViolationType | "">("");
-  const [filterSector, setFilterSector] = useState<Sector | "">("");
+  // Compare case pool filters (default to all, but sorted FTC first)
+  const [compareFilterJurisdiction, setCompareFilterJurisdiction] = useState<Jurisdiction | "">("");
+  const [compareFilterViolation, setCompareFilterViolation] = useState<ViolationType | "">("");
+  const [compareFilterSector, setCompareFilterSector] = useState<Sector | "">("");
   const [selectedCases, setSelectedCases] = useState<string[]>([]);
   const [casesShown, setCasesShown] = useState(CASES_PER_PAGE);
 
@@ -119,14 +120,27 @@ const Compare = () => {
   const [colDimension, setColDimension] = useState<DimensionKey>("jurisdiction");
   const [metric, setMetric] = useState<MetricKey>("count");
 
-  const filtered = useMemo(() => {
-    return cases.filter((c) => {
-      if (filterJurisdiction && c.jurisdiction !== filterJurisdiction) return false;
-      if (filterViolation && !c.violations.includes(filterViolation)) return false;
-      if (filterSector && c.sector !== filterSector) return false;
+  // Matrix uses all cases
+  const filtered = useMemo(() => cases, []);
+
+  // Compare case pool uses its own filters, FTC cases sorted first
+  const compareFiltered = useMemo(() => {
+    const result = cases.filter((c) => {
+      if (compareFilterJurisdiction && c.jurisdiction !== compareFilterJurisdiction) return false;
+      if (compareFilterViolation && !c.violations.includes(compareFilterViolation)) return false;
+      if (compareFilterSector && c.sector !== compareFilterSector) return false;
       return true;
     });
-  }, [filterJurisdiction, filterViolation, filterSector]);
+    // Sort US FTC cases first when no jurisdiction filter is applied
+    if (!compareFilterJurisdiction) {
+      result.sort((a, b) => {
+        const aFtc = a.jurisdiction === "US FTC" ? 0 : 1;
+        const bFtc = b.jurisdiction === "US FTC" ? 0 : 1;
+        return aFtc - bFtc;
+      });
+    }
+    return result;
+  }, [compareFilterJurisdiction, compareFilterViolation, compareFilterSector]);
 
   /* ── Dynamic matrix ── */
   const matrixData = useMemo(() => {
@@ -463,24 +477,24 @@ const Compare = () => {
 
             <div className="grid grid-cols-3 gap-3 mb-4">
               <select
-                value={filterJurisdiction}
-                onChange={(e) => { setFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
+                value={compareFilterJurisdiction}
+                onChange={(e) => { setCompareFilterJurisdiction(e.target.value as Jurisdiction | ""); setCasesShown(CASES_PER_PAGE); }}
                 className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
               >
                 <option value="">All Jurisdictions</option>
                 {JURISDICTIONS.map((j) => <option key={j} value={j}>{j}</option>)}
               </select>
               <select
-                value={filterViolation}
-                onChange={(e) => { setFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
+                value={compareFilterViolation}
+                onChange={(e) => { setCompareFilterViolation(e.target.value as ViolationType | ""); setCasesShown(CASES_PER_PAGE); }}
                 className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
               >
                 <option value="">All Violations</option>
                 {VIOLATION_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}
               </select>
               <select
-                value={filterSector}
-                onChange={(e) => { setFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
+                value={compareFilterSector}
+                onChange={(e) => { setCompareFilterSector(e.target.value as Sector | ""); setCasesShown(CASES_PER_PAGE); }}
                 className="w-full border-2 border-border bg-background px-3 py-2 text-xs font-mono font-bold uppercase"
               >
                 <option value="">All Sectors</option>
@@ -489,7 +503,7 @@ const Compare = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {filtered.slice(0, casesShown).map((c) => {
+              {compareFiltered.slice(0, casesShown).map((c) => {
                 const isSelected = selectedCases.includes(c.id);
                 return (
                   <button
@@ -515,12 +529,12 @@ const Compare = () => {
               })}
             </div>
 
-            {casesShown < filtered.length && (
+            {casesShown < compareFiltered.length && (
               <button
                 onClick={() => setCasesShown((prev) => prev + CASES_PER_PAGE)}
                 className="mt-4 w-full py-3 text-xs font-mono font-bold uppercase tracking-wider border-2 border-[#D4A800] bg-[#FFD700] hover:bg-[#E6C200] transition-colors"
               >
-                Show More ({filtered.length - casesShown} remaining)
+                Show More ({compareFiltered.length - casesShown} remaining)
               </button>
             )}
           </div>
