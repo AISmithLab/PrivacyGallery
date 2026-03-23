@@ -222,6 +222,11 @@ const Compare = () => {
               </button>
             ))}
           </div>
+          <p className="text-xs font-mono text-muted-foreground mt-2">
+            {view === "matrix"
+              ? "Click Cases to compare individual cases side-by-side"
+              : "Click Features to explore patterns across jurisdictions and violations"}
+          </p>
         </div>
 
         {/* ═══ MATRIX VIEW ═══ */}
