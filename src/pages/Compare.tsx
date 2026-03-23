@@ -215,7 +215,7 @@ const Compare = () => {
                 key={v}
                 onClick={() => setView(v)}
                 className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition-colors ${
-                  view === v ? "bg-black text-[#FFD700]" : "bg-background text-foreground hover:bg-muted"
+                  view === v ? "bg-[#FFD700] text-black" : "bg-background text-foreground hover:bg-muted"
                 }`}
               >
                 {v === "matrix" ? "Features" : "Cases"}
@@ -294,7 +294,7 @@ const Compare = () => {
                         onClick={() => setMetric(m.key)}
                         className={`px-4 py-2 text-xs font-mono font-bold transition-all ${
                           metric === m.key
-                            ? "bg-black text-[#FFD700]"
+                            ? "bg-[#FFD700] text-black"
                             : "bg-background hover:bg-muted"
                         }`}
                       >
@@ -323,14 +323,14 @@ const Compare = () => {
             <div className="overflow-x-auto border-2 border-border brutalist-shadow">
               <table className="w-full border-collapse" style={{ minWidth: `${Math.max(matrixData.colValues.length * 180, 800)}px` }}>
                 <thead>
-                  <tr className="bg-black text-[#FFD700]">
-                    <th className="text-left p-5 text-sm font-mono font-bold uppercase tracking-wider border-r-2 border-border/50" style={{ minWidth: 260 }}>
+                  <tr className="bg-[#FFD700] text-black">
+                    <th className="text-left p-5 text-sm font-mono font-bold uppercase tracking-wider border-r-2 border-black/20" style={{ minWidth: 260 }}>
                       {rowLabel}
                     </th>
                     {matrixData.colValues.map((cv) => (
                       <th
                         key={cv}
-                        className="p-5 text-sm font-mono font-bold uppercase tracking-wider text-center border-r border-border/30"
+                        className="p-5 text-sm font-mono font-bold uppercase tracking-wider text-center border-r border-black/20"
                         style={{ minWidth: 170 }}
                       >
                         {cv}
@@ -436,12 +436,12 @@ const Compare = () => {
                   <div className="border-2 border-border overflow-x-auto brutalist-shadow">
                     <table className="w-full border-collapse">
                       <thead>
-                        <tr className="bg-black text-[#FFD700]">
-                          <th className="p-4 text-sm font-mono font-bold uppercase text-left border-r border-border/30 min-w-[140px]">
+                        <tr className="bg-[#FFD700] text-black">
+                          <th className="p-4 text-sm font-mono font-bold uppercase text-left border-r border-black/20 min-w-[140px]">
                             Attribute
                           </th>
                           {selectedCaseObjects.map((c) => (
-                            <th key={c.id} className="p-3 text-xs font-mono font-bold uppercase text-center border-r border-border/30">
+                            <th key={c.id} className="p-3 text-xs font-mono font-bold uppercase text-center border-r border-black/20">
                               {getDisplayCompany(c)}
                             </th>
                           ))}
@@ -515,7 +515,7 @@ const Compare = () => {
                     key={c.id}
                     onClick={() => toggleCase(c.id)}
                     disabled={!isSelected && selectedCases.length >= 3}
-                    className={`text-left p-4 border-2 transition-all shadow-sm ${
+                    className={`text-left p-4 border-2 transition-all shadow-md ${
                       isSelected
                         ? "border-[#D4A800] bg-[#FFD700]/20"
                         : selectedCases.length >= 3
