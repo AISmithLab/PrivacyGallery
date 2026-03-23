@@ -108,7 +108,7 @@ const formatMetric = (val: number, metric: MetricKey): string => {
 
 const Compare = () => {
   const [view, setView] = useState<ViewMode>("matrix");
-  const [filterJurisdiction, setFilterJurisdiction] = useState<Jurisdiction | "">("");
+  const [filterJurisdiction, setFilterJurisdiction] = useState<Jurisdiction | "">("US FTC");
   const [filterViolation, setFilterViolation] = useState<ViolationType | "">("");
   const [filterSector, setFilterSector] = useState<Sector | "">("");
   const [selectedCases, setSelectedCases] = useState<string[]>([]);
