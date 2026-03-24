@@ -15,6 +15,14 @@ function formatCurrency(amount: number): string {
   return `$${amount.toLocaleString()}`;
 }
 
+/** Format outcome for the table — show fine amount for Monetary Penalty */
+function formatOutcome(outcome: string, fine: number): string {
+  if (outcome === "Monetary Penalty" && fine > 0) {
+    return `${formatCurrency(fine)} fine`;
+  }
+  return outcome;
+}
+
 export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailProps) {
   const info = JURISDICTION_INFO[jurisdiction];
   const [lawsOpen, setLawsOpen] = useState(false);
@@ -79,14 +87,14 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
 
   return (
     <div className="border-2 border-black bg-card brutalist-shadow animate-in fade-in slide-in-from-top-2 duration-300">
-      {/* Header */}
+      {/* Header — matches CaseDetail h1 style: text-4xl/5xl font-bold */}
       <div className="px-6 py-5 border-b-2 border-black bg-card">
         <div className="flex items-center gap-5">
           <JurisdictionLogo jurisdiction={jurisdiction} className="w-16 h-16 shrink-0" />
           <div className="min-w-0">
-            <h2 className="hero-title text-3xl md:text-4xl tracking-tight uppercase leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase">
               {info.fullName}
-            </h2>
+            </h1>
             <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mt-1">
               {info.abbreviation}
             </p>
@@ -102,16 +110,14 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           <p className="text-[15px] leading-relaxed">{info.overview}</p>
         </section>
 
-        {/* 2. Enforcement Style */}
+        {/* 2. Enforcement Style — plain text, no box */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ ENFORCEMENT STYLE</h2>
           <div className="h-[3px] bg-border mb-4" />
-          <div className="brutalist-border info-box p-6">
-            <p className="text-[15px] leading-relaxed">{info.enforcementStyle}</p>
-          </div>
+          <p className="text-[15px] leading-relaxed">{info.enforcementStyle}</p>
         </section>
 
-        {/* 3. Main Privacy Laws — loot-drop accordion */}
+        {/* 3. Main Privacy Laws — loot-drop accordion, no dashed line after */}
         <section>
           <button
             type="button"
@@ -138,9 +144,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           )}
         </section>
 
-        <div className="border-t-2 border-dashed border-border" />
-
-        {/* 4. From Our Dataset — contains severity snapshot + bar charts + table */}
+        {/* 4. From Our Dataset */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ FROM OUR DATASET</h2>
           <div className="h-[3px] bg-border mb-4" />
@@ -148,9 +152,9 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
             {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
           </p>
 
-          {/* Severity Snapshot */}
+          {/* Severity Snapshot — 2x2 grid */}
           <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Severity Snapshot</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 gap-4 mb-8">
             <div className="detail-yellow-box p-4">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Total Fines</p>
               <p className="text-lg font-bold mt-1">{formatCurrency(stats.totalFines)}</p>
@@ -193,7 +197,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
                 {stats.topCompanies.map((c, i) => (
                   <tr key={c.name + c.year} className={`border-b border-border ${i % 2 === 0 ? "bg-card" : "bg-background"}`}>
                     <td className="px-4 py-2.5 font-bold">{c.name}</td>
-                    <td className="px-4 py-2.5 text-right text-xs">{c.outcome}</td>
+                    <td className="px-4 py-2.5 text-right text-xs">{formatOutcome(c.outcome, c.fine)}</td>
                     <td className="px-4 py-2.5 text-right">{c.year}</td>
                   </tr>
                 ))}
@@ -214,7 +218,6 @@ function BarSection({ title, data, total }: { title: string; data: [string, numb
       <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">{title}</p>
       <div className="space-y-3">
         {data.map(([label, count]) => {
-          // Bar width relative to the largest item so bars are visually distinct
           const barPct = maxCount > 0 ? (count / maxCount) * 100 : 0;
           return (
             <div key={label}>
