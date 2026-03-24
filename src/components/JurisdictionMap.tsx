@@ -50,9 +50,11 @@ export default function JurisdictionMap({
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{
-            scale: 130,
-            center: [10, 30],
+            scale: 150,
+            center: [20, 25],
           }}
+          width={800}
+          height={380}
           style={{ width: "100%", height: "auto" }}
         >
           <ZoomableGroup>
