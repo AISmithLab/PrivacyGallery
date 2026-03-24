@@ -10,6 +10,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Compare from "./pages/Compare";
 import About from "./pages/About";
 import Explore from "./pages/Explore";
+import Learn from "./pages/Learn";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/compare" element={<Compare />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/learn" element={<Learn />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

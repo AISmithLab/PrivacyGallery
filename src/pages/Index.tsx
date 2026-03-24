@@ -104,7 +104,7 @@ const Index = () => {
 
       {/* Page navigation cards */}
       <div className="max-w-[1200px] mx-auto px-6 pt-8 pb-2">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link
             to="/compare"
             className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
@@ -128,6 +128,14 @@ const Index = () => {
           >
             <p className="text-lg font-bold uppercase tracking-tight">Leaderboard</p>
             <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">Top Offenders</p>
+          </Link>
+          <Link
+            to="/learn"
+            className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
+            style={{ backgroundColor: "#C084FC", boxShadow: "6px 6px 0 #000" }}
+          >
+            <p className="text-lg font-bold uppercase tracking-tight">Learn</p>
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">Glossary & Terms</p>
           </Link>
         </div>
       </div>

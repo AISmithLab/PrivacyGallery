@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { label: "Compare", path: "/compare" },
   { label: "Explore", path: "/explore" },
   { label: "Leaderboard", path: "/leaderboard" },
+  { label: "Learn", path: "/learn" },
   { label: "About", path: "/about" },
 ];
 
