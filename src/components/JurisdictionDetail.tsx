@@ -85,7 +85,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
   return (
     <div className="border-2 border-black bg-card brutalist-shadow animate-in fade-in slide-in-from-top-2 duration-300">
       {/* Header — logo on left, large bold title */}
-      <div className="px-6 py-5 border-b-2 border-black" style={{ backgroundColor: info.color + "1A" }}>
+      <div className="px-6 py-5 border-b-2 border-black bg-card">
         <div className="flex items-center gap-5">
           <JurisdictionLogo jurisdiction={jurisdiction} className="w-16 h-16 shrink-0" />
           <div className="min-w-0">
@@ -159,7 +159,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           <Section title="Top Sectors Affected" yellowTitle>
             <div className="space-y-2.5">
               {stats.topSectors.map(([sector, count]) => (
-                <BarRow key={sector} label={sector} count={count} total={stats.totalCases} />
+                <BarRow key={sector} label={sector} count={count} total={stats.totalCases} maxCount={stats.topSectors[0]?.[1] ?? 1} />
               ))}
             </div>
           </Section>
@@ -168,7 +168,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           <Section title="Most Common Violations" yellowTitle>
             <div className="space-y-2.5">
               {stats.topViolations.map(([violation, count]) => (
-                <BarRow key={violation} label={violation} count={count} total={stats.totalCases} />
+                <BarRow key={violation} label={violation} count={count} total={stats.totalCases} maxCount={stats.topViolations[0]?.[1] ?? 1} />
               ))}
             </div>
           </Section>
@@ -177,7 +177,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           <Section title="Most Common Outcomes" yellowTitle>
             <div className="space-y-2.5">
               {stats.topOutcomes.map(([outcome, count]) => (
-                <BarRow key={outcome} label={outcome} count={count} total={stats.totalCases} />
+                <BarRow key={outcome} label={outcome} count={count} total={stats.totalCases} maxCount={stats.topOutcomes[0]?.[1] ?? 1} />
               ))}
             </div>
           </Section>
@@ -241,7 +241,7 @@ function Section({
 
 function StatBox({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border-2 border-border p-3 text-center" style={{ backgroundColor: "#FFD70020" }}>
+    <div className="border-2 border-black p-3 text-center" style={{ backgroundColor: "#FFD700" }}>
       <p className="text-xl font-bold">{value}</p>
       <p className="text-xs font-mono opacity-60 mt-0.5">{label}</p>
     </div>
@@ -276,9 +276,10 @@ function CollapsibleLaw({ name, year, description }: { name: string; year: numbe
   );
 }
 
-function BarRow({ label, count, total }: { label: string; count: number; total: number }) {
+function BarRow({ label, count, total, maxCount }: { label: string; count: number; total: number; maxCount: number }) {
   const pct = total > 0 ? (count / total) * 100 : 0;
-  // Scale bar relative to the max in the group — the largest item fills the full bar
+  // Bar width scales relative to the largest item in the group (largest = 100%)
+  const barWidth = maxCount > 0 ? (count / maxCount) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 min-w-0">
@@ -291,7 +292,7 @@ function BarRow({ label, count, total }: { label: string; count: number; total: 
         <div className="h-3 bg-border rounded-sm overflow-hidden">
           <div
             className="h-full bg-black rounded-sm transition-all duration-500"
-            style={{ width: `${pct}%` }}
+            style={{ width: `${barWidth}%` }}
           />
         </div>
       </div>
