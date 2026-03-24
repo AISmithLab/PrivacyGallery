@@ -476,7 +476,7 @@ const Compare = () => {
               </div>
             )}
 
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-3">
+            <h3 className="text-2xl font-bold uppercase tracking-tight mb-4 text-center">
               {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
             </h3>
 
