@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Plus, Minus } from "lucide-react";
 import { cases, getDisplayCompany, type Jurisdiction } from "@/data/cases";
 import { JURISDICTION_INFO } from "@/data/jurisdictionInfo";
 import { JurisdictionLogo } from "./JurisdictionLogos";
@@ -58,10 +59,16 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
 
+    // Top companies by fine — include outcome
     const topCompanies = [...jCases]
       .sort((a, b) => b.fineAmount - a.fineAmount)
       .slice(0, 5)
-      .map((c) => ({ name: getDisplayCompany(c), fine: c.fineAmount, year: c.year }));
+      .map((c) => ({
+        name: getDisplayCompany(c),
+        fine: c.fineAmount,
+        year: c.year,
+        outcome: c.outcomeSummary || "—",
+      }));
 
     return {
       totalCases, minYear, maxYear,
@@ -88,180 +95,173 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
         </div>
       </div>
 
-      <div className="p-6 space-y-8">
+      <div className="p-6 space-y-10">
         {/* Overview */}
-        <div>
-          <SectionLabel>Overview</SectionLabel>
-          <p className="text-sm leading-relaxed">{info.overview}</p>
-        </div>
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ OVERVIEW</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <p className="text-[15px] leading-relaxed">{info.overview}</p>
+        </section>
 
-        {/* Main Privacy Laws — entire section is collapsible */}
-        <div>
+        {/* Severity Snapshot — yellow detail boxes matching CaseDetail */}
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ SEVERITY SNAPSHOT</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Total Fines</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.totalFines)}</p>
+            </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Largest Fine</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.maxFine)}</p>
+            </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Avg Fine</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.avgFine)}</p>
+            </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">% Monetary</p>
+              <p className="text-lg font-bold mt-1">{stats.pctMonetary}%</p>
+            </div>
+          </div>
+          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mt-3">
+            {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
+          </p>
+        </section>
+
+        {/* Enforcement Style */}
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ ENFORCEMENT STYLE</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <div className="brutalist-border info-box p-6">
+            <p className="text-[15px] leading-relaxed">{info.enforcementStyle}</p>
+          </div>
+        </section>
+
+        {/* Main Privacy Laws — loot-drop accordion */}
+        <section>
           <button
             type="button"
-            onClick={() => setLawsOpen(!lawsOpen)}
-            className="w-full flex items-center justify-between gap-2 cursor-pointer group"
+            className="loot-drop-accordion-header"
+            onClick={() => setLawsOpen((o) => !o)}
           >
-            <SectionLabel>Main Privacy Laws</SectionLabel>
-            <span
-              className="text-[10px] font-mono font-bold shrink-0 transition-transform duration-200 text-muted-foreground"
-              style={{ transform: lawsOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-            >
-              ▼
+            <span className="loot-drop-circle">
+              {lawsOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
             </span>
+            <span className="loot-drop-accordion-title">Main Privacy Laws</span>
+            {lawsOpen ? <Minus className="w-6 h-6 shrink-0" /> : <Plus className="w-6 h-6 shrink-0" />}
           </button>
           {lawsOpen && (
-            <div className="mt-3 space-y-3 animate-in fade-in slide-in-from-top-1 duration-200">
+            <div className="loot-drop-accordion-content space-y-4">
               {info.laws.map((law) => (
-                <div key={law.name} className="border-l-4 border-black pl-4">
+                <div key={law.name} className="brutalist-border info-box p-4" style={{ borderLeftWidth: "4px", borderLeftColor: "#FFD700" }}>
                   <p className="text-sm font-bold">
                     {law.name} <span className="font-normal opacity-60">({law.year})</span>
                   </p>
-                  <p className="text-xs leading-relaxed mt-1 opacity-80">{law.description}</p>
+                  <p className="text-sm leading-relaxed mt-2 opacity-80">{law.description}</p>
                 </div>
               ))}
             </div>
           )}
-        </div>
-
-        {/* Enforcement Authority */}
-        <div>
-          <SectionLabel>Enforcement Authority</SectionLabel>
-          <div className="border-l-4 border-black pl-4 mt-1">
-            <p className="text-sm font-bold">
-              {info.authority.name}{" "}
-              <span className="font-normal opacity-60">({info.authority.acronym})</span>
-            </p>
-            <p className="text-xs leading-relaxed mt-1 opacity-80">{info.authority.role}</p>
-          </div>
-        </div>
-
-        {/* Enforcement Style */}
-        <div>
-          <SectionLabel>Enforcement Style</SectionLabel>
-          <p className="text-sm leading-relaxed">{info.enforcementStyle}</p>
-        </div>
-
-        <div className="border-t-2 border-dashed border-border" />
-
-        {/* Dataset Stats Header */}
-        <div>
-          <h3 className="hero-title text-2xl uppercase tracking-tight mb-1">From Our Dataset</h3>
-          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
-          </p>
-        </div>
+        </section>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Severity Snapshot */}
-          <div>
-            <SectionLabel>Severity Snapshot</SectionLabel>
-            <div className="grid grid-cols-2 gap-3 mt-1">
-              <StatBox label="Total Fines" value={formatCurrency(stats.totalFines)} />
-              <StatBox label="Largest Fine" value={formatCurrency(stats.maxFine)} />
-              <StatBox label="Avg Fine" value={formatCurrency(stats.avgFine)} />
-              <StatBox label="% Monetary" value={`${stats.pctMonetary}%`} />
-            </div>
-          </div>
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ FROM OUR DATASET</h2>
+          <div className="h-[3px] bg-border mb-6" />
 
-          {/* Top Sectors */}
-          <div>
-            <SectionLabel>Top Sectors Affected</SectionLabel>
-            <div className="space-y-2.5 mt-1">
-              {stats.topSectors.map(([sector, count]) => (
-                <BarRow key={sector} label={sector} count={count} total={stats.totalCases} />
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Top Sectors */}
+            <div>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Top Sectors Affected</p>
+              <div className="space-y-3">
+                {stats.topSectors.map(([sector, count]) => {
+                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
+                  return (
+                    <div key={sector}>
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="text-sm font-bold truncate">{sector}</span>
+                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
+                      </div>
+                      <div className="h-2.5 bg-border overflow-hidden">
+                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Most Common Violations */}
-          <div>
-            <SectionLabel>Most Common Violations</SectionLabel>
-            <div className="space-y-2.5 mt-1">
-              {stats.topViolations.map(([violation, count]) => (
-                <BarRow key={violation} label={violation} count={count} total={stats.totalCases} />
-              ))}
+            {/* Most Common Violations */}
+            <div>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Most Common Violations</p>
+              <div className="space-y-3">
+                {stats.topViolations.map(([violation, count]) => {
+                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
+                  return (
+                    <div key={violation}>
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="text-sm font-bold truncate">{violation}</span>
+                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
+                      </div>
+                      <div className="h-2.5 bg-border overflow-hidden">
+                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Most Common Outcomes */}
-          <div>
-            <SectionLabel>Most Common Outcomes</SectionLabel>
-            <div className="space-y-2.5 mt-1">
-              {stats.topOutcomes.map(([outcome, count]) => (
-                <BarRow key={outcome} label={outcome} count={count} total={stats.totalCases} />
-              ))}
+            {/* Most Common Outcomes */}
+            <div className="md:col-span-2">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Most Common Outcomes</p>
+              <div className="space-y-3">
+                {stats.topOutcomes.map(([outcome, count]) => {
+                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
+                  return (
+                    <div key={outcome}>
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="text-sm font-bold truncate">{outcome}</span>
+                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
+                      </div>
+                      <div className="h-2.5 bg-border overflow-hidden">
+                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Top Companies */}
-        <div>
-          <SectionLabel>Top Companies by Fine</SectionLabel>
-          <div className="border-2 border-border mt-1">
-            <table className="w-full text-sm font-mono">
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">\ TOP COMPANIES</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <div className="border-2 border-black">
+            <table className="w-full text-sm">
               <thead>
-                <tr className="border-b-2 border-border bg-background">
-                  <th className="text-left px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Company</th>
-                  <th className="text-right px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Fine</th>
-                  <th className="text-right px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Year</th>
+                <tr className="border-b-2 border-black" style={{ backgroundColor: "#FFD700" }}>
+                  <th className="text-left px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-widest">Company</th>
+                  <th className="text-right px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-widest">Outcome</th>
+                  <th className="text-right px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-widest">Year</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="font-mono">
                 {stats.topCompanies.map((c, i) => (
-                  <tr key={c.name + c.year} className={i % 2 === 0 ? "bg-card" : "bg-background"}>
-                    <td className="px-3 py-2 font-bold">{c.name}</td>
-                    <td className="px-3 py-2 text-right">
-                      {c.fine > 0 ? formatCurrency(c.fine) : "—"}
-                    </td>
-                    <td className="px-3 py-2 text-right">{c.year}</td>
+                  <tr key={c.name + c.year} className={`border-b border-border ${i % 2 === 0 ? "bg-card" : "bg-background"}`}>
+                    <td className="px-4 py-2.5 font-bold">{c.name}</td>
+                    <td className="px-4 py-2.5 text-right text-xs">{c.outcome}</td>
+                    <td className="px-4 py-2.5 text-right">{c.year}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/** Consistent section label matching the site-wide pattern */
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">
-      {children}
-    </p>
-  );
-}
-
-function StatBox({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="border-2 border-black p-3 text-center" style={{ backgroundColor: "#FFD700" }}>
-      <p className="text-xl font-bold">{value}</p>
-      <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-60 mt-0.5">{label}</p>
-    </div>
-  );
-}
-
-function BarRow({ label, count, total }: { label: string; count: number; total: number }) {
-  const pct = total > 0 ? (count / total) * 100 : 0;
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline justify-between mb-1">
-          <span className="text-xs font-mono truncate">{label}</span>
-          <span className="text-xs font-mono font-bold ml-2 shrink-0">
-            {Math.round(pct)}% <span className="opacity-50">({count})</span>
-          </span>
-        </div>
-        <div className="h-3 bg-border rounded-sm overflow-hidden">
-          <div
-            className="h-full bg-black rounded-sm transition-all duration-500"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
+        </section>
       </div>
     </div>
   );
