@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth, getDisplayCompany } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import ControlBar from "@/components/ControlBar";
@@ -101,6 +101,44 @@ const Index = () => {
           in fines.
         </p>
       </header>
+
+      {/* Page navigation cards */}
+      <div className="max-w-[1200px] mx-auto px-6 pt-8 pb-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Link
+            to="/compare"
+            className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
+            style={{ backgroundColor: "#4ADE80", boxShadow: "6px 6px 0 #000" }}
+          >
+            <p className="text-lg font-bold uppercase tracking-tight">Compare</p>
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">Side-by-Side Cases</p>
+          </Link>
+          <Link
+            to="/explore"
+            className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
+            style={{ backgroundColor: "#60A5FA", boxShadow: "6px 6px 0 #000" }}
+          >
+            <p className="text-lg font-bold uppercase tracking-tight">Explore</p>
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">Jurisdiction Map</p>
+          </Link>
+          <Link
+            to="/leaderboard"
+            className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
+            style={{ backgroundColor: "#F472B6", boxShadow: "6px 6px 0 #000" }}
+          >
+            <p className="text-lg font-bold uppercase tracking-tight">Leaderboard</p>
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">Top Offenders</p>
+          </Link>
+          <Link
+            to="/about"
+            className="border-2 border-black p-5 text-center transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(0,0,0,1)]"
+            style={{ backgroundColor: "#FFD700", boxShadow: "6px 6px 0 #000" }}
+          >
+            <p className="text-lg font-bold uppercase tracking-tight">About</p>
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest mt-1 opacity-70">The Project</p>
+          </Link>
+        </div>
+      </div>
 
       {/* Main layout — no sidebar */}
       <div className="max-w-[1200px] mx-auto px-6 py-6 space-y-4">
