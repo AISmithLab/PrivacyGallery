@@ -26,26 +26,33 @@ const TopNav = () => {
       </Link>
 
       <div className="flex items-center gap-1">
-        {NAV_ITEMS.map((item) => {
-          const isActive =
-            item.path === "/"
-              ? location.pathname === "/" || location.pathname.startsWith("/case/")
-              : location.pathname === item.path;
+        {NAV_ITEMS
+          .filter((item) => {
+            // On homepage, only show About
+            const isHome = location.pathname === "/" || location.pathname.startsWith("/case/");
+            if (isHome) return item.path === "/about";
+            return true;
+          })
+          .map((item) => {
+            const isActive =
+              item.path === "/"
+                ? location.pathname === "/" || location.pathname.startsWith("/case/")
+                : location.pathname === item.path;
 
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition-all border-2 ${
-                isActive
-                  ? "bg-black text-[#FFD700] border-black"
-                  : "bg-transparent text-black border-transparent hover:border-black"
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition-all border-2 ${
+                  isActive
+                    ? "bg-black text-[#FFD700] border-black"
+                    : "bg-transparent text-black border-transparent hover:border-black"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
       </div>
     </nav>
   );
