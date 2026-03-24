@@ -48,13 +48,13 @@ export default function JurisdictionMap({
       {/* Map */}
       <div className="relative">
         <ComposableMap
-          projection="geoMercator"
+          projection="geoEqualEarth"
           projectionConfig={{
-            scale: 150,
-            center: [20, 25],
+            scale: 120,
+            center: [10, 15],
           }}
-          width={800}
-          height={380}
+          width={900}
+          height={330}
           style={{ width: "100%", height: "auto" }}
         >
           <ZoomableGroup>
