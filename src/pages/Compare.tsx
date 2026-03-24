@@ -387,12 +387,7 @@ const Compare = () => {
         {/* ═══ SIDE-BY-SIDE VIEW ═══ */}
         {view === "side-by-side" && (
           <div>
-            <h2 className="text-lg font-mono font-bold uppercase tracking-wider mb-1">
-              Side-by-Side Comparison
-            </h2>
-            <p className="text-xs font-mono text-muted-foreground mb-4">
-              Select up to 3 cases to compare.
-            </p>
+            {/* heading moved to centered version below */}
 
             {selectedCaseObjects.length > 0 && (
               <div className="mb-8">
@@ -476,9 +471,12 @@ const Compare = () => {
               </div>
             )}
 
-            <h3 className="text-2xl font-bold uppercase tracking-tight mb-4 text-center">
+            <h3 className="text-2xl font-bold uppercase tracking-tight mb-1 text-center">
               {selectedCases.length < 3 ? "Select Cases to Compare" : "Maximum 3 cases selected"}
             </h3>
+            <p className="text-xs font-mono text-muted-foreground mb-4 text-center">
+              Select up to 3 cases to compare.
+            </p>
 
             <div className="grid grid-cols-3 gap-3 mb-4">
               <select
