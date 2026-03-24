@@ -59,7 +59,6 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
 
-    // Top companies by fine — include outcome
     const topCompanies = [...jCases]
       .sort((a, b) => b.fineAmount - a.fineAmount)
       .slice(0, 5)
@@ -96,41 +95,14 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       </div>
 
       <div className="p-6 space-y-10">
-        {/* Overview */}
+        {/* 1. Overview */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ OVERVIEW</h2>
           <div className="h-[3px] bg-border mb-4" />
           <p className="text-[15px] leading-relaxed">{info.overview}</p>
         </section>
 
-        {/* Severity Snapshot — yellow detail boxes matching CaseDetail */}
-        <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">\ SEVERITY SNAPSHOT</h2>
-          <div className="h-[3px] bg-border mb-4" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Total Fines</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.totalFines)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Largest Fine</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.maxFine)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Avg Fine</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.avgFine)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">% Monetary</p>
-              <p className="text-lg font-bold mt-1">{stats.pctMonetary}%</p>
-            </div>
-          </div>
-          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mt-3">
-            {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
-          </p>
-        </section>
-
-        {/* Enforcement Style */}
+        {/* 2. Enforcement Style */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ ENFORCEMENT STYLE</h2>
           <div className="h-[3px] bg-border mb-4" />
@@ -139,7 +111,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           </div>
         </section>
 
-        {/* Main Privacy Laws — loot-drop accordion */}
+        {/* 3. Main Privacy Laws — loot-drop accordion */}
         <section>
           <button
             type="button"
@@ -166,81 +138,48 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
           )}
         </section>
 
-        {/* Stats Grid */}
+        <div className="border-t-2 border-dashed border-border" />
+
+        {/* 4. From Our Dataset — contains severity snapshot + bar charts + table */}
         <section>
           <h2 className="text-2xl font-bold tracking-tight mb-4">\ FROM OUR DATASET</h2>
-          <div className="h-[3px] bg-border mb-6" />
+          <div className="h-[3px] bg-border mb-4" />
+          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-6">
+            {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Top Sectors */}
-            <div>
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Top Sectors Affected</p>
-              <div className="space-y-3">
-                {stats.topSectors.map(([sector, count]) => {
-                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
-                  return (
-                    <div key={sector}>
-                      <div className="flex items-baseline justify-between mb-1">
-                        <span className="text-sm font-bold truncate">{sector}</span>
-                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
-                      </div>
-                      <div className="h-2.5 bg-border overflow-hidden">
-                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* Severity Snapshot */}
+          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Severity Snapshot</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Total Fines</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.totalFines)}</p>
             </div>
-
-            {/* Most Common Violations */}
-            <div>
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Most Common Violations</p>
-              <div className="space-y-3">
-                {stats.topViolations.map(([violation, count]) => {
-                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
-                  return (
-                    <div key={violation}>
-                      <div className="flex items-baseline justify-between mb-1">
-                        <span className="text-sm font-bold truncate">{violation}</span>
-                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
-                      </div>
-                      <div className="h-2.5 bg-border overflow-hidden">
-                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Largest Fine</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.maxFine)}</p>
             </div>
-
-            {/* Most Common Outcomes */}
-            <div className="md:col-span-2">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Most Common Outcomes</p>
-              <div className="space-y-3">
-                {stats.topOutcomes.map(([outcome, count]) => {
-                  const pct = stats.totalCases > 0 ? (count / stats.totalCases) * 100 : 0;
-                  return (
-                    <div key={outcome}>
-                      <div className="flex items-baseline justify-between mb-1">
-                        <span className="text-sm font-bold truncate">{outcome}</span>
-                        <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
-                      </div>
-                      <div className="h-2.5 bg-border overflow-hidden">
-                        <div className="h-full bg-black transition-all duration-500" style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Avg Fine</p>
+              <p className="text-lg font-bold mt-1">{formatCurrency(stats.avgFine)}</p>
+            </div>
+            <div className="detail-yellow-box p-4">
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">% Monetary</p>
+              <p className="text-lg font-bold mt-1">{stats.pctMonetary}%</p>
             </div>
           </div>
-        </section>
 
-        {/* Top Companies */}
-        <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">\ TOP COMPANIES</h2>
-          <div className="h-[3px] bg-border mb-4" />
+          {/* Bar charts grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <BarSection title="Top Sectors Affected" data={stats.topSectors} total={stats.totalCases} />
+            <BarSection title="Most Common Violations" data={stats.topViolations} total={stats.totalCases} />
+            <div className="md:col-span-2">
+              <BarSection title="Most Common Outcomes" data={stats.topOutcomes} total={stats.totalCases} />
+            </div>
+          </div>
+
+          {/* Top Companies table */}
+          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Top Companies</p>
           <div className="border-2 border-black">
             <table className="w-full text-sm">
               <thead>
@@ -262,6 +201,33 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
             </table>
           </div>
         </section>
+      </div>
+    </div>
+  );
+}
+
+/** Bar chart section with a label header and proportional bars */
+function BarSection({ title, data, total }: { title: string; data: [string, number][]; total: number }) {
+  const maxCount = data.length > 0 ? data[0][1] : 1;
+  return (
+    <div>
+      <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">{title}</p>
+      <div className="space-y-3">
+        {data.map(([label, count]) => {
+          // Bar width relative to the largest item so bars are visually distinct
+          const barPct = maxCount > 0 ? (count / maxCount) * 100 : 0;
+          return (
+            <div key={label}>
+              <div className="flex items-baseline justify-between mb-1">
+                <span className="text-sm font-bold truncate">{label}</span>
+                <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
+              </div>
+              <div className="h-2.5 overflow-hidden" style={{ backgroundColor: "#e5e5e5" }}>
+                <div className="h-full bg-black transition-all duration-500" style={{ width: `${barPct}%` }} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
