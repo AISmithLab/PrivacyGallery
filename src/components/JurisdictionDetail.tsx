@@ -16,6 +16,7 @@ function formatCurrency(amount: number): string {
 
 export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailProps) {
   const info = JURISDICTION_INFO[jurisdiction];
+  const [lawsOpen, setLawsOpen] = useState(false);
 
   const stats = useMemo(() => {
     const jCases = cases.filter((c) => c.jurisdiction === jurisdiction);
@@ -24,7 +25,6 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
     const minYear = years[0] || 0;
     const maxYear = years[years.length - 1] || 0;
 
-    // Violation counts
     const violationCounts: Record<string, number> = {};
     for (const c of jCases) {
       for (const v of c.violations) {
@@ -35,7 +35,6 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
 
-    // Outcome counts
     const outcomeCounts: Record<string, number> = {};
     for (const c of jCases) {
       const outcome = c.outcomeSummary || "Unknown";
@@ -45,14 +44,12 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
 
-    // Severity
     const casesWithFines = jCases.filter((c) => c.fineAmount > 0);
     const totalFines = casesWithFines.reduce((sum, c) => sum + c.fineAmount, 0);
     const avgFine = casesWithFines.length > 0 ? totalFines / casesWithFines.length : 0;
     const maxFine = casesWithFines.length > 0 ? Math.max(...casesWithFines.map((c) => c.fineAmount)) : 0;
     const pctMonetary = totalCases > 0 ? Math.round((casesWithFines.length / totalCases) * 100) : 0;
 
-    // Sector counts
     const sectorCounts: Record<string, number> = {};
     for (const c of jCases) {
       sectorCounts[c.sector] = (sectorCounts[c.sector] || 0) + 1;
@@ -61,137 +58,154 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
 
-    // Top companies by fine
     const topCompanies = [...jCases]
       .sort((a, b) => b.fineAmount - a.fineAmount)
       .slice(0, 5)
       .map((c) => ({ name: getDisplayCompany(c), fine: c.fineAmount, year: c.year }));
 
     return {
-      totalCases,
-      minYear,
-      maxYear,
-      topViolations,
-      topOutcomes,
-      totalFines,
-      avgFine,
-      maxFine,
-      pctMonetary,
-      topSectors,
-      topCompanies,
+      totalCases, minYear, maxYear,
+      topViolations, topOutcomes,
+      totalFines, avgFine, maxFine, pctMonetary,
+      topSectors, topCompanies,
     };
   }, [jurisdiction]);
 
   return (
     <div className="border-2 border-black bg-card brutalist-shadow animate-in fade-in slide-in-from-top-2 duration-300">
-      {/* Header — logo on left, large bold title */}
+      {/* Header */}
       <div className="px-6 py-5 border-b-2 border-black bg-card">
         <div className="flex items-center gap-5">
           <JurisdictionLogo jurisdiction={jurisdiction} className="w-16 h-16 shrink-0" />
           <div className="min-w-0">
-            <h2
-              className="text-3xl md:text-4xl tracking-tight uppercase leading-tight"
-              style={{ fontFamily: "Anton, sans-serif", fontWeight: 400 }}
-            >
+            <h2 className="hero-title text-3xl md:text-4xl tracking-tight uppercase leading-tight">
               {info.fullName}
             </h2>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider opacity-60">
+            <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mt-1">
               {info.abbreviation}
-            </span>
+            </p>
           </div>
         </div>
       </div>
 
       <div className="p-6 space-y-8">
         {/* Overview */}
-        <Section title="Overview">
+        <div>
+          <SectionLabel>Overview</SectionLabel>
           <p className="text-sm leading-relaxed">{info.overview}</p>
-        </Section>
+        </div>
 
-        {/* Main Privacy Laws — collapsible */}
-        <Section title="Main Privacy Laws">
-          <div className="space-y-2">
-            {info.laws.map((law) => (
-              <CollapsibleLaw key={law.name} name={law.name} year={law.year} description={law.description} />
-            ))}
-          </div>
-        </Section>
+        {/* Main Privacy Laws — entire section is collapsible */}
+        <div>
+          <button
+            type="button"
+            onClick={() => setLawsOpen(!lawsOpen)}
+            className="w-full flex items-center justify-between gap-2 cursor-pointer group"
+          >
+            <SectionLabel>Main Privacy Laws</SectionLabel>
+            <span
+              className="text-[10px] font-mono font-bold shrink-0 transition-transform duration-200 text-muted-foreground"
+              style={{ transform: lawsOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+            >
+              ▼
+            </span>
+          </button>
+          {lawsOpen && (
+            <div className="mt-3 space-y-3 animate-in fade-in slide-in-from-top-1 duration-200">
+              {info.laws.map((law) => (
+                <div key={law.name} className="border-l-4 border-black pl-4">
+                  <p className="text-sm font-bold">
+                    {law.name} <span className="font-normal opacity-60">({law.year})</span>
+                  </p>
+                  <p className="text-xs leading-relaxed mt-1 opacity-80">{law.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Enforcement Authority */}
-        <Section title="Enforcement Authority">
-          <div className="border-l-4 border-black pl-4">
+        <div>
+          <SectionLabel>Enforcement Authority</SectionLabel>
+          <div className="border-l-4 border-black pl-4 mt-1">
             <p className="text-sm font-bold">
               {info.authority.name}{" "}
               <span className="font-normal opacity-60">({info.authority.acronym})</span>
             </p>
             <p className="text-xs leading-relaxed mt-1 opacity-80">{info.authority.role}</p>
           </div>
-        </Section>
+        </div>
 
         {/* Enforcement Style */}
-        <Section title="Enforcement Style">
+        <div>
+          <SectionLabel>Enforcement Style</SectionLabel>
           <p className="text-sm leading-relaxed">{info.enforcementStyle}</p>
-        </Section>
+        </div>
 
         <div className="border-t-2 border-dashed border-border" />
 
         {/* Dataset Stats Header */}
         <div>
-          <h3 className="text-lg font-bold uppercase tracking-wider mb-1">From Our Dataset</h3>
-          <p className="text-xs font-mono opacity-60">
+          <h3 className="hero-title text-2xl uppercase tracking-tight mb-1">From Our Dataset</h3>
+          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">
             {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
           </p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Severity Snapshot — yellow shading */}
-          <Section title="Severity Snapshot" yellowTitle>
-            <div className="grid grid-cols-2 gap-3">
+          {/* Severity Snapshot */}
+          <div>
+            <SectionLabel>Severity Snapshot</SectionLabel>
+            <div className="grid grid-cols-2 gap-3 mt-1">
               <StatBox label="Total Fines" value={formatCurrency(stats.totalFines)} />
               <StatBox label="Largest Fine" value={formatCurrency(stats.maxFine)} />
               <StatBox label="Avg Fine" value={formatCurrency(stats.avgFine)} />
               <StatBox label="% Monetary" value={`${stats.pctMonetary}%`} />
             </div>
-          </Section>
+          </div>
 
           {/* Top Sectors */}
-          <Section title="Top Sectors Affected" yellowTitle>
-            <div className="space-y-2.5">
+          <div>
+            <SectionLabel>Top Sectors Affected</SectionLabel>
+            <div className="space-y-2.5 mt-1">
               {stats.topSectors.map(([sector, count]) => (
-                <BarRow key={sector} label={sector} count={count} total={stats.totalCases} maxCount={stats.topSectors[0]?.[1] ?? 1} />
+                <BarRow key={sector} label={sector} count={count} total={stats.totalCases} />
               ))}
             </div>
-          </Section>
+          </div>
 
           {/* Most Common Violations */}
-          <Section title="Most Common Violations" yellowTitle>
-            <div className="space-y-2.5">
+          <div>
+            <SectionLabel>Most Common Violations</SectionLabel>
+            <div className="space-y-2.5 mt-1">
               {stats.topViolations.map(([violation, count]) => (
-                <BarRow key={violation} label={violation} count={count} total={stats.totalCases} maxCount={stats.topViolations[0]?.[1] ?? 1} />
+                <BarRow key={violation} label={violation} count={count} total={stats.totalCases} />
               ))}
             </div>
-          </Section>
+          </div>
 
           {/* Most Common Outcomes */}
-          <Section title="Most Common Outcomes" yellowTitle>
-            <div className="space-y-2.5">
+          <div>
+            <SectionLabel>Most Common Outcomes</SectionLabel>
+            <div className="space-y-2.5 mt-1">
               {stats.topOutcomes.map(([outcome, count]) => (
-                <BarRow key={outcome} label={outcome} count={count} total={stats.totalCases} maxCount={stats.topOutcomes[0]?.[1] ?? 1} />
+                <BarRow key={outcome} label={outcome} count={count} total={stats.totalCases} />
               ))}
             </div>
-          </Section>
+          </div>
         </div>
 
         {/* Top Companies */}
-        <Section title="Top Companies by Fine" yellowTitle>
-          <div className="border-2 border-border">
+        <div>
+          <SectionLabel>Top Companies by Fine</SectionLabel>
+          <div className="border-2 border-border mt-1">
             <table className="w-full text-sm font-mono">
               <thead>
                 <tr className="border-b-2 border-border bg-background">
-                  <th className="text-left px-3 py-2 text-xs font-bold uppercase tracking-wider">Company</th>
-                  <th className="text-right px-3 py-2 text-xs font-bold uppercase tracking-wider">Fine</th>
-                  <th className="text-right px-3 py-2 text-xs font-bold uppercase tracking-wider">Year</th>
+                  <th className="text-left px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Company</th>
+                  <th className="text-right px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Fine</th>
+                  <th className="text-right px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest">Year</th>
                 </tr>
               </thead>
               <tbody>
@@ -207,35 +221,18 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
               </tbody>
             </table>
           </div>
-        </Section>
+        </div>
       </div>
     </div>
   );
 }
 
-function Section({
-  title,
-  children,
-  yellowTitle = false,
-}: {
-  title: string;
-  children: React.ReactNode;
-  yellowTitle?: boolean;
-}) {
+/** Consistent section label matching the site-wide pattern */
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      {yellowTitle ? (
-        <div
-          className="inline-block px-2 py-0.5 mb-2 text-xs font-mono font-bold uppercase tracking-wider"
-          style={{ backgroundColor: "#FFD700" }}
-        >
-          {title}
-        </div>
-      ) : (
-        <h4 className="text-xs font-mono font-bold uppercase tracking-wider mb-2 opacity-60">{title}</h4>
-      )}
+    <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">
       {children}
-    </div>
+    </p>
   );
 }
 
@@ -243,43 +240,13 @@ function StatBox({ label, value }: { label: string; value: string }) {
   return (
     <div className="border-2 border-black p-3 text-center" style={{ backgroundColor: "#FFD700" }}>
       <p className="text-xl font-bold">{value}</p>
-      <p className="text-xs font-mono opacity-60 mt-0.5">{label}</p>
+      <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-60 mt-0.5">{label}</p>
     </div>
   );
 }
 
-function CollapsibleLaw({ name, year, description }: { name: string; year: number; description: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-l-4 border-black">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="w-full text-left pl-4 pr-2 py-2 flex items-center justify-between gap-2 hover:bg-black/5 transition-colors cursor-pointer"
-      >
-        <p className="text-sm font-bold">
-          {name} <span className="font-normal opacity-60">({year})</span>
-        </p>
-        <span
-          className="text-xs font-mono shrink-0 transition-transform duration-200"
-          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-        >
-          ▼
-        </span>
-      </button>
-      {open && (
-        <div className="pl-4 pr-2 pb-3 animate-in fade-in slide-in-from-top-1 duration-200">
-          <p className="text-xs leading-relaxed opacity-80">{description}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function BarRow({ label, count, total, maxCount }: { label: string; count: number; total: number; maxCount: number }) {
+function BarRow({ label, count, total }: { label: string; count: number; total: number }) {
   const pct = total > 0 ? (count / total) * 100 : 0;
-  // Bar width scales relative to the largest item in the group (largest = 100%)
-  const barWidth = maxCount > 0 ? (count / maxCount) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 min-w-0">
@@ -292,7 +259,7 @@ function BarRow({ label, count, total, maxCount }: { label: string; count: numbe
         <div className="h-3 bg-border rounded-sm overflow-hidden">
           <div
             className="h-full bg-black rounded-sm transition-all duration-500"
-            style={{ width: `${barWidth}%` }}
+            style={{ width: `${pct}%` }}
           />
         </div>
       </div>
