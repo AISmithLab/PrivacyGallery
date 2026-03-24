@@ -50,8 +50,8 @@ export default function JurisdictionMap({
         <ComposableMap
           projection="geoEqualEarth"
           projectionConfig={{
-            scale: 120,
-            center: [10, 15],
+            scale: 135,
+            center: [15, 20],
           }}
           width={900}
           height={330}
