@@ -213,9 +213,10 @@ export const glossary: GlossaryCategory[] = [
       {
         term: "Severity Rating",
         shortDescription:
-          "Our 1–10 score estimating how severely a case impacted individuals.",
+          "Our 1–5 score measuring how severely a case impacted individuals, based on data sensitivity and scale.",
         fullDescription:
-          "The severity rating in our dataset is a score from 1 to 10 that estimates the real-world impact of a privacy violation on the individuals affected. It considers factors like: the sensitivity of the data involved (health and financial data score higher), the number of people affected, whether the data was actually misused or just exposed, whether vulnerable populations (children, patients) were involved, and the duration of the violation. A rating of 1–3 indicates limited impact, 4–6 moderate harm, and 7–10 severe consequences for individuals. This is an editorial assessment, not a legal determination.",
+          "The severity rating in our dataset is a deterministic score from 1 to 5 calculated from two factors: data sensitivity and number of people impacted. Data sensitivity is scored 1–3: the most sensitive categories (health, biometric, children's data, SSN, financial, bank) score 3; moderately sensitive data (location, identity, credit, genetic) scores 2; everything else scores 1. People impacted is scored 0–2: over 1 million people scores 2, between 10,000 and 999,999 scores 1, and fewer than 10,000 or unknown scores 0. The final severity is the sum of both scores, clamped to the range 1–5. For example, a case involving children's data (3) affecting 50,000 people (1) would score 4. A case involving browsing data (1) with unknown affected individuals (0) would score 1.",
+        relatedTerms: ["COPPA", "GDPR"],
       },
       {
         term: "Right of Access",
