@@ -34,3 +34,5 @@ files/.env
 # PDF processing outputs (large, regenerated)
 files/processed/*
 files/errors/*
+__pycache__/
+*.pyc

@@ -1,6 +1,6 @@
 # The Privacy Jury
 
-A global registry of **771 data privacy enforcement cases** across 7 jurisdictions, totaling **$507M+** in fines. Browse cases, compare enforcement actions side-by-side, explore jurisdictions on an interactive map, and learn what privacy enforcement terms actually mean.
+A global registry of **787+ data privacy enforcement cases** across 7 jurisdictions, totaling **$532M+** in fines. Browse cases, compare enforcement actions side-by-side, explore jurisdictions on an interactive map, and learn what privacy enforcement terms actually mean.
 
 **Live site**: [jury.privacydev.org](https://jury.privacydev.org)
 
@@ -8,32 +8,67 @@ A global registry of **771 data privacy enforcement cases** across 7 jurisdictio
 
 ## How It Works
 
-The project has two halves: a **data pipeline** that extracts structured case data from legal PDFs using Claude AI, and a **React frontend** that presents it as an interactive gallery.
+The project has two halves: an **automated data pipeline** that discovers, downloads, and extracts structured case data from regulator websites using Claude AI, and a **React frontend** that presents it as an interactive gallery.
 
 ### Data Pipeline
 
 ```
-Google Drive (PDFs)
+Regulator Websites (FTC, ICO, PDPC, OAIC, EU DPAs, CA DOJ)
     |
     v
-Python Agent (agent.py) ---> Claude API (extracts structured fields)
+Collectors (jurisdiction-specific scrapers)
     |
     v
-PostgreSQL Database (cases table)
+Document Discovery Log (PostgreSQL: discovered_documents)
     |
     v
-Export Script (export_to_frontend.py) ---> generatedCases.json
+Downloader (raw PDFs/HTML stored as BLOBs in PostgreSQL)
     |
     v
-React Frontend (static JSON import at build time)
+Text Extractor (pymupdf: PDF → clean text, locally, no API cost)
+    |
+    v
+Phase 1: Extraction (Claude Haiku → structured fields from document)
+    |
+    v
+Phase 2: Enrichment (Claude Haiku → company context, narratives, impact estimates)
+    |
+    v
+URL Resolver (finds official case page URLs per jurisdiction)
+    |
+    v
+Validation & Normalization → PostgreSQL (cases table)
+    |
+    v
+Export → generatedCases.json → React Frontend (static build)
 ```
 
-1. **Source documents** — Complaint filings, consent orders, compliance decisions, and penalty notices are collected from regulator websites and stored in [Google Drive](https://drive.google.com/drive/folders/1j3XpwO0N2ttEjjVin-x-pHpq3KT3gwYj), organized by jurisdiction
-2. **PDF processing** — `files/agent.py` watches an inbox folder, extracts text from PDFs, and sends them to the Claude API with a structured extraction prompt
-3. **Claude extraction** — Claude parses each legal document and returns structured fields: company name, jurisdiction, violation types, legal bases, fines, impacted individuals, claims vs reality, regulatory findings, and more
-4. **Database storage** — Extracted data is stored in PostgreSQL with the full JSON payload
-5. **Frontend export** — `files/export_to_frontend.py` reads the database, calculates derived fields (severity scores, fine displays), and exports everything to `src/data/generatedCases.json`
-6. **Static frontend** — The React app imports the JSON at build time. No runtime API calls or database connections
+#### Pipeline Steps
+
+| Step | Command | API Cost | Description |
+|------|---------|----------|-------------|
+| **Collect** | `--step collect` | Free | Scrapes regulator websites to discover new case document URLs |
+| **Download** | `--step download` | Free | Fetches PDFs/HTML, stores as BLOBs in PostgreSQL |
+| **Text** | `--step text` | Free | Converts PDFs to clean text via pymupdf (local) |
+| **Extract** | `--step extract` | ~$0.01/doc | Claude extracts structured fields (company, fines, violations, legal bases) |
+| **Enrich** | `--step enrich` | ~$0.01/doc | Claude adds company context, narratives, impact estimates |
+| **URL Fill** | `--step url_fill` | ~$0.005/doc | Resolves official regulator case page URLs |
+| **Save** | `--step save` | Free | Writes validated data to PostgreSQL `cases` table |
+| **Export** | `--step export` | Free | Generates `generatedCases.json` for the frontend |
+
+#### Two-Phase AI Extraction
+
+**Phase 1 — Document Extraction:** Reads the document text and extracts fields directly stated in the document: case name, jurisdiction, year, company, sector, violation type, legal bases violated, enforcement outcomes, penalty amounts, individuals affected, legal findings, and severity.
+
+**Phase 2 — AI Enrichment:** Uses Phase 1 data plus outside knowledge to fill contextual fields: `whatTheyDid` (195-char narrative), `whyTheyWereWrong` (195-char harm description), company description, company valuation, founding year, current company status, impacted individuals (estimated when not in document), and claims vs reality.
+
+Each phase is independently re-runnable. You can re-enrich all cases without re-extracting, or re-extract specific documents without touching enrichment.
+
+#### Deduplication
+
+- Documents are deduped by `(jurisdiction_id, document_url)` — same URL won't be re-downloaded
+- Raw files are deduped by SHA256 hash — same content won't be re-processed
+- Existing cases in the database are skipped during extraction
 
 ### Severity Score
 
@@ -48,7 +83,7 @@ Each case gets a deterministic severity rating (1-5) based on:
 
 | Page | Route | Description |
 |------|-------|-------------|
-| **Cases** | `/` | Searchable, filterable grid of all 771 cases with jurisdiction, sector, violation type, and sort controls |
+| **Cases** | `/` | Searchable, filterable grid of all cases with jurisdiction, sector, violation type, and sort controls |
 | **Case Detail** | `/case/:id` | Full case breakdown — what they did, why they were wrong, claims vs reality, legal findings, outcome, attached PDFs |
 | **Compare** | `/compare` | Matrix view (patterns across jurisdictions/violations/sectors) and side-by-side comparison of up to 3 individual cases |
 | **Explore** | `/explore` | Interactive world map highlighting 7 jurisdictions; click a region to see its enforcement framework, key laws, and dataset statistics |
@@ -86,10 +121,11 @@ Each case gets a deterministic severity rating (1-5) based on:
 - **Lucide React** — Icons
 
 ### Data Pipeline
-- **Python 3** — Scripting language
-- **Anthropic SDK** — Claude API for PDF extraction
-- **PostgreSQL** + **psycopg2** — Database
-- **Watchdog** — File system watcher for inbox processing
+- **Python 3** — Pipeline orchestration
+- **Anthropic SDK** — Claude API for document extraction and enrichment
+- **PostgreSQL** + **psycopg2** — Database and raw document storage (BLOBs)
+- **PyMuPDF (pymupdf)** — PDF text extraction (local, no API cost)
+- **BeautifulSoup4** — HTML parsing for collectors and HTML documents
 - **python-dotenv** — Environment variable management
 
 ### Deployment
@@ -125,36 +161,49 @@ PrivacyGallery/
 │   │   └── ui/                   # 50+ shadcn/ui components
 │   ├── data/
 │   │   ├── cases.ts              # Type definitions, utilities, case loading
-│   │   ├── generatedCases.json   # 771 cases exported from PostgreSQL
+│   │   ├── generatedCases.json   # 787+ cases exported from PostgreSQL
 │   │   ├── jurisdictionInfo.ts   # Jurisdiction metadata (laws, authorities)
 │   │   └── glossary.ts           # Learn page glossary content
 │   ├── hooks/                    # Custom React hooks
 │   ├── lib/utils.ts              # Tailwind class merge utility
 │   ├── main.tsx                  # App entry point
 │   └── index.css                 # Global styles and CSS variables
-├── files/                        # Data pipeline (Python)
-│   ├── agent.py                  # PDF → Claude API → PostgreSQL
-│   ├── export_to_frontend.py     # PostgreSQL → generatedCases.json
-│   ├── fill_case_source_url.py   # Enrich cases with source URLs
-│   ├── fill_company_worth.py     # Enrich cases with company valuations
-│   ├── revise_what_why.py        # Refine case descriptions via Claude
-│   ├── reset_and_run.py          # Reset DB and reprocess all PDFs
-│   ├── run_subset.py             # Process a subset for testing
-│   ├── queries.sql               # Example SQL queries
-│   ├── requirements.txt          # Python dependencies
-│   ├── .env.example              # Environment variable template
-│   └── inbox/                    # PDF drop folders by jurisdiction
-│       ├── Australia - OAIC/
-│       ├── EU/GDPR/
-│       ├── Singapore - PDPC/
-│       ├── UK - ICO/
-│       └── US FTC/
-├── scripts/
-│   └── ingest-drive.mjs          # Google Drive → generatedCases.json
-├── public/
-│   ├── logos/                    # Jurisdiction logos
-│   ├── CNAME                     # Custom domain config
-│   └── favicon.svg
+├── pipeline/                     # Automated data pipeline
+│   ├── config.py                 # DB URL, API key, model settings
+│   ├── db.py                     # Connection pool, schema init
+│   ├── models.py                 # Dataclasses for all entities
+│   ├── runner.py                 # CLI entry point (--step, --jurisdiction, --limit)
+│   ├── migrate.py                # One-time migration + jurisdiction seeding
+│   ├── collectors/               # Jurisdiction-specific scrapers
+│   │   ├── base.py               # BaseCollector ABC
+│   │   ├── registry.py           # Collector factory
+│   │   ├── ftc.py                # US FTC
+│   │   ├── ico.py                # UK ICO
+│   │   ├── pdpc.py               # Singapore PDPC
+│   │   ├── oaic.py               # Australia OAIC
+│   │   ├── gdpr.py               # EU GDPR (per-country DPAs)
+│   │   ├── california_doj.py     # California DOJ
+│   │   └── edpb.py               # EU EDPB
+│   ├── processing/               # Download, dedup, text extraction
+│   │   ├── downloader.py         # Fetch documents, store as BLOBs
+│   │   ├── dedup.py              # SHA256 hash deduplication
+│   │   ├── text_extractor.py     # PDF→text (pymupdf), HTML→text (bs4)
+│   │   └── url_resolver.py       # Find official case page URLs
+│   ├── extraction/               # AI extraction (two-phase)
+│   │   ├── prompts.py            # Phase 1 + Phase 2 prompt templates
+│   │   ├── extractor.py          # Phase 1: structured fields from text
+│   │   ├── enricher.py           # Phase 2: company context + narratives
+│   │   └── parser.py             # JSON response parsing
+│   ├── validation/               # Field validation and normalization
+│   │   ├── validator.py          # Missing values, impossible fines, dates
+│   │   └── normalizer.py         # Jurisdiction/sector/violation mapping
+│   └── export/                   # Output generation
+│       ├── to_postgres.py        # Write to cases table
+│       └── to_frontend.py        # cases → generatedCases.json
+├── files/                        # Legacy pipeline scripts (archived)
+│   ├── agent.py                  # Original PDF → Claude → PostgreSQL
+│   ├── export_to_frontend.py     # Original PostgreSQL → JSON export
+│   └── ...
 ├── .github/workflows/
 │   └── deploy.yml                # GitHub Actions → GitHub Pages
 ├── package.json
@@ -180,37 +229,71 @@ npm run dev
 
 The site runs at `http://localhost:8080`. Case data is already included in `generatedCases.json`.
 
-### Data Pipeline (optional)
+### Data Pipeline
 
-Only needed if you want to process new PDFs or rebuild the dataset.
+Only needed if you want to collect new cases or rebuild the dataset.
+
+**Prerequisites:** Python 3.12+, PostgreSQL running locally.
 
 ```sh
-cd files
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your Anthropic API key and PostgreSQL connection string
+# Install dependencies
+pip install -r pipeline/requirements.txt
+
+# Configure environment
+cp files/.env.example files/.env
+# Edit files/.env with your ANTHROPIC_API_KEY and DATABASE_URL
+
+# Initialize database tables and seed jurisdictions
+python3 -m pipeline.migrate
 ```
 
-**Process PDFs:**
+**Run the full pipeline:**
 ```sh
-python agent.py              # Watches inbox/ for new PDFs
+python3 -m pipeline.runner
 ```
 
-**Export to frontend:**
+**Run individual steps:**
 ```sh
-python export_to_frontend.py  # Writes src/data/generatedCases.json
+python3 -m pipeline.runner --step collect                    # discover new documents
+python3 -m pipeline.runner --step download                   # fetch PDFs/HTML
+python3 -m pipeline.runner --step text                       # extract text locally
+python3 -m pipeline.runner --step extract                    # Phase 1: Claude extraction
+python3 -m pipeline.runner --step enrich                     # Phase 2: Claude enrichment
+python3 -m pipeline.runner --step url_fill                   # resolve case page URLs
+python3 -m pipeline.runner --step save                       # write to PostgreSQL
+python3 -m pipeline.runner --step export                     # generate frontend JSON
+```
+
+**Filter by jurisdiction or limit:**
+```sh
+python3 -m pipeline.runner --jurisdiction us_ftc             # one jurisdiction only
+python3 -m pipeline.runner --step extract --limit 5          # process max 5 documents
+python3 -m pipeline.runner --dry-run                         # preview without changes
 ```
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Claude API key for PDF extraction |
+| `ANTHROPIC_API_KEY` | Claude API key for document extraction and enrichment |
 | `DATABASE_URL` | PostgreSQL connection string |
-| `MAX_PDFS` | Limit PDFs processed per run (default: 10) |
-| `WATCH_DIR` | Custom inbox directory path |
-| `DONE_DIR` | Custom processed directory path |
-| `ERROR_DIR` | Custom error directory path |
+| `EXTRACTION_MODEL` | Model for Phase 1 extraction (default: `claude-haiku-4-5`) |
+| `ENRICHMENT_MODEL` | Model for Phase 2 enrichment (default: `claude-haiku-4-5`) |
+
+---
+
+## Database Schema
+
+The pipeline uses 6 PostgreSQL tables:
+
+| Table | Purpose |
+|-------|---------|
+| `jurisdictions` | Registry of data sources (regulator URLs, crawl frequency, access method) |
+| `discovered_documents` | Every document found by collectors (URL, status, jurisdiction) |
+| `raw_documents` | Downloaded files stored as BLOBs with extracted text |
+| `extraction_runs` | Audit log for each AI call (phase, model, tokens, response) |
+| `pipeline_log` | Monitoring and failure logs |
+| `cases` | Final structured case data (feeds the frontend export) |
 
 ---
 
