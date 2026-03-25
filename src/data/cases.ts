@@ -15,12 +15,15 @@ export function parseCompanyWorth(worth: string): number {
 }
 
 export type ViolationType =
-  | "Misrepresentation of practices"
-  | "Failure to disclose practices"
-  | "Health breach notification failure"
-  | "Excessive retention of childrens data"
-  | "Failure of parent control over childrens data"
-  | "Failure to obtain parental consent";
+  | "Unauthorized Data Collection"
+  | "Data Breach & Negligence"
+  | "Unauthorized Disclosure/Selling"
+  | "Failure to Honor Consumer Rights"
+  | "Misleading Privacy Policies"
+  | "Invasion of Seclusion"
+  | "False Light/Misappropriation"
+  | "Improper Data Disposal"
+  | "Illegal Monitoring/Surveillance";
 
 export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore PDPC" | "EU GDPR" | "EU EDPB" | "Australia OAIC";
 
@@ -88,12 +91,15 @@ export const JURISDICTIONS: Jurisdiction[] = [
 ];
 
 export const VIOLATION_TYPES: ViolationType[] = [
-  "Misrepresentation of practices",
-  "Failure to disclose practices",
-  "Health breach notification failure",
-  "Excessive retention of childrens data",
-  "Failure of parent control over childrens data",
-  "Failure to obtain parental consent",
+  "Unauthorized Data Collection",
+  "Data Breach & Negligence",
+  "Unauthorized Disclosure/Selling",
+  "Failure to Honor Consumer Rights",
+  "Misleading Privacy Policies",
+  "Invasion of Seclusion",
+  "False Light/Misappropriation",
+  "Improper Data Disposal",
+  "Illegal Monitoring/Surveillance",
 ];
 
 export const SECTORS: Sector[] = [

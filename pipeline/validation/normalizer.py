@@ -36,12 +36,15 @@ SECTORS = [
 ]
 
 VIOLATION_TYPES = [
-    "Misrepresentation of practices",
-    "Failure to disclose practices",
-    "Health breach notification failure",
-    "Excessive retention of childrens data",
-    "Failure of parent control over childrens data",
-    "Failure to obtain parental consent",
+    "Unauthorized Data Collection",
+    "Data Breach & Negligence",
+    "Unauthorized Disclosure/Selling",
+    "Failure to Honor Consumer Rights",
+    "Misleading Privacy Policies",
+    "Invasion of Seclusion",
+    "False Light/Misappropriation",
+    "Improper Data Disposal",
+    "Illegal Monitoring/Surveillance",
 ]
 
 
@@ -106,31 +109,122 @@ def _involves_health_data(data_types: str) -> bool:
     return any(k in d for k in _HEALTH_KEYWORDS)
 
 
-def map_violation_type(solove_type: str | None, data_types: str = "") -> List[str]:
-    """Map Solove taxonomy string to frontend ViolationType[] values."""
+def map_violation_type(solove_type: str | None, data_types: str = "",
+                       legal_bases: list | None = None,
+                       summary: str = "") -> List[str]:
+    """Map Solove taxonomy + case context to frontend ViolationType[] values.
+
+    9 violation types:
+    - Unauthorized Data Collection: collecting without consent, pre-ticked boxes, ignoring opt-out
+    - Data Breach & Negligence: poor security leading to unauthorized access
+    - Unauthorized Disclosure/Selling: sharing/selling data to third parties without authorization
+    - Failure to Honor Consumer Rights: not fulfilling access/delete/correct requests (CCPA, GDPR rights)
+    - Misleading Privacy Policies: deceptive/inaccurate privacy representations
+    - Invasion of Seclusion: intruding into private space/affairs
+    - False Light/Misappropriation: using name/likeness without consent, publishing private facts
+    - Improper Data Disposal: failing to securely destroy records
+    - Illegal Monitoring/Surveillance: tracking, cameras, web session recording without consent
+    """
     if not solove_type:
-        return []
+        return ["Unauthorized Data Collection"]
     t = solove_type.lower()
+    dt = (data_types or "").lower()
+    bases_str = " ".join(legal_bases or []).lower()
+    s = (summary or "").lower()
 
     result: List[str] = []
 
-    if any(k in t for k in [
-        "disclosure", "exposure", "accessibility",
-        "breach of confidentiality", "secondary use",
-    ]):
-        result.append("Failure to disclose practices")
-    if any(k in t for k in ["insecurity", "security"]) and _involves_health_data(data_types):
-        result.append("Health breach notification failure")
-    if any(k in t for k in ["children", "child", "minor", "coppa"]):
-        result.append("Failure to obtain parental consent")
-    if any(k in t for k in [
-        "surveillance", "interrogation", "intrusion",
-        "decisional interference", "aggregation", "identification",
-    ]):
-        result.append("Misrepresentation of practices")
+    # ── Data Breach & Negligence ──────────────────────────────────────────
+    if (any(k in t for k in ["insecurity"]) or
+        any(k in s for k in [
+            "breach", "hack", "unauthorized access", "data breach", "leaked",
+            "exposed", "security", "inadequate safeguard", "failed to protect",
+            "compromised", "vulnerability",
+        ])):
+        result.append("Data Breach & Negligence")
 
+    # ── Unauthorized Disclosure/Selling ───────────────────────────────────
+    if (any(k in t for k in [
+            "breach of confidentiality", "disclosure", "increased accessibility",
+        ]) or
+        any(k in s for k in [
+            "sold", "selling", "shared", "disclosed", "transferred",
+            "third part", "without authorization", "without consent",
+            "data broker", "sold data",
+        ])):
+        result.append("Unauthorized Disclosure/Selling")
+
+    # ── Misleading Privacy Policies ───────────────────────────────────────
+    if (any(k in t for k in ["distortion"]) or
+        any(k in s for k in [
+            "misrepresent", "deceptive", "false", "misleading", "claimed",
+            "privacy policy", "represented that", "unfair", "fraudulent",
+            "inaccurate", "failed to disclose",
+        ])):
+        result.append("Misleading Privacy Policies")
+
+    # ── Unauthorized Data Collection ──────────────────────────────────────
+    if (any(k in t for k in [
+            "surveillance", "interrogation", "aggregation",
+            "secondary use", "exclusion",
+        ]) or
+        any(k in s for k in [
+            "without consent", "without notice", "collected", "pre-ticked",
+            "opt-out", "opted out", "tracking", "gathered", "harvested",
+            "scraped", "profiling",
+        ])):
+        result.append("Unauthorized Data Collection")
+
+    # ── Illegal Monitoring/Surveillance ───────────────────────────────────
+    if (any(k in t for k in ["surveillance", "intrusion"]) or
+        any(k in s for k in [
+            "monitor", "surveillance", "tracking", "recorded", "session recording",
+            "chat box", "wiretap", "camera", "gps", "geolocation", "spyware",
+            "keystroke", "screen capture",
+        ])):
+        result.append("Illegal Monitoring/Surveillance")
+
+    # ── Failure to Honor Consumer Rights ──────────────────────────────────
+    if (any(k in t for k in ["exclusion"]) or
+        any(k in s for k in [
+            "access request", "deletion request", "right to delete",
+            "right to access", "right to correct", "opt-out request",
+            "failed to respond", "consumer rights", "data subject request",
+            "dsar", "right to erasure", "right to rectification",
+        ]) or
+        any(k in bases_str for k in [
+            "ccpa", "cpra", "art. 15", "art. 17", "art. 16",
+            "right of access", "right to erasure",
+        ])):
+        result.append("Failure to Honor Consumer Rights")
+
+    # ── Invasion of Seclusion ─────────────────────────────────────────────
+    if (any(k in t for k in ["intrusion", "decisional interference"]) or
+        any(k in s for k in [
+            "intrusion", "seclusion", "private space", "private affairs",
+            "unwanted contact", "stalking", "harassment",
+        ])):
+        result.append("Invasion of Seclusion")
+
+    # ── False Light/Misappropriation ──────────────────────────────────────
+    if (any(k in t for k in ["appropriation", "exposure"]) or
+        any(k in s for k in [
+            "likeness", "false light", "misappropriation", "name or image",
+            "identity theft", "impersonat", "deepfake", "private facts",
+        ])):
+        result.append("False Light/Misappropriation")
+
+    # ── Improper Data Disposal ────────────────────────────────────────────
+    if any(k in s for k in [
+            "disposal", "dispose", "destroy", "shredding", "retention",
+            "retained", "kept longer", "failed to delete", "improper disposal",
+            "data retention",
+        ]):
+        result.append("Improper Data Disposal")
+
+    # ── Default fallback ──────────────────────────────────────────────────
     if not result:
-        result.append("Misrepresentation of practices")
+        result.append("Unauthorized Data Collection")
 
     return [v for v in dict.fromkeys(result) if v in VIOLATION_TYPES]
 

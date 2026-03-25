@@ -191,7 +191,11 @@ def build_case(row: Dict[str, Any]) -> Dict[str, Any]:
     outcome = data.get("outcome") or row.get("outcome") or ""
 
     sector = norm_sector(data.get("sector") or row.get("sector"))
-    violations = map_violation_type(violation_type, data_types)
+    violations = map_violation_type(
+        violation_type, data_types,
+        legal_bases=data.get("legal_bases_violated") or [],
+        summary=data.get("summary") or data.get("what_they_did") or "",
+    )
     impacted_individuals = format_impacted(individuals_int) if (individuals_int and individuals_int > 0) else "Unknown"
     severity = severity_from_impact_and_data(individuals_int, data_types)
 
