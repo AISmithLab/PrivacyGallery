@@ -135,9 +135,9 @@ const CaseDetail = () => {
             </div>
             <div className="detail-yellow-box px-5 py-3 flex-1">
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">VIOLATION TYPE</p>
-              <div className="flex flex-wrap gap-1.5 mt-1">
+              <div className="flex flex-col gap-1 mt-1">
                 {case_.violations.length > 0 ? case_.violations.map((v) => (
-                  <span key={v} className="text-xs font-mono font-bold text-black">{v}</span>
+                  <span key={v} className="text-xs font-mono font-bold text-black">• {v}</span>
                 )) : <span className="text-xs text-muted-foreground">—</span>}
               </div>
             </div>
