@@ -100,61 +100,76 @@ export const glossary: GlossaryCategory[] = [
       "Privacy violations fall into distinct categories based on how the company failed its users. Understanding these categories helps you see patterns across cases.",
     entries: [
       {
-        term: "Misrepresentation of Practices",
+        term: "Unauthorized Data Collection",
         shortDescription:
-          "The company said one thing about its privacy practices but did another.",
+          "Collecting personal data without explicit consent, including using pre-ticked boxes or ignoring opt-out requests.",
         fullDescription:
-          "This is the most common violation type. It means a company made specific promises about how it handles personal data — in its privacy policy, marketing materials, or user agreements — and then broke those promises. Classic examples include: telling users their data won't be shared with third parties and then selling it to data brokers, claiming data is encrypted when it isn't, or promising users can delete their accounts while retaining the data indefinitely. In the US, the FTC prosecutes this under Section 5 of the FTC Act as a \"deceptive trade practice.\"",
-        relatedTerms: ["Failure to Disclose Practices"],
+          "This violation occurs when a company gathers personal information without obtaining proper, informed consent from users. It includes practices like using pre-ticked consent boxes (banned under GDPR), collecting data types users didn't agree to, ignoring opt-out requests, scraping data from public profiles, or continuing to collect data after consent is withdrawn. Under GDPR, consent must be freely given, specific, informed, and unambiguous. Under COPPA, collecting children's data requires verifiable parental consent. This is one of the most fundamental privacy violations — the company took data it had no right to take.",
+        relatedTerms: ["Misleading Privacy Policies", "Illegal Monitoring/Surveillance"],
       },
       {
-        term: "Failure to Disclose Practices",
+        term: "Data Breach & Negligence",
         shortDescription:
-          "The company collected or used data without telling users what it was doing.",
+          "Failure to implement reasonable security measures, leading to unauthorized access to sensitive information.",
         fullDescription:
-          "Unlike misrepresentation (where the company lied), failure to disclose means the company simply never told users about certain data practices. This includes collecting data types that users wouldn't reasonably expect, sharing data with undisclosed third parties, using data for purposes not mentioned in the privacy policy, or tracking users through hidden mechanisms like invisible pixels or device fingerprinting. The key distinction from misrepresentation is omission versus deception — the company didn't lie, it just didn't tell you.",
-        relatedTerms: ["Misrepresentation of Practices"],
+          "This violation covers cases where a company failed to protect personal data through adequate security measures, resulting in a data breach or creating conditions that made one likely. Examples include: storing passwords in plain text, failing to patch known vulnerabilities, leaving databases publicly accessible, not encrypting sensitive data in transit or at rest, and lacking basic access controls. The key element is negligence — the company didn't take reasonable steps to safeguard the data it collected. Under most privacy laws, companies have a duty to implement security measures appropriate to the sensitivity of the data they hold. Breaches affecting health data, financial records, or children's information carry particularly severe consequences.",
+        relatedTerms: ["Unauthorized Disclosure/Selling", "Improper Data Disposal"],
       },
       {
-        term: "Health Breach Notification Failure",
+        term: "Unauthorized Disclosure/Selling",
         shortDescription:
-          "The company failed to notify consumers or regulators after a health data breach.",
+          "Sharing, selling, or transferring personal data to third parties without authorization.",
         fullDescription:
-          "Under the FTC's Health Breach Notification Rule (2009), companies that handle personal health records outside of HIPAA's coverage must notify affected consumers, the FTC, and in some cases the media when a breach of unsecured health information occurs. This violation means the company experienced a breach involving health data and either failed to notify entirely, notified too late, or didn't notify all required parties. This is particularly important because health data is among the most sensitive categories of personal information and breaches can lead to discrimination, insurance denial, or personal embarrassment.",
-        relatedTerms: ["Failure to Disclose Practices"],
+          "This violation occurs when a company shares, sells, or otherwise transfers personal data to third parties without the user's knowledge or consent. Common examples include selling user data to data brokers, sharing browsing history with advertisers without disclosure, providing employee data to unauthorized parties, or allowing third-party SDKs to collect user data without informing users. Under CCPA/CPRA, consumers have the explicit right to opt out of the sale of their personal information. Under GDPR, sharing data with third parties generally requires a lawful basis and transparency. Several major enforcement actions have targeted companies that monetized user data through undisclosed third-party sharing.",
+        relatedTerms: ["Misleading Privacy Policies", "Unauthorized Data Collection"],
       },
       {
-        term: "Excessive Retention of Children's Data",
+        term: "Failure to Honor Consumer Rights",
         shortDescription:
-          "The company kept children's personal data longer than necessary or without proper justification.",
+          "Not fulfilling requests to access, delete, or correct personal information under privacy laws.",
         fullDescription:
-          "Under COPPA (Children's Online Privacy Protection Act) and similar laws, companies must only retain children's personal information for as long as reasonably necessary to fulfill the purpose for which it was collected. This violation means the company held onto data from children under 13 far beyond what was needed — sometimes indefinitely. This is especially concerning because children's data collected today could follow them for decades, and retention increases the risk of breaches. Companies must have clear data retention policies and actually follow them.",
-        relatedTerms: [
-          "Failure to Obtain Parental Consent",
-          "Failure of Parent Control Over Children's Data",
-        ],
+          "Modern privacy laws like GDPR, CCPA/CPRA, and others grant individuals specific rights over their personal data — including the right to access, delete, correct, and port their data. This violation means a company failed to respond to these requests within required timeframes, made the process unreasonably difficult, ignored requests entirely, or only partially fulfilled them. For example, a company might acknowledge a deletion request but retain the data in backup systems indefinitely, or provide only partial data in response to an access request. Under GDPR, companies must respond within 30 days. Under CCPA, the deadline is 45 days. Systematic failure to honor these rights often triggers enforcement action.",
+        relatedTerms: ["Unauthorized Data Collection", "Misleading Privacy Policies"],
       },
       {
-        term: "Failure of Parent Control Over Children's Data",
+        term: "Misleading Privacy Policies",
         shortDescription:
-          "The company did not give parents meaningful control over their children's information.",
+          "Providing inaccurate or deceptive information about how data is collected and used.",
         fullDescription:
-          "COPPA requires that parents have the ability to review, correct, and delete their children's personal information, and to revoke consent for future data collection. This violation means the company made it difficult or impossible for parents to exercise these rights — for example, by not providing a way to access the data, ignoring deletion requests, or continuing to collect data after a parent withdrew consent. The principle is that parents, not companies, should be the gatekeepers of their children's digital footprint.",
-        relatedTerms: [
-          "Failure to Obtain Parental Consent",
-          "Excessive Retention of Children's Data",
-        ],
+          "This violation covers cases where a company's stated privacy practices don't match its actual practices. It includes outright lies in privacy policies (claiming data isn't shared when it is), material omissions (failing to mention data sales to third parties), and deceptive framing (burying important disclosures in dense legal language designed to be ignored). In the US, the FTC prosecutes this under Section 5 of the FTC Act as a \"deceptive trade practice.\" The key test is whether a reasonable consumer would be misled by the company's representations. This is one of the most commonly cited violations because privacy policies are the primary mechanism through which companies communicate their data practices to users.",
+        relatedTerms: ["Unauthorized Data Collection", "Unauthorized Disclosure/Selling"],
       },
       {
-        term: "Failure to Obtain Parental Consent",
+        term: "Invasion of Seclusion",
         shortDescription:
-          "The company collected data from children under 13 without verifiable parental consent.",
+          "Physically or electronically intruding into a person's private space or affairs.",
         fullDescription:
-          "COPPA requires companies to obtain verifiable parental consent before collecting personal information from children under 13. \"Verifiable\" means more than just clicking \"I am over 13\" — it requires methods like signed consent forms, credit card verification, video conferencing, or government ID checks. This violation means the company either didn't attempt to get consent at all, used a consent mechanism that was too easy to bypass (like a simple checkbox), or collected data from users it knew or should have known were children. This is one of the FTC's most actively enforced areas.",
-        relatedTerms: [
-          "Failure of Parent Control Over Children's Data",
-          "Excessive Retention of Children's Data",
-        ],
+          "Invasion of seclusion is a tort (civil wrong) that occurs when someone intentionally intrudes upon another's private affairs in a manner that would be highly offensive to a reasonable person. In the digital context, this includes accessing private accounts without authorization, intercepting private communications, using spyware to monitor someone's device activity, or deploying hidden cameras or microphones. Unlike other privacy violations that focus on data handling, invasion of seclusion focuses on the act of intrusion itself — the mere act of prying into someone's private space is the violation, regardless of what is found or how the information is used.",
+        relatedTerms: ["Illegal Monitoring/Surveillance", "Unauthorized Data Collection"],
+      },
+      {
+        term: "False Light/Misappropriation",
+        shortDescription:
+          "Using a person's name or likeness without consent, or publishing private facts that place someone in a false light.",
+        fullDescription:
+          "This category covers two related privacy torts. False light occurs when someone publishes information that places another person before the public in a misleading way — for example, using someone's photo in a context that implies something untrue about them. Misappropriation occurs when someone uses another person's name, likeness, or identity for commercial purposes without consent — such as using a customer's photo in advertising without permission, or training AI models on personal images without authorization. In the data privacy context, this also extends to companies creating misleading profiles or inferences about individuals based on their data, or using personal information in ways that misrepresent the individual.",
+        relatedTerms: ["Misleading Privacy Policies", "Invasion of Seclusion"],
+      },
+      {
+        term: "Improper Data Disposal",
+        shortDescription:
+          "Failing to securely destroy physical or electronic records, leading to potential exposure.",
+        fullDescription:
+          "This violation occurs when a company fails to properly dispose of personal data that it no longer needs or is required to delete. Examples include throwing unshredded documents containing personal information in regular trash, selling or donating old computers and hard drives without wiping them, retaining data in backup systems long after deletion was requested, or failing to destroy data when a retention period expires. Under the FTC's Disposal Rule, companies must take reasonable measures to protect against unauthorized access to consumer information during disposal. Improper disposal is particularly dangerous because it can expose large volumes of sensitive data — often old records that consumers have forgotten about — to identity thieves and other bad actors.",
+        relatedTerms: ["Data Breach & Negligence", "Failure to Honor Consumer Rights"],
+      },
+      {
+        term: "Illegal Monitoring/Surveillance",
+        shortDescription:
+          "Using tracking devices, cameras, or web session recording technology without consent.",
+        fullDescription:
+          "This violation covers the unauthorized monitoring of individuals through technological means. It includes installing tracking software or GPS devices without consent, using web session recording or chat box technology to capture user interactions without disclosure, deploying facial recognition cameras without notice, recording phone calls without required consent, and using browser fingerprinting or cross-device tracking without transparency. Several major enforcement actions have targeted companies for secretly recording user sessions, tracking location data through mobile apps without adequate disclosure, or using pixel tracking in emails to monitor behavior. The distinction from unauthorized data collection is the active, ongoing nature of surveillance — the company isn't just collecting data points, it's continuously watching.",
+        relatedTerms: ["Invasion of Seclusion", "Unauthorized Data Collection"],
       },
     ],
   },
@@ -179,7 +194,7 @@ export const glossary: GlossaryCategory[] = [
         fullDescription:
           "COPPA (1998) requires websites and online services directed at children under 13 to obtain verifiable parental consent before collecting personal information, provide parents access to their children's data, give parents the choice to delete it, and maintain reasonable security. It is enforced by the FTC and carries significant penalties — Epic Games paid $275 million for COPPA violations in 2022. COPPA applies not just to kids' sites but to any service that has \"actual knowledge\" it is collecting data from children under 13.",
         relatedTerms: [
-          "Failure to Obtain Parental Consent",
+          "Unauthorized Data Collection",
           "Section 5 of the FTC Act",
         ],
       },
@@ -206,8 +221,8 @@ export const glossary: GlossaryCategory[] = [
         fullDescription:
           "Data brokers aggregate personal information from public records, commercial sources, and online activity to build detailed profiles on individuals, which they sell to advertisers, employers, insurers, and others. Most consumers have never heard of the data brokers that hold their information. This industry is a growing focus of privacy enforcement because data brokers often operate without consumer knowledge or consent, collect sensitive information like location data and health inferences, and make it nearly impossible for individuals to opt out. Several major FTC cases have targeted data broker practices.",
         relatedTerms: [
-          "Failure to Disclose Practices",
-          "Misrepresentation of Practices",
+          "Unauthorized Disclosure/Selling",
+          "Misleading Privacy Policies",
         ],
       },
       {
@@ -224,7 +239,7 @@ export const glossary: GlossaryCategory[] = [
           "An individual's legal right to obtain a copy of their personal data held by a company.",
         fullDescription:
           "Under laws like GDPR (Article 15), individuals have the right to request and receive a copy of all personal data a company holds about them, along with information about how it is being used, who it has been shared with, and how long it will be retained. Companies must respond within a set timeframe (typically 30 days). This right is fundamental to privacy enforcement because it allows individuals and regulators to verify whether companies are actually doing what they claim with personal data. Failure to honour access requests is itself a violation in many jurisdictions.",
-        relatedTerms: ["GDPR", "Failure to Disclose Practices"],
+        relatedTerms: ["GDPR", "Unauthorized Disclosure/Selling"],
       },
     ],
   },
