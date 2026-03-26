@@ -86,6 +86,22 @@ def run_collect(jurisdiction_id: str | None = None, dry_run: bool = False, limit
                         )
                         if cur.rowcount > 0:
                             inserted += 1
+                            # For OAIC: auto-create raw_document with pre-built summary
+                            if d._oaic_summary:
+                                from pipeline.processing.dedup import sha256_bytes
+                                content = d._oaic_summary.encode("utf-8")
+                                file_hash = sha256_bytes(content)
+                                cur.execute("SELECT id FROM discovered_documents WHERE jurisdiction_id = %s AND document_url = %s", (jid, d.document_url))
+                                dd_row = cur.fetchone()
+                                if dd_row:
+                                    dd_id = dd_row[0]
+                                    cur.execute(
+                                        """INSERT INTO raw_documents (document_id, file_name, file_hash, file_data, file_size, mime_type, extracted_text)
+                                           VALUES (%s, %s, %s, %s, %s, %s, %s)
+                                           ON CONFLICT (file_hash) DO NOTHING""",
+                                        (dd_id, f"oaic-{dd_id}.txt", file_hash, content, len(content), "text/plain", d._oaic_summary),
+                                    )
+                                    cur.execute("UPDATE discovered_documents SET status = 'downloaded', downloaded_at = NOW() WHERE id = %s", (dd_id,))
                     except Exception as e:
                         log.warning(f"Insert failed for {d.document_url}: {e}")
             conn.commit()

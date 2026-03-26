@@ -109,7 +109,7 @@ const ControlBar = ({
                   : "hover:bg-secondary"
               }`}
             >
-              {selectedJurisdictions.includes(j) ? "☑ " : "☐ "}
+              {selectedJurisdictions.includes(j) ? "● " : "○ "}
               {j}
             </button>
           ))}

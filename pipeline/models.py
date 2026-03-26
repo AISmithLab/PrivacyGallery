@@ -14,6 +14,7 @@ class DiscoveredDoc:
     source_page_url: str
     document_url: str
     file_type: str = "pdf"
+    _oaic_summary: str | None = None  # Pre-built summary text (OAIC scrapes)
 
 
 @dataclass

@@ -23,6 +23,7 @@ const Index = () => {
   const [selectedJurisdictions, setSelectedJurisdictions] = useState<Jurisdiction[]>([]);
   const [selectedViolations, setSelectedViolations] = useState<ViolationType[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
+  const [visibleCount, setVisibleCount] = useState(50);
 
   const toggle = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>) => (item: T) => {
     setter((prev) => prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]);
@@ -74,6 +75,13 @@ const Index = () => {
 
     return result;
   }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors]);
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleCount(50);
+  }, [search, selectedJurisdictions, selectedViolations, selectedSectors]);
+
+  const visibleCases = filtered.slice(0, visibleCount);
 
   const totalFines = cases.reduce((sum, c) => sum + c.fineAmount, 0);
 
@@ -146,7 +154,7 @@ const Index = () => {
           search={search}
           onSearchChange={setSearch}
           selectedJurisdictions={selectedJurisdictions}
-          onToggleJurisdiction={toggle(setSelectedJurisdictions)}
+          onToggleJurisdiction={(j) => setSelectedJurisdictions((prev) => prev.includes(j) ? [] : [j])}
           sort={sort}
           onSortChange={setSort}
           selectedViolations={selectedViolations}
@@ -160,10 +168,22 @@ const Index = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filtered.map((c) => (
+          {visibleCases.map((c) => (
             <CaseCard key={c.id} case_={c} />
           ))}
         </div>
+
+        {visibleCount < filtered.length && (
+          <div className="text-center py-6">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + 50)}
+              className="px-6 py-3 text-sm font-mono font-bold uppercase tracking-wider border-2 border-black bg-[#FFD700] text-black hover:-translate-y-0.5 hover:shadow-[4px_4px_0_black] transition-all"
+            >
+              Load more ({filtered.length - visibleCount} remaining)
+            </button>
+          </div>
+        )}
 
         {filtered.length === 0 && (
           <div className="brutalist-border bg-card loot-drop-shadow p-12 text-center">

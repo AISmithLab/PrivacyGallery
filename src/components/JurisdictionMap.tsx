@@ -3,6 +3,7 @@ import {
   ComposableMap,
   Geographies,
   Geography,
+  Marker,
   ZoomableGroup,
 } from "react-simple-maps";
 import type { Jurisdiction } from "@/data/cases";
@@ -118,6 +119,33 @@ export default function JurisdictionMap({
                 })
               }
             </Geographies>
+            {/* Singapore is too small for 110m resolution — render as a circle marker */}
+            <Marker coordinates={[103.8198, 1.3521]}>
+              <circle
+                r={4}
+                fill={
+                  selectedJurisdiction === "Singapore PDPC"
+                    ? JURISDICTION_INFO["Singapore PDPC"].color
+                    : hoveredCountry === "SGP"
+                    ? `${JURISDICTION_INFO["Singapore PDPC"].color}CC`
+                    : JURISDICTION_INFO["Singapore PDPC"].color
+                }
+                stroke={
+                  selectedJurisdiction === "Singapore PDPC" || hoveredCountry === "SGP"
+                    ? "#000000"
+                    : "#059669"
+                }
+                strokeWidth={selectedJurisdiction === "Singapore PDPC" ? 2 : 1}
+                style={{ cursor: "pointer" }}
+                onMouseEnter={() => setHoveredCountry("SGP")}
+                onMouseLeave={() => setHoveredCountry(null)}
+                onClick={() =>
+                  onSelectJurisdiction(
+                    selectedJurisdiction === "Singapore PDPC" ? null : "Singapore PDPC"
+                  )
+                }
+              />
+            </Marker>
           </ZoomableGroup>
         </ComposableMap>
       </div>

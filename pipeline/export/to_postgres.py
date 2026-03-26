@@ -8,10 +8,27 @@ maintaining full backward compatibility with the existing cases schema.
 from __future__ import annotations
 
 import json
+import re
 import logging
 
 from pipeline.db import get_conn
 from pipeline.validation.validator import validate_case
+
+
+def _to_int(val) -> int | None:
+    """Safely convert a value to int. Returns None for non-numeric strings like 'Unknown'."""
+    if val is None:
+        return None
+    if isinstance(val, int):
+        return val
+    if isinstance(val, float):
+        return int(val)
+    if isinstance(val, str):
+        # Strip non-numeric chars and try to parse
+        cleaned = re.sub(r"[^\d]", "", val)
+        if cleaned:
+            return int(cleaned)
+    return None
 
 log = logging.getLogger(__name__)
 
@@ -106,7 +123,7 @@ def save_to_cases(document_id: int, file_name: str, file_hash: str,
         "file_hash": file_hash,
         "case_name": merged.get("case_name"),
         "jurisdiction": merged.get("jurisdiction"),
-        "year": merged.get("year"),
+        "year": _to_int(merged.get("year")),
         "company": merged.get("company"),
         "sector": merged.get("sector"),
         "data_types": merged.get("data_types"),
@@ -117,7 +134,7 @@ def save_to_cases(document_id: int, file_name: str, file_hash: str,
         "enforcement_outcomes": json.dumps(merged.get("enforcement_outcomes", [])),
         "penalty_amount_usd": merged.get("penalty_amount_usd"),
         "penalty_original": merged.get("penalty_original"),
-        "individuals_affected": merged.get("individuals_affected"),
+        "individuals_affected": _to_int(merged.get("individuals_affected")),
         "outcome": merged.get("outcome"),
         "raw_json": json.dumps(merged),
         "document_id": document_id,

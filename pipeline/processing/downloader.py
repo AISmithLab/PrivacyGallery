@@ -39,11 +39,21 @@ def download_document(document_id: int, document_url: str, jurisdiction_id: str)
     Returns the raw_documents.id on success, None on failure.
     Skips if the content hash already exists (dedup).
     """
+    # AustLII and some other sites need longer timeouts and browser headers
+    timeout = HTTP_TIMEOUT
+    headers = {"User-Agent": USER_AGENT}
+    if "austlii.edu.au" in document_url:
+        timeout = 60
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "application/pdf,text/html,*/*",
+        }
+
     try:
         resp = requests.get(
             document_url,
-            headers={"User-Agent": USER_AGENT},
-            timeout=HTTP_TIMEOUT,
+            headers=headers,
+            timeout=timeout,
             allow_redirects=True,
         )
         resp.raise_for_status()
