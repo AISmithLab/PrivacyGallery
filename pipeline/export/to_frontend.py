@@ -325,7 +325,13 @@ def export_to_json(output_path: str | None = None) -> int:
         cases: List[Dict[str, Any]] = []
         for row in rows:
             try:
-                cases.append(build_case(row))
+                case = build_case(row)
+                # Skip cases with no real company name
+                company = (case.get("company") or "").strip()
+                if not company or company.lower() in ("unknown", "none", "n/a", ""):
+                    log.info(f"Skipping case id={row.get('id')}: company is '{company}'")
+                    continue
+                cases.append(case)
             except Exception as e:
                 log.warning(f"Skipping row id={row.get('id')}: {e}")
 

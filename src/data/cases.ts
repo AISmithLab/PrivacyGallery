@@ -29,6 +29,8 @@ export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore P
 
 export type Sector = "Technology" | "Social Media" | "Healthcare" | "E-Commerce" | "Gaming" | "Finance" | "Advertising" | "Food Delivery" | "Hospitality" | "Retail" | "Transportation";
 
+export type OutcomeType = "Monetary Penalty" | "Consent Order" | "Compliance Order" | "Complaint Filed" | "Warning" | "Reprimand" | "No Penalty" | "Injunction" | "Enforcement Notice";
+
 export interface ClaimVsReality {
   claim: string;
   reality: string;
@@ -89,6 +91,32 @@ export const JURISDICTIONS: Jurisdiction[] = [
   "EU EDPB",
   "Australia OAIC",
 ];
+
+export const OUTCOME_TYPES: OutcomeType[] = [
+  "Monetary Penalty",
+  "Consent Order",
+  "Compliance Order",
+  "Complaint Filed",
+  "Warning",
+  "Reprimand",
+  "No Penalty",
+  "Injunction",
+  "Enforcement Notice",
+];
+
+export function getOutcomeType(c: EnforcementCase): OutcomeType {
+  if (c.fineAmount > 0) return "Monetary Penalty";
+  const s = (c.outcomeSummary || "").toLowerCase();
+  if (s.includes("consent")) return "Consent Order";
+  if (s.includes("compliance")) return "Compliance Order";
+  if (s.includes("complaint")) return "Complaint Filed";
+  if (s.includes("warning")) return "Warning";
+  if (s.includes("reprimand")) return "Reprimand";
+  if (s.includes("injunct")) return "Injunction";
+  if (s.includes("enforcement")) return "Enforcement Notice";
+  if (s.includes("no penalty") || s.includes("no formal")) return "No Penalty";
+  return "No Penalty";
+}
 
 export const VIOLATION_TYPES: ViolationType[] = [
   "Unauthorized Data Collection",
@@ -184,20 +212,15 @@ export function getFineDisplay(case_: EnforcementCase): string {
   return "No fine";
 }
 
-/** Red stamp on card: amount, or 2-word consequence (e.g. Consent order) when no fine. */
+/** Red stamp on card: fine amount, or normalized outcome type when no fine. */
 export function getRedStampDisplay(case_: EnforcementCase): string {
   if (case_.fineAmount && case_.fineAmount > 0) {
     return case_.fineDisplay || `$${case_.fineAmount.toLocaleString()}`;
   }
   const d = (case_.fineDisplay || "").trim();
   if (d && (/^[\d€£$SGD\s,.]+\d|^\d/.test(d) || d.includes("€") || d.includes("£") || d.includes("SGD"))) return d;
-  const summary = (case_.outcomeSummary || "").trim();
-  if (summary) {
-    const words = summary.split(/\s+/).slice(0, 2);
-    const result = words.join(" ").replace(/;\s*$/, "").trim();
-    return result || "No fine";
-  }
-  return "No fine";
+  const outcome = getOutcomeType(case_);
+  return outcome === "Monetary Penalty" ? "No fine" : outcome;
 }
 
 /** Keep at most the first maxSentences sentences (default 4). Avoids splitting on abbreviations (e.g. U.S., EU-U.S.). */

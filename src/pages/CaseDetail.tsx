@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, getSimilarCases, truncateToMaxSentences } from "@/data/cases";
+import { cases, formatCompanyWorth, getDisplayCompany, getFineDisplay, getSimilarCases, truncateToMaxSentences, getOutcomeType } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import TopNav from "@/components/TopNav";
 import { ArrowLeft, ChevronDown, ChevronUp, FileText, Plus, Minus } from "lucide-react";
@@ -27,14 +27,14 @@ function formatClaimForDisplay(company: string, claim: string): string {
 
 const CONSEQUENCE_EXPLANATIONS: Record<string, string> = {
   "monetary penalty": "A monetary penalty (fine) has been imposed on the company for its violations. The amount reflects the severity of the breach and the regulator's enforcement posture.",
-  "injunctive relief": "Injunctive relief is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour (e.g. stop a practice) or take specific steps, rather than only paying a fine.",
   "consent order": "A consent order is a binding agreement between the regulator and the company. The company agrees to certain terms (e.g. change practices, implement a program) without admitting liability. Failure to comply can lead to further enforcement.",
-  "compliance order": "A compliance order requires the company to take specific actions to comply with the law—for example, updating policies, implementing safeguards, or submitting to monitoring. It is aimed at changing future behaviour.",
-  "reprimand": "A reprimand is an official warning or censure. It is a formal finding of a breach without a monetary penalty, often used when the breach is less serious or the organisation has taken steps to remedy the issue.",
-  "warning": "A formal warning has been issued by the regulator. It signals that a breach was found but no monetary penalty or binding order was imposed at this time.",
-  "no formal penalty": "No formal penalty was imposed. The regulator may have issued guidance, closed the case, or required non-financial remedies such as corrective measures or an undertaking.",
+  "compliance order": "A compliance order requires the company to take specific actions to comply with the law — for example, updating policies, implementing safeguards, or submitting to monitoring. It is aimed at changing future behaviour.",
   "complaint filed": "A formal complaint has been filed by the regulator. The case may be ongoing; no final decision or penalty may have been reached yet.",
-  "guidance / advisory": "The regulator issued non-binding guidance or advisory recommendations rather than a formal enforcement action.",
+  "warning": "A formal warning has been issued by the regulator. It signals that a breach was found but no monetary penalty or binding order was imposed at this time.",
+  "reprimand": "A reprimand is an official warning or censure. It is a formal finding of a breach without a monetary penalty, often used when the breach is less serious or the organisation has taken steps to remedy the issue.",
+  "no penalty": "No formal penalty was imposed. The regulator may have issued guidance, closed the case, or required non-financial remedies such as corrective measures or an undertaking.",
+  "injunction": "An injunction is a court order requiring a party to do or stop doing something. When sought by a regulator, it means the agency is asking a court to order the company to change its behaviour or take specific steps, rather than only paying a fine.",
+  "enforcement notice": "An enforcement notice is a formal directive from the regulator requiring the company to take specific corrective actions within a set timeframe. Non-compliance can result in further penalties.",
 };
 
 const CaseDetail = () => {
@@ -253,13 +253,13 @@ const CaseDetail = () => {
                 {getFineDisplay(case_) !== "No fine" ? (
                   <p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>Fine: {getFineDisplay(case_)}</span></p>
                 ) : (
-                  <p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>{case_.outcomeSummary || "No monetary penalty"}</span></p>
+                  <p><span className="font-bold" style={{ color: "hsl(var(--accent))" }}>{getOutcomeType(case_)}</span></p>
                 )}
                 {case_.consequences && <p>{case_.consequences}</p>}
-                {case_.outcomeSummary && CONSEQUENCE_EXPLANATIONS[case_.outcomeSummary.toLowerCase()] && (
+                {CONSEQUENCE_EXPLANATIONS[getOutcomeType(case_).toLowerCase()] && (
                   <div className="mt-3 pt-3 border-t border-border">
                     <p className="font-mono font-bold text-[10px] uppercase tracking-wider text-muted-foreground mb-1">What does this mean?</p>
-                    <p className="text-muted-foreground">{CONSEQUENCE_EXPLANATIONS[case_.outcomeSummary.toLowerCase()]}</p>
+                    <p className="text-muted-foreground">{CONSEQUENCE_EXPLANATIONS[getOutcomeType(case_).toLowerCase()]}</p>
                   </div>
                 )}
               </div>

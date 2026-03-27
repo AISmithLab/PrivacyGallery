@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { cases, JURISDICTIONS, VIOLATION_TYPES, SECTORS, type EnforcementCase, type Jurisdiction, type ViolationType, type Sector, getDisplayCompany } from "@/data/cases";
+import { cases, JURISDICTIONS, VIOLATION_TYPES, SECTORS, OUTCOME_TYPES, type EnforcementCase, type Jurisdiction, type ViolationType, type Sector, getDisplayCompany, getOutcomeType } from "@/data/cases";
 import TopNav from "@/components/TopNav";
 import { Link } from "react-router-dom";
 
@@ -48,7 +48,7 @@ const getDimensionValues = (key: DimensionKey, data: EnforcementCase[]): string[
       case "jurisdiction": set.add(c.jurisdiction); break;
       case "violation": c.violations.forEach((v) => set.add(v)); break;
       case "sector": set.add(c.sector); break;
-      case "outcome": set.add(c.outcomeSummary || "Other"); break;
+      case "outcome": set.add(getOutcomeType(c)); break;
       case "country": set.add(c.country); break;
       case "severity":
         if (c.severityForIndividuals >= 8) set.add("High (8-10)");
@@ -65,7 +65,7 @@ const getCaseValue = (c: EnforcementCase, key: DimensionKey): string[] => {
     case "jurisdiction": return [c.jurisdiction];
     case "violation": return c.violations;
     case "sector": return [c.sector];
-    case "outcome": return [c.outcomeSummary || "Other"];
+    case "outcome": return [getOutcomeType(c)];
     case "country": return [c.country];
     case "severity":
       if (c.severityForIndividuals >= 8) return ["High (8-10)"];
@@ -449,7 +449,7 @@ const Compare = () => {
                           { label: "Fine", fn: (c: EnforcementCase) => c.fineAmount > 0 ? c.fineDisplay : "—" },
                           { label: "Severity", fn: (c: EnforcementCase) => `${c.severityForIndividuals}/10` },
                           { label: "Sector", fn: (c: EnforcementCase) => c.sector },
-                          { label: "Outcome", fn: (c: EnforcementCase) => c.outcomeSummary || "Fine" },
+                          { label: "Outcome", fn: (c: EnforcementCase) => getOutcomeType(c) },
                           { label: "Impacted", fn: (c: EnforcementCase) => c.impactedIndividuals || "—" },
                           { label: "Violation", fn: (c: EnforcementCase) => c.violations.join(", ") },
                         ].map((row, ri) => (
@@ -525,7 +525,7 @@ const Compare = () => {
                       {getDisplayCompany(c)}
                     </div>
                     <div className="text-xs font-mono mt-1 opacity-70">
-                      {c.jurisdiction} · {c.year} · {c.fineAmount > 0 ? formatFine(c.fineAmount) : c.outcomeSummary || "—"}
+                      {c.jurisdiction} · {c.year} · {c.fineAmount > 0 ? formatFine(c.fineAmount) : getOutcomeType(c)}
                     </div>
                   </button>
                 );

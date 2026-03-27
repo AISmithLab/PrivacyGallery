@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { cases, Jurisdiction, ViolationType, Sector, parseCompanyWorth, getDisplayCompany } from "@/data/cases";
+import { cases, Jurisdiction, ViolationType, Sector, OutcomeType, parseCompanyWorth, getDisplayCompany, getOutcomeType } from "@/data/cases";
 import CaseCard from "@/components/CaseCard";
 import ControlBar from "@/components/ControlBar";
 import TopNav from "@/components/TopNav";
@@ -23,6 +23,7 @@ const Index = () => {
   const [selectedJurisdictions, setSelectedJurisdictions] = useState<Jurisdiction[]>([]);
   const [selectedViolations, setSelectedViolations] = useState<ViolationType[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
+  const [selectedOutcomes, setSelectedOutcomes] = useState<OutcomeType[]>([]);
   const [visibleCount, setVisibleCount] = useState(50);
 
   const toggle = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>) => (item: T) => {
@@ -47,6 +48,8 @@ const Index = () => {
       result = result.filter((c) => c.violations.some((v) => selectedViolations.includes(v)));
     if (selectedSectors.length > 0)
       result = result.filter((c) => selectedSectors.includes(c.sector));
+    if (selectedOutcomes.length > 0)
+      result = result.filter((c) => selectedOutcomes.includes(getOutcomeType(c)));
 
     const cardTextLen = (c: typeof result[0]) =>
       (c.whatTheyDid || "").length + (c.whyTheyWereWrong || "").length;
@@ -74,7 +77,7 @@ const Index = () => {
     result.sort((a, b) => (jurOrder[a.jurisdiction] ?? 99) - (jurOrder[b.jurisdiction] ?? 99));
 
     return result;
-  }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors]);
+  }, [search, sort, selectedJurisdictions, selectedViolations, selectedSectors, selectedOutcomes]);
 
   // Reset visible count when filters change
   useEffect(() => {
@@ -161,6 +164,8 @@ const Index = () => {
           onToggleViolation={toggle(setSelectedViolations)}
           selectedSectors={selectedSectors}
           onToggleSector={toggle(setSelectedSectors)}
+          selectedOutcomes={selectedOutcomes}
+          onToggleOutcome={toggle(setSelectedOutcomes)}
         />
 
         <p className="text-xs font-mono text-muted-foreground">

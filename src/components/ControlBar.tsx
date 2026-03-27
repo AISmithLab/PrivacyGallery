@@ -1,6 +1,6 @@
 import { Search, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Jurisdiction, JURISDICTIONS, ViolationType, VIOLATION_TYPES, Sector, SECTORS } from "@/data/cases";
+import { Jurisdiction, JURISDICTIONS, ViolationType, VIOLATION_TYPES, Sector, SECTORS, OutcomeType, OUTCOME_TYPES } from "@/data/cases";
 
 interface ControlBarProps {
   search: string;
@@ -13,6 +13,8 @@ interface ControlBarProps {
   onToggleViolation: (v: ViolationType) => void;
   selectedSectors: Sector[];
   onToggleSector: (s: Sector) => void;
+  selectedOutcomes: OutcomeType[];
+  onToggleOutcome: (o: OutcomeType) => void;
 }
 
 const SORT_OPTIONS = [
@@ -76,9 +78,11 @@ const ControlBar = ({
   onToggleViolation,
   selectedSectors,
   onToggleSector,
+  selectedOutcomes,
+  onToggleOutcome,
 }: ControlBarProps) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const activeFilterCount = selectedViolations.length + selectedSectors.length;
+  const activeFilterCount = selectedViolations.length + selectedSectors.length + selectedOutcomes.length;
 
   return (
     <div className="space-y-0">
@@ -176,6 +180,29 @@ const ControlBar = ({
               </div>
             </div>
 
+            {/* Outcome */}
+            <div>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                Outcome
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {OUTCOME_TYPES.map((o) => (
+                  <button
+                    key={o}
+                    type="button"
+                    onClick={() => onToggleOutcome(o)}
+                    className={`px-2.5 py-1 text-[11px] font-mono border-2 transition-all ${
+                      selectedOutcomes.includes(o)
+                        ? "border-black bg-[#FFD700] text-black font-bold"
+                        : "border-border/40 bg-card text-foreground hover:border-black"
+                    }`}
+                  >
+                    {o}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Sector */}
             <div>
               <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground mb-2">
@@ -203,9 +230,9 @@ const ControlBar = ({
       )}
 
       {/* Active filter pills */}
-      {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0) && (
+      {(selectedJurisdictions.length > 0 || selectedViolations.length > 0 || selectedSectors.length > 0 || selectedOutcomes.length > 0) && (
         <div className="flex gap-2 flex-wrap px-4 py-2 bg-card/40">
-          {[...selectedJurisdictions, ...selectedViolations, ...selectedSectors].map((f) => (
+          {[...selectedJurisdictions, ...selectedViolations, ...selectedSectors, ...selectedOutcomes].map((f) => (
             <span key={f} className="flex items-center gap-1 border-2 border-black bg-[#FFD700] text-black px-2 py-0.5 text-[11px] font-mono font-bold">
               {f}
               <X className="w-3 h-3 cursor-pointer" />

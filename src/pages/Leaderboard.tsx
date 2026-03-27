@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { cases, getDisplayCompany, parseCompanyWorth } from "@/data/cases";
+import { cases, getDisplayCompany, parseCompanyWorth, getOutcomeType } from "@/data/cases";
 import { Link } from "react-router-dom";
 import TopNav from "@/components/TopNav";
 
@@ -37,7 +37,7 @@ const Leaderboard = () => {
     // Enforcement outcomes breakdown
     const outcomeMap = new Map<string, number>();
     const normalizeOutcome = (c: typeof cases[0]): string => {
-      return c.outcomeSummary || "Other / No Penalty";
+      return getOutcomeType(c);
     };
     cases.forEach((c) => {
       const label = normalizeOutcome(c);
@@ -46,19 +46,23 @@ const Leaderboard = () => {
     const topOutcomes = [...outcomeMap.entries()]
       .map(([label, count]) => ({ label, count }))
       .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
+      .slice(0, 3);
 
-    // Most common violation type
+    // Top 3 violation types
     const violationCounts = new Map<string, number>();
     cases.forEach((c) => {
       c.violations.forEach((v) => violationCounts.set(v, (violationCounts.get(v) || 0) + 1));
     });
     const topViolation = [...violationCounts.entries()].sort((a, b) => b[1] - a[1])[0];
+    const topViolations = [...violationCounts.entries()]
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3);
 
     // Largest single fine
     const largestFineCase = [...cases].sort((a, b) => b.fineAmount - a.fineAmount)[0];
 
-    return { topCompanies, topOffenders, topOutcomes, topViolation, largestFineCase };
+    return { topCompanies, topOffenders, topOutcomes, topViolation, topViolations, largestFineCase };
   }, []);
 
   return (
@@ -173,9 +177,38 @@ const Leaderboard = () => {
           </div>
         </section>
 
-        {/* Top Enforcement Outcomes */}
+        {/* Top 3 Violation Types */}
         <section>
-          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 5 Enforcement Outcomes</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 3 Violation Types</h2>
+          <div className="h-[3px] bg-border mb-4" />
+          <div className="space-y-2">
+            {stats.topViolations.map((v, i) => (
+              <div
+                key={v.label}
+                className={`flex items-center gap-4 brutalist-border p-4 ${
+                  i === 0 ? "bg-[#FFD700]/20" : "bg-card"
+                }`}
+                style={i === 0 ? { borderColor: "#D4A800", borderWidth: "4px" } : {}}
+              >
+                <span
+                  className={`w-8 h-8 flex items-center justify-center font-bold text-sm font-mono shrink-0 border-2 border-black ${
+                    i === 0 ? "bg-[#FFD700] text-black" : i === 1 ? "bg-gray-300 text-black" : "bg-orange-300 text-black"
+                  }`}
+                >
+                  {i + 1}
+                </span>
+                <span className="flex-1 font-bold">{v.label}</span>
+                <span className="font-mono font-bold text-sm" style={{ color: "hsl(var(--accent))" }}>
+                  {v.count} cases
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Top 3 Enforcement Outcomes */}
+        <section>
+          <h2 className="text-2xl font-bold tracking-tight mb-1 uppercase">\ Top 3 Enforcement Outcomes</h2>
           <div className="h-[3px] bg-border mb-4" />
           <div className="space-y-2">
             {stats.topOutcomes.map((o, i) => (
@@ -188,7 +221,7 @@ const Leaderboard = () => {
               >
                 <span
                   className={`w-8 h-8 flex items-center justify-center font-bold text-sm font-mono shrink-0 border-2 border-black ${
-                    i === 0 ? "bg-[#FFD700] text-black" : "bg-card"
+                    i === 0 ? "bg-[#FFD700] text-black" : i === 1 ? "bg-gray-300 text-black" : "bg-orange-300 text-black"
                   }`}
                 >
                   {i + 1}

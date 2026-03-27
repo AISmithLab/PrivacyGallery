@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Plus, Minus } from "lucide-react";
-import { cases, getDisplayCompany, type Jurisdiction } from "@/data/cases";
+import { cases, getDisplayCompany, getOutcomeType, type Jurisdiction } from "@/data/cases";
 import { JURISDICTION_INFO } from "@/data/jurisdictionInfo";
 import { JurisdictionLogo } from "./JurisdictionLogos";
 
@@ -46,7 +46,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
 
     const outcomeCounts: Record<string, number> = {};
     for (const c of jCases) {
-      const outcome = c.outcomeSummary || "Unknown";
+      const outcome = getOutcomeType(c);
       outcomeCounts[outcome] = (outcomeCounts[outcome] || 0) + 1;
     }
     const topOutcomes = Object.entries(outcomeCounts)
@@ -74,7 +74,7 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
         name: getDisplayCompany(c),
         fine: c.fineAmount,
         year: c.year,
-        outcome: c.outcomeSummary || "—",
+        outcome: getOutcomeType(c),
       }));
 
     return {
