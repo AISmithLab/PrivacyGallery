@@ -1,0 +1,1511 @@
+[
+  {
+    "code": "AL",
+    "name": "Albania",
+    "numericCode": "008",
+    "overview": "Data Protection Law defines personal data as any information relating to a data subject (Article 5(3)). A “data subject” refers to any identified or identifiable natural person. A person is identifiable if he or she can be identified, directly or indirectly, by reference to one or more specific identifiers, such as a name, an identification number, location data, an online identifier or to one or more factors specific to his or her physical, physiological, genetic, mental, economic, cultural or social identity (Article 5(23)).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "DZ",
+    "name": "Algeria",
+    "numericCode": "012",
+    "overview": "Any information, regardless of the medium, relating to an identified or identifiable person, hereinafter referred to as \"data subject\", directly or indirectly, in particular by reference to an identification number or to one or more factors specific to his or her physical, physiological, genetic, biometric, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "Violation of the provisions of Law No. 18-07 is punishable by imprisonment and / or a fine. Article 47 to 74 of the law No. 18-07 provide that non-compliance with the Data Protection Law is punishable by a fine ranging from 20,000 DZD to 1,000,000 DZD and / or imprisonment between two months and five years."
+  },
+  {
+    "code": "AO",
+    "name": "Angola",
+    "numericCode": "024",
+    "overview": "The Data Protection Law defines personal data as any given information, regardless of its nature, including images and sounds related to a specific or identifiable individual. An identifiable person is an individual directly or indirectly identified, notably, by reference to his or her identification number or to the combination of specific elements of his or her physical, physiological, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "AR",
+    "name": "Argentina",
+    "numericCode": "032",
+    "overview": "Personal data is defined as information of any type referred to individuals or legal entities, determined or which may be determined.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "AM",
+    "name": "Armenia",
+    "numericCode": "051",
+    "overview": "Armenia adopted its Law on Personal Data Protection in 2002, which establishes baseline requirements for data collection, processing, and storage. The framework is relatively basic by European standards and does not fully align with GDPR principles, though Armenia has been working toward modernization. Coverage includes personal data in automated and manual filing systems, with rules on lawful processing, consent, and data subject rights.",
+    "authority": "The Data Protection Inspector of Armenia serves as the independent data protection authority, responsible for monitoring compliance, investigating complaints, and enforcing the personal data protection law.",
+    "mainLaws": [
+      "Law on Personal Data Protection (2002)",
+      "RA Law on Information Security (2007)"
+    ],
+    "enforcementStyle": "Enforcement is generally modest in practice, with limited resources and public visibility compared to Western jurisdictions. Penalties exist but are not frequently publicized; enforcement tends toward guidance and compliance assistance rather than aggressive litigation. Notable actions remain sparse, reflecting a developing regulatory environment."
+  },
+  {
+    "code": "AW",
+    "name": "Aruba",
+    "numericCode": "",
+    "overview": "According to the Explanatory Memorandum on the National Ordinance Person Registration the term personal data has a broad meaning. This does not only concern data that can identify a person, but concerns any data that can be associated with a particular person; it is foreseeable that under certain circumstances data can be traced to one person through systematic comparison and lengthy investigations. Personal identifiable confidential data is therefore not only limited to home address, email address, telephone number, membership number and/or identity number. Personal data means any information",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "AU",
+    "name": "Australia",
+    "numericCode": "036",
+    "overview": "Personal data (referred to as \"personal information\" in Australia) means information or an opinion about an identified individual, or an individual who is reasonably identifiable, whether the information or opinion is true or not, and whether the information or opinion is recorded in material form or not. The Privacy Act currently contains an exemption for “employee records”, such that certain records containing personal information which an employer makes in connection with a current or former employment relationship are exempt from the Privacy Act. However there are some further carve outs t",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "AT",
+    "name": "Austria",
+    "numericCode": "040",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "AZ",
+    "name": "Azerbaijan",
+    "numericCode": "031",
+    "overview": "Azerbaijan adopted the Law on Protection of Personal Data in 2010, which establishes general principles for collecting, processing, and protecting personal data. The law covers both public and private sector data processing but lacks some modern provisions found in comprehensive frameworks like GDPR. The legal framework is supplemented by sector-specific regulations, particularly in telecommunications and financial services.",
+    "authority": "The Data Protection Commissioner of the Republic of Azerbaijan (established under the 2010 law) oversees compliance, handles complaints, and conducts inspections of data processors.",
+    "mainLaws": [
+      "Law on Protection of Personal Data (2010)",
+      "Law on Information, Informatization and Information Protection (1998)",
+      "Law on Electronic Commerce (2004)"
+    ],
+    "enforcementStyle": "Enforcement is moderate with penalties including fines and administrative sanctions for violations. The authority has limited visible enforcement activity compared to European standards, and cases are not widely publicized. Compliance monitoring focuses primarily on government agencies and major organizations rather than systematic private sector oversight."
+  },
+  {
+    "code": "BS",
+    "name": "Bahamas",
+    "numericCode": "044",
+    "overview": "Section 2 DPA defines ‘personal data’ as data relating to a living individual who can be identified either from the data or from the data in conjunction with other information in the possession of the data controller.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BH",
+    "name": "Bahrain",
+    "numericCode": "048",
+    "overview": "Personal data is defined under the PDPL as any information of any form related to an identifiable individual, or an individual who can be identified, directly or indirectly, particularly through their personal identification number, or one or more of their physical, physiological, intellectual, cultural or economic characteristics or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BD",
+    "name": "Bangladesh",
+    "numericCode": "050",
+    "overview": "Section 26 of the CA 2023 defines the term \"identity information\" as \"any external, biological or physical information or any other information which singly or jointly can identify a person or a system, such as name, photograph, address, date of birth, mother's name, father's name, signature, national identity card, birth and death registration number, finger print, passport number, bank account number, driving license, e-TIN number [Tax identification Number], electronic or digital signature, username, credit or debit card number, voice print, retina image, iris image, DNA profile, security r",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BB",
+    "name": "Barbados",
+    "numericCode": "052",
+    "overview": "\"Personal data\" means data which relates to an individual who can be identified: from that data; or from that data together with other information which is in the possession of or is likely to come into the possession of the data controller.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BY",
+    "name": "Belarus",
+    "numericCode": "112",
+    "overview": "Data Protection Law defines “personal data” as any information relating to an identified or identifiable natural person. In its turn, “individual who can be identified” means an individual who can be directly or indirectly determined, in particular through the surname, proper name, patronymic, date of birth, identification number, or through one or more of characteristic features of her / his physical, psychological, mental, economic, cultural or social identity. The Law also defines “special personal data”, “biometric personal data”, “genetic personal data” and “publicly available personal da",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BE",
+    "name": "Belgium",
+    "numericCode": "056",
+    "overview": "Belgium has a comprehensive data protection framework anchored in the General Data Protection Regulation (GDPR), which applies directly as EU law since 2018. Domestically, Belgium enacted the Data Protection Act (Law of 30 July 2018) to supplement GDPR and implement specific requirements under Belgian law. The framework covers processing of personal data by both public and private entities.",
+    "authority": "Belgian Data Protection Authority (Autorité de Protection des Données / Gegevensbeschermingsautoriteit, APD/GBA), established in 2018, which investigates complaints, conducts audits, and enforces GDPR and Belgian data protection law.",
+    "mainLaws": [
+      "GDPR (2018)",
+      "Data Protection Act / Law of 30 July 2018",
+      "ePrivacy Directive implementation (various electronic communications laws)"
+    ],
+    "enforcementStyle": "The APD/GBA pursues enforcement through investigations, administrative fines, and corrective measures. Penalties under GDPR can reach up to €20 million or 4% of global annual turnover, whichever is higher. Belgium has taken notable enforcement actions against major tech companies and organizations for GDPR violations, with a moderately active enforcement posture."
+  },
+  {
+    "code": "BJ",
+    "name": "Benin",
+    "numericCode": "204",
+    "overview": "The personal data is defined as any information relating to an identified or identifiable natural person. It makes a direct reference to sound and image (Article 1 of the Digital Code).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BM",
+    "name": "Bermuda",
+    "numericCode": "060",
+    "overview": "PIPA provides for a definition of \"personal information\" as meaning \"any information about an identified or identifiable individual\". At common law, information is generally to be regarded as 'confidential' if it has a necessary quality of confidentiality and has been communicated or has become known in such circumstances as give rise to a reasonable expectation of confidence; for example if obtained in connection with certain professional relationships, if obtained by improper means, or if received from another party who is subject to a duty of confidentiality.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BO",
+    "name": "Bolivia",
+    "numericCode": "068",
+    "overview": "Bolivia does not have a comprehensive data protection law as of 2024. Privacy rights are addressed through constitutional protections and sectoral regulations, including provisions in the 2009 Constitution that recognize the right to privacy and personal data protection. The legal framework remains fragmented, with limited specific legislation governing data handling across most sectors.",
+    "authority": "No dedicated data protection authority. The Defensoría del Pueblo (Ombudsman's Office) handles some privacy complaints, but lacks specialized enforcement powers for data protection.",
+    "mainLaws": [
+      "Constitution of Bolivia (2009) — Articles 21 and 24 recognize privacy and personal data rights",
+      "Law on Telecommunications (1999) — Includes limited data protection provisions for telecommunications providers"
+    ],
+    "enforcementStyle": "Enforcement is limited and inconsistent. Privacy violations are typically addressed through constitutional courts and general administrative channels rather than dedicated data protection mechanisms. Few precedents exist for significant penalties, reflecting weak institutional capacity in this area."
+  },
+  {
+    "code": "BQ",
+    "name": "Bonaire, Sint Eustatius and Saba",
+    "numericCode": "",
+    "overview": "Article 1 paragraph 2 of the Personal Data Protection Act BES stipulates personal data as any data concerning an identified or identifiable natural person. Personal data means any information relating to an identified or identifiable natural person; an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural perso",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BA",
+    "name": "Bosnia and Herzegovina",
+    "numericCode": "070",
+    "overview": "The DP Law defines personal data as any information relating to an identified or identifiable natural person. Data subjects are natural persons whose identity can be determined or identified, directly or indirectly, in particular by reference to a personal identification number or to one or more factors specific to his or her physical, physiological, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BW",
+    "name": "Botswana",
+    "numericCode": "072",
+    "overview": "Under the DPA, personal data means information relating to an identified or identifiable individual, which the individual can be identified directly or indirectly, in particular by reference to an identification number, or to one or more factors specific to the individual’s physical, physiological, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BR",
+    "name": "Brazil",
+    "numericCode": "076",
+    "overview": "The LGPD defines personal data as any information related to an identified or identifiable natural person. Anonymized data is not considered personal data, except when the process of anonymization has been reversed or if it can be reversed applying reasonable efforts.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "VG",
+    "name": "British Virgin Islands",
+    "numericCode": "",
+    "overview": "Personal data means any information in respect of commercial transactions which: (i) is being processed wholly or partly by means of equipment operating automatically in response to instructions given for that purpose; (ii) is recorded with the intention that it should wholly or partly be processed by means of such equipment; or (iii) is recorded as part of a relevant filing system or with the intention, and in each case, that it should form part of a relevant filing system, that relates directly or indirectly to a data subject, who is identified or identifiable from that information, or from ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BN",
+    "name": "Brunei",
+    "numericCode": "096",
+    "overview": "At present there is no legal definition. It is anticipated that under the PDPO \"personal data\" will refer to data, whether true or not, about an individual who can be identified (a) from that data; or (b) from that data and other information to which the organization has or is likely to have access. Premised on such a definition of “personal data” it is envisaged that if a data subject cannot be identified by that data and other information to which the organization has or may have access to, such data would not come within the meaning of “personal data” under PDPO and this would remain the si",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BG",
+    "name": "Bulgaria",
+    "numericCode": "100",
+    "overview": "The definition of personal data set forth before by the Personal Data Protection Act was repealed following the implementation of the GDPR and it explicitly refers to the definition of personal data under art. 4 of the GDPR (§1 of the Supplementary provisions of the Personal Data Protection Act). Personal data means any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an on",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BF",
+    "name": "Burkina Faso",
+    "numericCode": "854",
+    "overview": "Any information that allows, in any form whatsoever, directly, or indirectly, the identification of natural persons, in particular by reference to an identification number or to several characteristics specific to their physical, psychological, mental, economic, cultural or social identity (Article 5 of the Law).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "BI",
+    "name": "Burundi",
+    "numericCode": "",
+    "overview": "Burundi lacks a comprehensive, dedicated data protection law. Privacy protections are fragmented across general legal instruments including the Constitution, the Penal Code, and sector-specific regulations. The country has not yet enacted a standalone data protection statute comparable to international standards like GDPR.",
+    "authority": "No dedicated data protection authority. Regulatory oversight is dispersed among various government agencies without a centralized data protection regulator.",
+    "mainLaws": [],
+    "enforcementStyle": "Enforcement of privacy rights is minimal and ad-hoc, primarily through general constitutional and criminal law mechanisms. There is limited institutional capacity and resources for systematic data protection enforcement. No significant privacy-specific enforcement actions or penalties are documented."
+  },
+  {
+    "code": "KH",
+    "name": "Cambodia",
+    "numericCode": "116",
+    "overview": "Cambodia does not have a comprehensive data protection law. The country's privacy framework is fragmented, with data protection provisions scattered across the Law on Telecommunications (2009), the Criminal Code, and sector-specific regulations. Personal data protection remains largely unregulated compared to international standards.",
+    "authority": "No dedicated data protection authority. The Ministry of Posts and Telecommunications and the National Police have limited oversight roles in specific sectors.",
+    "mainLaws": [
+      "Law on Telecommunications (2009)",
+      "Criminal Code provisions on privacy and confidentiality"
+    ],
+    "enforcementStyle": "Enforcement is minimal and ad-hoc. There is no systematic regulatory oversight of data practices, and penalties for privacy violations are rarely applied. Cambodia's enforcement capacity and prioritization of data protection remains very limited."
+  },
+  {
+    "code": "CM",
+    "name": "Cameroon",
+    "numericCode": "120",
+    "overview": "Information relating to a person enabling that person to be identified directly or indirectly, in particular by reference to any form of identifier or to one or more elements specific to their physical, psychological, genetic, psychological, cultural, socio-professional or economic identity, in particular a name, a photograph, a fingerprint, a postal address, an e-mail address, a telephone number, a social security number, an internal personnel number, a digital identifier, an IP address, a computer connection identifier or a voice recording. (Article 5 of the Data Protection Act)",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CA",
+    "name": "Canada",
+    "numericCode": "124",
+    "overview": "‘Personal information’ includes any information about an identifiable individual (business contact information is expressly “carved out” of the definition of ‘personal information’ in some Canadian privacy statutes). The Quebec Private Sector Act, as modified by Bill 64, has broadened the definition of “personal information” to include any information that allows an individual to be identified indirectly as well as directly. In Quebec, business contact information is included in the definition of “personal information”, however it is considered a less sensitive form of data to which many of th",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CV",
+    "name": "Cape Verde",
+    "numericCode": "132",
+    "overview": "Personal data is defined as any information, regardless of its nature or the media on which it is stored, relating to an identifiable natural person (referred to as 'the data subject'). Natural persons are deemed to be identifiable whenever they can be directly or indirectly identified through such information.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "The DPL also lays down sanctions that can be imposed in addition to criminal and civil liability, namely: a temporary or permanent prohibition on processing data the advertisement of a sentence applied to a specific case a public warning or reproach of a data controller."
+  },
+  {
+    "code": "KY",
+    "name": "Cayman Islands",
+    "numericCode": "136",
+    "overview": "The application of the DPA turns on whether an organization is established in the Cayman Islands or has personal data processed in the Cayman Islands.  Specifically, the DPA applies to a data controller in respect of personal data only if: the data controller is established in the Cayman Islands and the personal data are processed in the context of that establishment; or the data controller is not established in the Cayman Islands, but the personal data are processed in the Cayman Islands other than for the purposes of transit of the data through the Cayman Islands.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "TD",
+    "name": "Chad",
+    "numericCode": "148",
+    "overview": "Any information relating to a natural person, identified or identifiable directly or indirectly, by reference to an identification number or to one or more elements specific to his or her physical, physiological, genetic, psychological, cultural, social, and economic identity (Article 5 of the Act).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CL",
+    "name": "Chile",
+    "numericCode": "152",
+    "overview": "The PDPL definespersonal data as any information concerning identified or identifiable natural persons.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CN",
+    "name": "China",
+    "numericCode": "156",
+    "overview": "The PIPL has extra–territorial effect, and applies both to: data processing activities within the PRC; and processing of PRC residents' data outside of PRC where:for the purposes of providing products or services to PRC residents;for analytics or evaluation of behavior of PRC residents; orfor any other reasons as required by law or regulations.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "If an individual or organization wants to provide any data stored in the PRC to an overseas judicial or enforcement authority, it must obtain the approval of the Ministry of Justice in advance."
+  },
+  {
+    "code": "CO",
+    "name": "Colombia",
+    "numericCode": "170",
+    "overview": "Under Law 1266, personal data is defined as any information related to or that may be associated with one or several determined or determinable natural or legal persons. Personal data may also be regarded as public, private or semi-private data. Public data is available to the public based on a legal or constitutional mandate. Private or semi-private data is data that does not have a public purpose, is intimate in nature and the disclosure of which concerns only the data subject. Under Law 1581, personal data is defined as any information related to, or that may be related to, one or several d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CI",
+    "name": "Côte d’Ivoire",
+    "numericCode": "384",
+    "overview": "According to Article 1 of the 2013-450 law on the protection of personal data, personal data is defined as:",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CR",
+    "name": "Costa Rica",
+    "numericCode": "188",
+    "overview": "Personal information contained in public or private registries (eg, medical records) that identifies or could be used to identify a natural person. Personal information can only be disclosed to persons or entities with a need to know such information.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "HR",
+    "name": "Croatia",
+    "numericCode": "191",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CU",
+    "name": "Cuba",
+    "numericCode": "192",
+    "overview": "In the regulatory order, the information is approached in a general sense oriented to the preservation of the confidentiality, integrity and availability of the same, and focuses on establishing rules that regulate the management and treatment of information in general, especially related to cybersecurity issues.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CW",
+    "name": "Curaçao",
+    "numericCode": "",
+    "overview": "According to the Explanatory Memorandum on the National Ordinance Personal Data Protection the term personal data has a broad meaning. This does not only concern data that can identify a person, but concerns any data that can be associated with a particular person; it is foreseeable that under certain circumstances data can be traced to one person through systematic comparison and lengthy investigations. Personal identifiable confidential data is therefore not only limited to home address, email address, telephone number, membership number and/or identity number. Personal data means any inform",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CY",
+    "name": "Cyprus",
+    "numericCode": "196",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CZ",
+    "name": "Czech Republic",
+    "numericCode": "203",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CD",
+    "name": "Democratic Republic of Congo",
+    "numericCode": "180",
+    "overview": "Personal data is defined in Article 183 of the Digital Code Law and listed in eight different categories: Personal identification data, in particular: first name, surname, middle name, date and place of birth, age, marital status, national identification number, valid official identity document or any other biometric data, in particular photographs, sound recordings, images, fingerprints and iris scans; Correspondence data: telephone numbers, physical, postal and e-mail addresses; Professional data: status, job held, employer, remuneration; Billing and payment data: invoice amounts and history",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "DK",
+    "name": "Denmark",
+    "numericCode": "208",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "DO",
+    "name": "Dominican Republic",
+    "numericCode": "214",
+    "overview": "Personal data consists of any information, whether numerical, alphabetical, graphic, photographic, or acoustic, or any other type of data which concerns individuals that are identified or identifiable.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "EC",
+    "name": "Ecuador",
+    "numericCode": "218",
+    "overview": "The Ecuadorian data protection regime distinguishes between personal data and a sub-category of sensitive personal data, depending on the information and the harmful effects caused by its unlawful use. Article 4 of the Organic Law on Personal Data Protection defines personal information as the information that identifies or makes identifiable a specific individual, directly or indirectly.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "EG",
+    "name": "Egypt",
+    "numericCode": "818",
+    "overview": "Pursuant to Article (1) of the Law, personal data shall mean any data relating to an identified natural person, or one who can be identified directly or indirectly by way of linking such personal data and other data such as name, voice, picture, identification number, online identifier, or any data which determines the psychological, medical, economic, cultural or social identity of a natural person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "Failure to comply with the provisions of the Law, shall be penalized with imprisonment and/or fines that can reach up to EGP 5,000,000 (five million Egyptian pounds)."
+  },
+  {
+    "code": "SV",
+    "name": "El Salvador",
+    "numericCode": "222",
+    "overview": "“Information concerning a natural/moral person who is identified or identifiable.” Definition as contained Personal Data Protection Act on Apr. 22, 2021",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GQ",
+    "name": "Equatorial Guinea",
+    "numericCode": "226",
+    "overview": "The Personal Data Protection Law under art.4 defines personal data as\"any information, testimony or review concerning a person specifically identified or identifiable\".",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "EE",
+    "name": "Estonia",
+    "numericCode": "233",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ET",
+    "name": "Ethiopia",
+    "numericCode": "231",
+    "overview": "No specific definition is generally applicable. The Freedom of the Mass Media and Access to Information Proclamation No. 590/2008, applicable to government entities, is understood to generally define personal data as information about an identifiable individual that relates, but is not limited, to: medical, education, academic, employment, financial transaction, professional or criminal history ethnic, national or social origin, age, pregnancy, marital status, color, sexual orientation, physical or mental health, well-being, disability, religion, belief, conscience, culture, language or birth ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "FM",
+    "name": "Federated States of Micronesia",
+    "numericCode": "",
+    "overview": "The Federated States of Micronesia (FSM) has no comprehensive data protection or privacy law. Privacy protections are fragmented across various sectoral regulations and constitutional provisions. The country relies heavily on informal governance practices and has limited formal data protection infrastructure.",
+    "authority": "No dedicated data protection authority.",
+    "mainLaws": [],
+    "enforcementStyle": "Enforcement is minimal and ad-hoc, primarily through existing government agencies without specialized data protection mandates. There are no reported systematic data protection enforcement actions or significant penalties for privacy violations."
+  },
+  {
+    "code": "FJ",
+    "name": "Fiji",
+    "numericCode": "",
+    "overview": "The only actionable rights available to citizens are in s.24 of the Constitution. This creates a right to “personal privacy”, said to include: “confidentiality of their personal information; confidentiality of their communications; and respect for their private and family life”. These terms are not otherwise defined.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "FI",
+    "name": "Finland",
+    "numericCode": "246",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "FR",
+    "name": "France",
+    "numericCode": "250",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (“GDPR” or ”Regulation”) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GA",
+    "name": "Gabon",
+    "numericCode": "266",
+    "overview": "Any information relating to an identified or identifiable natural person, directly or indirectly, by reference to an identification number or to one or more elements, specific to his physical, physiological, genetic, psychological, cultural, social or economic identity (Article 6 of the Personal Data Act 2023 and Article 1 of the African Union Convention on Cyber Security And The Protection Of Personal Data).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GE",
+    "name": "Georgia",
+    "numericCode": "268",
+    "overview": "The Data Protection Law applies: to the processing of data wholly or partly by automated means within the territory of Georgia; to the processing other than by automated means of data which form part of a filing system or are processed to form part of a filing system within the territory of Georgia;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "DE",
+    "name": "Germany",
+    "numericCode": "276",
+    "overview": "Germany adjusted its legal framework to align with the GDPR through the new German Federal Data Protection Act (BDSG), which came into force on May 25, 2018. The BDSG leverages GDPR's opening clauses, allowing Member States to tailor or restrict certain data processing requirements. Part 3 of the BDSG implements the EU's Law Enforcement Directive (EU) 2016/680, which governs data processing for law enforcement purposes. Germany also has data protection rules embedded in area-specific laws, such as those regulating financial trade and the energy sector.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "There are no German specific enforcement powers except for the German Federal Commissioner for Data Protection and Freedom of Information (Bundesbeauftragter für Datenschutz und Informationsfreiheit– \"BfDI\") competent for federal authorities and certain sectors (seeAuthorityfor details)."
+  },
+  {
+    "code": "GH",
+    "name": "Ghana",
+    "numericCode": "288",
+    "overview": "A person shall collect data directly from the data subject unless: the data is contained in a public record; the data subject has deliberately made the data public; the data subject has consented to the collection of the information from another source; the collection of the data from another source is unlikely to prejudice a legitimate interest of the data subject;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GI",
+    "name": "Gibraltar",
+    "numericCode": "",
+    "overview": "\"Personal data\" is defined as \"any information relating to an identified or identifiable natural person\" (Article 4). A low bar is set for \"identifiable\" – if the natural person can be identified using “all means reasonably likely to be used” (Recital 26) the information is personal data. A name is not necessary either – any identifier will do, such as an identification number, phone number, location data or other factors which may identify that natural person. Online identifiers are expressly called out in Recital 30, with IP addresses, cookies and RFID tags all listed as examples. The Gibral",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GR",
+    "name": "Greece",
+    "numericCode": "300",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "The competent supervisory authority for the territory of Greece is the Hellenic Data Protection Authority (hereinafter the “HDPA”).",
+    "mainLaws": [],
+    "enforcementStyle": "In exercise of the discretionary powers recognized to Member States by Article 84 of the GDPR, the Greek Data Protection Law stipulates criminal sanctions which may be applied for unauthorized processing: Any act of unauthorized data processing (i.e. access, disclosure, destruction or damage collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction) may lead to imprisonment of up to 1 year. If the above m"
+  },
+  {
+    "code": "GT",
+    "name": "Guatemala",
+    "numericCode": "320",
+    "overview": "Article 9, number 1 of the Law on Access to Public Information defines Personal Data as“relative to any information pertaining to natural persons identified or identifiable.”",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GG",
+    "name": "Guernsey",
+    "numericCode": "",
+    "overview": "Section 111(1) of the DPL 2017 defines personal data as \"any information relating to an identified or identifiable individual\". An 'identifiable individual' is given special meaning under Schedule 9 of the DPL 2017 and is defined as an individual who can be directly or indirectly identified from the information including: by reference to a name or an identifier; one or more factors specific to the person's physical, physiological, genetic, mental, economic, cultural or social identity; where, despite pseudonymisation, that information is capable of being attributed  to that individual by the u",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GN",
+    "name": "Guinea",
+    "numericCode": "324",
+    "overview": "Article 1 of Law No. L/2016/037/AN defines personal data as any information of any kind and regardless of its medium, including sound and image, relating to an identified or identifiable natural person directly or indirectly, by reference to an identification number or to one or more factors specific to his or her physical, physiological, genetic, mental, cultural, social or economic identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "HT",
+    "name": "Haiti",
+    "numericCode": "332",
+    "overview": "Haiti lacks a comprehensive, dedicated data protection law. Privacy protections are scattered across the 1987 Constitution (which guarantees privacy rights), sectoral regulations, and limited legislation addressing specific industries like telecommunications and banking. The country's regulatory framework remains underdeveloped compared to international standards.",
+    "authority": "No dedicated data protection authority. Privacy matters fall under various ministries and sectoral regulators, with limited centralized enforcement.",
+    "mainLaws": [
+      "Constitution of Haiti (1987) – Articles on privacy rights",
+      "Telecommunications Law (various decrees) – Limited sectoral protections"
+    ],
+    "enforcementStyle": "Enforcement is minimal and fragmented. There are no specialized data protection agencies with dedicated powers, leading to inconsistent application of privacy rules. Practical enforcement relies on general civil courts and sectoral regulators with varying capacity, making meaningful privacy protection mechanisms weak in practice."
+  },
+  {
+    "code": "HN",
+    "name": "Honduras",
+    "numericCode": "340",
+    "overview": "Public Personal Data under the Law of the Civil Registry is defined as: Public Data whose disclosure is not restricted in any way, and includes the following: Names and surnames Date of birth and date of death Domicile (but not address) Job or occupation",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "HK",
+    "name": "Hong Kong, SAR",
+    "numericCode": "344",
+    "overview": "Personal data is defined in the Ordinance as any data: Relating directly or indirectly to a living individual; From which it is practicable for the identity of the individual to be directly or indirectly ascertained; and In a form in which access to or processing of the data is practicable. The January 2020 Consultation Paper proposed to expand the definition of personal data to cover anonymized information where the relevant individual can be re identified, but this is still on hold.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "HU",
+    "name": "Hungary",
+    "numericCode": "348",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "IS",
+    "name": "Iceland",
+    "numericCode": "352",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "IN",
+    "name": "India",
+    "numericCode": "356",
+    "overview": "Under the DPDP Act, personal data refers to data about an individual who is identifiable either by such data or in relation to such data. This implies that anonymized data or non-personal data will not be covered by the DPDP Act.The DPDP Act also defines ‘Data Fiduciary’, ‘Data Processor’ and ‘Data Principal’, among other concepts:",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ID",
+    "name": "Indonesia",
+    "numericCode": "360",
+    "overview": "Personal data under the General Data Protection Regulations and the PDP Law is broadly defined as any data of an individual who can be identified and / or may be identified individually or combined with other information both directly or indirectly through electronic or non-electronic systems.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "In Indonesia, the sanctions for breaches of data privacy are found under the relevant legislation and are essentially fines. Imprisonment may be imposed in severe instances, such as in the event of intentional infringement. Violations of certain articles in the PDP Law are subject to administrative sanctions. These administrative sanctions, which shall be imposed by the PDP Agency, are as follows: written warning; temporary suspension of personal data processing activities; deletion or destruction of personal data; and / or"
+  },
+  {
+    "code": "IR",
+    "name": "Iran",
+    "numericCode": "364",
+    "overview": "Not specifically defined. Under the Law on Publishing and Access to Data, “personal data” means first and last name, home and work address, individual habits, bank accounts information, etc. The E-Commerce Law defines “private data” as a “data message” associated with a specific data subject. “Data message” means any representation of facts, information, and concepts generated, sent, received, stored or processed by use of electronic, optical or other information technology means.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "IE",
+    "name": "Ireland",
+    "numericCode": "372",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "Part 6 of the DP Act provides the DPC with a wide-range of powers to supervise organisations under its jurisdiction, including: Powers to handle complaints made (directly or indirectly) to it; Powers to open and conduct “own-volition” inquiries; Powers to issue decisions and exercise corrective powers (including administrative fines) provided for in GDPR; Powers to issue a variety of corrective orders including warnings, reprimands, directions, suspensions or restrictions;"
+  },
+  {
+    "code": "IL",
+    "name": "Israel",
+    "numericCode": "376",
+    "overview": "Personal Data, as defined under the PPL, means: data regarding the personality, personal status, intimate affairs, state of health, economic position, vocational qualifications, opinions and beliefs of a person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "IT",
+    "name": "Italy",
+    "numericCode": "380",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on 25 May 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "JP",
+    "name": "Japan",
+    "numericCode": "392",
+    "overview": "Japan's primary data protection framework is the Act on the Protection of Personal Information (APPI), enacted in 2005 and significantly amended in 2022 to strengthen individual rights and expand scope. The APPI covers personal information handling by both private sector businesses and government agencies, with enhanced requirements for sensitive data, cross-border transfers, and data subject rights similar to GDPR standards.",
+    "authority": "Personal Information Protection Commission (PPC), established in 2022, enforces the APPI and investigates violations, issues administrative guidance, and coordinates with sectoral regulators.",
+    "mainLaws": [
+      "Act on the Protection of Personal Information (APPI, 2005; amended 2022)",
+      "My Number Act (2013) — for social security and tax identification data",
+      "Guidelines for Foreign Transfer of Personal Information (PPC guidance, updated 2022)"
+    ],
+    "enforcementStyle": "The PPC applies a graduated enforcement approach with administrative monetary penalties up to ¥100 million (~$700k USD) for serious violations, though enforcement has historically been moderate compared to EU standards. Enforcement is gradually intensifying post-2022 amendments; the PPC conducts inspections and publishes guidance, but Japan remains less aggressive than GDPR enforcement."
+  },
+  {
+    "code": "JE",
+    "name": "Jersey",
+    "numericCode": "",
+    "overview": "Jersey has a comprehensive data protection framework based on the Data Protection (Jersey) Law 2018, which implements principles aligned with the GDPR. The law applies to both automated and manual processing of personal data by organizations established in Jersey or processing data of Jersey residents.",
+    "authority": "The Jersey Office of the Information Commissioner (OIC) regulates data protection, investigations, and enforcement of the Data Protection Law.",
+    "mainLaws": [
+      "Data Protection (Jersey) Law 2018",
+      "Data Protection (Disclosure of Offenders) (Jersey) Law 2019"
+    ],
+    "enforcementStyle": "The OIC enforces through compliance notices, assessments, and financial penalties up to €20 million or 4% of global annual turnover (whichever is higher). Enforcement is relatively active with a supervisory approach emphasizing compliance; notable actions include guidance on GDPR-equivalent requirements and investigations into organizational breaches."
+  },
+  {
+    "code": "JO",
+    "name": "Jordan",
+    "numericCode": "400",
+    "overview": "Jordan does not have a comprehensive data protection law. Privacy is addressed fragmentarily through the Constitution (Article 17 protects privacy), the Telecommunications Law, and sector-specific regulations. There is no unified framework equivalent to GDPR or other modern data protection regimes.",
+    "authority": "No dedicated data protection authority. The Telecommunications Regulatory Commission (TRC) oversees some telecom-related data matters, but no independent DPA exists.",
+    "mainLaws": [
+      "Constitution of Jordan (1952, amended) — Article 17",
+      "Telecommunications Law (2002)"
+    ],
+    "enforcementStyle": "Enforcement is limited and ad-hoc, primarily through sector regulators and courts. Penalties are generally modest and enforcement actions are infrequent. The privacy landscape remains underdeveloped compared to international standards."
+  },
+  {
+    "code": "KZ",
+    "name": "Kazakhstan",
+    "numericCode": "398",
+    "overview": "'Personal data' is any data, including biometric data, relating to a specific individual (personal data subject) or a personal data subject who can be identified on the basis of such data which is recorded on electronic, paper and / or another tangible medium. The law divides personal data into: 'Generally accessible personal data', which is personal data that can be accessed freely with the consent of the personal data subject or to which confidentiality requirements do not apply in accordance with Kazakh law; and 'Limited access personal data', which is personal data, access to which is limi",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "KE",
+    "name": "Kenya",
+    "numericCode": "404",
+    "overview": "Kenya enacted the Data Protection Act in 2019, establishing a comprehensive legal framework governing the collection, processing, and use of personal data. The Act applies to both public and private sectors and aligns with international data protection standards, including principles of lawfulness, fairness, transparency, and purpose limitation.",
+    "authority": "The Office of the Data Protection Commissioner (ODPC), established under the Data Protection Act 2019, is responsible for implementing and enforcing the Act, handling complaints, conducting audits, and promoting data protection awareness.",
+    "mainLaws": [
+      "Data Protection Act (2019)",
+      "Constitution of Kenya (2010) - Article 31 on right to privacy",
+      "Computer Misuse and Cybercrimes Act (2018)"
+    ],
+    "enforcementStyle": "The ODPC can impose administrative penalties including fines up to 5 million Kenyan shillings for non-compliance, issue compliance orders, and conduct investigations. Enforcement remains developing but has shown increasing activity through guidance issuance and early enforcement actions."
+  },
+  {
+    "code": "XK",
+    "name": "Kosovo",
+    "numericCode": "",
+    "overview": "“Personal Data” is defined as“any information related to an identified or identifiable natural person (‘data subject’).\" An identifiable natural person is defined widely as any person“who can be identified directly or indirectly, particularly by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person”.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "KW",
+    "name": "Kuwait",
+    "numericCode": "414",
+    "overview": "The Data Protection Regulation defines personal data as information associated with a natural or juristic person whose identity is known or can be directly determined from the data. This includes personal details like name, identity, financial, health, racial, or religious information, as well as data that reveals the individual’s location, fingerprint, genetic profile, or any audio file containing the person’s voice. It also covers any other identifier that facilitates online interaction with the individual. Additionally, the E-Commerce Law refers to personal data as considered to include at ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "KG",
+    "name": "Kyrgyzstan",
+    "numericCode": "417",
+    "overview": "Kyrgyzstan has a fragmented approach to data protection without a single comprehensive privacy law. The primary legislative framework includes the Law on Information, Information Technologies and Information Security (2017) and the Law on Personal Data (2008), which provide baseline protections but lack robust enforcement mechanisms. Data protection standards are also addressed through sectoral laws covering telecommunications, healthcare, and banking, though gaps remain in comprehensive coverage.",
+    "authority": "No dedicated data protection authority. The State Committee for Information Technology and Communications oversees some regulatory aspects, but enforcement is decentralized across multiple agencies.",
+    "mainLaws": [
+      "Law on Personal Data (2008)",
+      "Law on Information, Information Technologies and Information Security (2017)",
+      "Law on Protection of State Secrets (1994)"
+    ],
+    "enforcementStyle": "Enforcement is weak and inconsistent, with limited public resources dedicated to data protection oversight. Penalties exist but are rarely applied. Most privacy breaches go unreported, and there is minimal case law. The regulator operates in an advisory capacity rather than a strict enforcement role."
+  },
+  {
+    "code": "LA",
+    "name": "Laos",
+    "numericCode": "418",
+    "overview": "Article 3, Section 12 of the Law on Electronic Data Protection defines “personal data” to mean electronic data of an individual, legal entity, or organization.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LV",
+    "name": "Latvia",
+    "numericCode": "428",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LB",
+    "name": "Lebanon",
+    "numericCode": "422",
+    "overview": "Personal Data is defined as any information relating to an individual which helps identifying such individual, either directly or indirectly, including by way of comparing or combining information of multiple sources.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LS",
+    "name": "Lesotho",
+    "numericCode": "426",
+    "overview": "The DP Act defines personal data or information as being information about an identifiable individual that is recorded in any form, including: Information relating to the race, national or ethnic origin, religion, age or marital status of the individual Information relating to the education or the medical, criminal or employment history of the individual or information relating to financial transactions in which the individual has been involved Any identifying number, symbol or other particular assigned to the individual The address, fingerprints or blood type of the individual",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LR",
+    "name": "Liberia",
+    "numericCode": "",
+    "overview": "Personal Data is not defined by existing laws. Data is however, defined variously by different statutes and legal instrument in Liberia as follows: Financial Intelligence Unit Act of 2012:“Data\" means:representations, in any form, of information or concepts”. Central Bank of Liberia (“CBL”) E-Payment Regulation:“Dataintegrity” means“the assurance that information that is in-transit or in storage is not altered without authorization” The ECOWAS Supplemental Act of which, Liberia is a signing member definespersonaldataas“any information relating to an identified individual or who may be directly",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LY",
+    "name": "Libya",
+    "numericCode": "434",
+    "overview": "Libya lacks a comprehensive data protection law. The country's legal framework is fragmented and underdeveloped due to ongoing political instability. Privacy protections are minimal and primarily addressed through scattered provisions in older legislation rather than modern data protection frameworks.",
+    "authority": "No dedicated data protection authority.",
+    "mainLaws": [],
+    "enforcementStyle": "Enforcement of privacy rights is extremely limited due to weak institutional capacity and political fragmentation. There are no systematic mechanisms for data protection complaints or oversight. The judiciary and administrative structures lack resources and specialization in privacy matters."
+  },
+  {
+    "code": "LT",
+    "name": "Lithuania",
+    "numericCode": "440",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "LU",
+    "name": "Luxembourg",
+    "numericCode": "442",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MO",
+    "name": "Macau SAR",
+    "numericCode": "446",
+    "overview": "The Law defines personal data as any information of any type, in any format, including sound and image, related to a specific or identifiable natural person (data subject). An ‘identifiable natural person’ is anyone who can be identified, directly or indirectly, in particular by reference to a specific number or to one or more specific elements related to his or her physical, physiological, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MG",
+    "name": "Madagascar",
+    "numericCode": "450",
+    "overview": "Personal data is any information relating to a natural person, whereby that person is or can be identified, directly or indirectly, by reference to a name, an identification number or to one or more elements specific to him / her such relating to physical, physiological, psychical, economic, cultural or social.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MY",
+    "name": "Malaysia",
+    "numericCode": "458",
+    "overview": "'Personal data' means any information in respect of commercial transactions that is: Being processed wholly or partly by means of equipment operating automatically in response to instructions given for that purpose; Recorded with the intention that it should wholly or partly be processed by means of such equipment; or Recorded as part of a relevant filing system or with the intention that it should form part of a relevant filing system, and, in each case ... that relates directly or indirectly to a data subject, who is identified or identifiable from that information or from that and other inf",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MT",
+    "name": "Malta",
+    "numericCode": "470",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MU",
+    "name": "Mauritius",
+    "numericCode": "480",
+    "overview": "Personal data is defined as any information relating to a data subject. A data subject is a  natural person who is identified or identifiable, in particular by reference to an identifier such as a name, identification number, location data, online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that individual.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MX",
+    "name": "Mexico",
+    "numericCode": "484",
+    "overview": "Mexico has a constitutional right to data protection and a comprehensive framework consisting of the Federal Law on Protection of Personal Data Held by Private Parties (LFPDPPP) and the Federal Law on Protection of Personal Data Held by Public Agencies (LFPDPP). These laws establish principles for lawful processing, individual rights, and organizational obligations, with LFPDPPP being the primary statute governing private sector data handling.",
+    "authority": "Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI) — Mexico's independent data protection authority responsible for enforcing compliance, investigating complaints, and issuing guidance on personal data protection.",
+    "mainLaws": [
+      "Federal Law on Protection of Personal Data Held by Private Parties (LFPDPPP, 2010)",
+      "Federal Law on Protection of Personal Data Held by Public Agencies (LFPDPP, 2013)",
+      "Constitutional Right to Data Protection (Article 16, reformed 2009)"
+    ],
+    "enforcementStyle": "INAI conducts investigations and can impose administrative sanctions including warnings, fines up to 40,000 times the daily minimum wage per violation, and public censure. Enforcement has increased in recent years with growing complaint volumes, though capacity constraints and coordination with sectoral regulators remain challenges."
+  },
+  {
+    "code": "MD",
+    "name": "Moldova",
+    "numericCode": "498",
+    "overview": "Personal data is defined as “any information relating to an identified or identifiable natural person (“personal data subject”)”. An identifiable person is one who can be identified, directly or indirectly, in particular by reference to an identification number or to one or more factors specific to his physical, physiological, mental, economic, cultural or social identity. The New Data Protection Law introduces the following definition for personal data, similar to the one regulated by the GDPR: \"any information relating to an identified or identifiable natural person\" (“data subject”). An ide",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MC",
+    "name": "Monaco",
+    "numericCode": "",
+    "overview": "Under the DPL, personal data is defined as data enabling identification of a determined or determinable person. Any individual who can be identified, directly or indirectly, notably by reference to an identification number or to one or more factors specific to their physical, psychological, psychological, economic, cultural, or social identity is deemed to be determinable.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MN",
+    "name": "Mongolia",
+    "numericCode": "496",
+    "overview": "Pursuant to Article 4.1.11 of the Data Protection Law, the following information refers to Personal Data: Sensitive personal data; First and last name; Date and place of birth; Permanent address and location data;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ME",
+    "name": "Montenegro",
+    "numericCode": "",
+    "overview": "The DP Law defines personal data as any information relating to an identified or identifiable data subject. Data subjects are natural persons whose identity is or can be determined, directly or indirectly, in particular by reference to a personal identification number or to one or more factors specific to their physical, physiological, mental, economic, cultural or social identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MA",
+    "name": "Morocco",
+    "numericCode": "504",
+    "overview": "Pursuant to Article 1 of the DP Law, personal data is defined as any information regardless of their nature, and format, relating to an identified or identifiable person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MZ",
+    "name": "Mozambique",
+    "numericCode": "508",
+    "overview": "The Constitution of the Republic of Mozambique provides that all citizens are entitled to the protection of their private life and have the right to honour, good name, reputation, protection of their public image and privacy. Further, Article 71 of the Constitution identifies the need to legislate on access, generation, protection and use of computerized personal data (either by public or private entities); however, implementing legislation has not yet been approved. The Electronic Transactions Law defines personal data as being any information in relation to a natural person which can be dire",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MM",
+    "name": "Myanmar",
+    "numericCode": "104",
+    "overview": "Myanmar has no comprehensive data protection law as of 2024. Privacy protections are fragmented across sectoral legislation, including the Telecommunications Law (2013) and various regulations governing telecommunications operators. The country's regulatory framework remains underdeveloped compared to international standards.",
+    "authority": "No dedicated data protection authority. The Ministry of Transport and Communications oversees telecommunications regulations, but no independent DPA exists.",
+    "mainLaws": [
+      "Telecommunications Law (2013)",
+      "Constitution of the Myanmar (2008) — Chapter 4 contains limited privacy protections"
+    ],
+    "enforcementStyle": "Enforcement is minimal and inconsistent. Penalties exist under sectoral laws (particularly telecommunications regulations), but there is limited active enforcement of privacy rights. No significant enforcement actions or data protection cases have been widely documented."
+  },
+  {
+    "code": "NA",
+    "name": "Namibia",
+    "numericCode": "516",
+    "overview": "Namibia does not have a comprehensive data protection law. The country's privacy framework is fragmented, relying primarily on constitutional protections under Article 8 of the Namibian Constitution (1990), which guarantees the right to privacy, and sectoral regulations for specific industries like telecommunications and financial services. There is ongoing discussion about enacting a dedicated data protection law aligned with African Union standards.",
+    "authority": "No dedicated data protection authority. The Communications Regulatory Authority of Namibia (CRAN) oversees telecommunications privacy, but no single entity handles general data protection enforcement.",
+    "mainLaws": [
+      "Namibian Constitution, Article 8 (1990)",
+      "Communications Act (2009) — telecommunications privacy provisions"
+    ],
+    "enforcementStyle": "Enforcement is limited and decentralized. Privacy rights are primarily enforced through constitutional provisions and the courts, with no specialized data protection regulator. Sectoral regulators (CRAN, financial authorities) handle industry-specific complaints. Practical enforcement remains weak due to lack of dedicated infrastructure and awareness."
+  },
+  {
+    "code": "NP",
+    "name": "Nepal",
+    "numericCode": "524",
+    "overview": "Privacy Act defines \"Personal information\" as the following information related to any person: his or her caste, ethnicity, birth, origin, religion, color or marital status; his or her education or academic qualification; his or her address, telephone or address of electronic letter (email); his or her passport, citizenship certificate, national identity card number, driving license, voter identity card or details of identity card issued by a public body;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NL",
+    "name": "Netherlands",
+    "numericCode": "528",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand",
+    "numericCode": "554",
+    "overview": "Personal information under the Act is defined as information about an identifiable individual and includes information relating to a death that is maintained by the Registrar General pursuant to the Births, Deaths, Marriages, and Relationships Registration Act 1995, or any former Act.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NI",
+    "name": "Nicaragua",
+    "numericCode": "558",
+    "overview": "Personal data:It is all the information about a natural or legal person that identifies or makes it identifiable.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NE",
+    "name": "Niger",
+    "numericCode": "562",
+    "overview": "Any information of any nature related to an identified or identifiable natural person, including sounds and images, directly or indirectly referencing an identification number, or one or more elements specific to his physical, physiological, genetic, psychological, cultural, social, or economic identity (Article 1 of the Law).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NG",
+    "name": "Nigeria",
+    "numericCode": "566",
+    "overview": "Personal Datais defined as any information relating to an individual, who can be identified or is identifiable, directly or indirectly, by reference to an identifier such as a name, an identification number, location data, an online identifier or one or more factors specific to the physical, physiological, genetic, psychological, cultural, social, or economic identity of that individual.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "MK",
+    "name": "North Macedonia",
+    "numericCode": "",
+    "overview": "The DP Law defines personal data as any information relating to an identified or identifiable natural person, where an identifiable natural person is one whose identity can be determined directly or indirectly, especially by reference to an identifier such as a name and surname, his or her personal identification number, location data, an online identifier or on one or a combination of features that are specific to his or her physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "NO",
+    "name": "Norway",
+    "numericCode": "578",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (\"GDPR\") is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their o",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "PK",
+    "name": "Pakistan",
+    "numericCode": "586",
+    "overview": "The term “personal data” is defined in PECA 2016 in Section 2(xviii) as ““identity information”meansan information which may authenticate or identify an individual or an information systemandenable access to anydataor information system.” “Data” in PECA 2016 is defined in Section 2(xiii) as ““data”includescontent data and traffic data.” The use of the word ‘include’ in the abovementioned definition of ‘data’ is indicative of the fact that the legislators intended for the definition of ‘data’ to include content data and traffic data in addition to what the typical dictionary meaning and definit",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "PA",
+    "name": "Panama",
+    "numericCode": "591",
+    "overview": "Personal Data is defined by the Data Protection Law as the personal information of an individual that identifies him or makes him identifiable.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "PY",
+    "name": "Paraguay",
+    "numericCode": "600",
+    "overview": "Art. 3 of Personal Credit Data Protection Law defines Personal Data or Personal Information as “information of any type that refers to legal entities or natural persons that are identified or identifiable. An identifiable person shall mean any person who can be identified by means of an identifier or by one or more elements that characterize the physical, physiological, genetics, mental, economic, cultural, or social identity of the data subject. The rights and guarantees of personal data protection shall be extended to legal entities, insofar as they are applicable”.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "PE",
+    "name": "Peru",
+    "numericCode": "604",
+    "overview": "Peru has a constitutional right to privacy (Article 2) and a comprehensive data protection framework established by the Law on Protection of Personal Data (Law No. 29733, enacted 2011). The law applies to both public and private entities and governs collection, processing, storage, and transfer of personal data, with subsequent regulatory updates enhancing its scope.",
+    "authority": "National Authority for Data Protection (APDP - Autoridad Nacional de Protección de Datos Personales), established in 2013, responsible for enforcing data protection compliance, investigating complaints, and issuing administrative sanctions.",
+    "mainLaws": [
+      "Law No. 29733 - Law on Protection of Personal Data (2011)",
+      "Supreme Decree No. 003-2013-JUS - Data Protection Regulation (2013)",
+      "Law No. 30096 - Law on Cybercrime (2013)"
+    ],
+    "enforcementStyle": "Enforcement is moderate with administrative penalties ranging from fines (up to approximately 50,000 UIT, roughly USD 500,000+) to public warnings and remedial orders. The APDP has increased enforcement activity in recent years, particularly against unauthorized data transfers and breaches, though enforcement capacity remains limited compared to European standards."
+  },
+  {
+    "code": "PH",
+    "name": "Philippines",
+    "numericCode": "608",
+    "overview": "The Philippines has the Data Privacy Act (DPA) of 2012, which is the primary comprehensive data protection law covering the collection, processing, and transfer of personal data by both public and private entities. The law applies broadly to organizations handling personal information of Philippine residents and establishes principles of lawfulness, transparency, and data subject rights, though implementation has been gradual.",
+    "authority": "National Privacy Commission (NPC), established in 2016, serves as the independent regulator responsible for enforcing the DPA, investigating complaints, issuing guidelines, and promoting data protection awareness.",
+    "mainLaws": [
+      "Data Privacy Act (2012)",
+      "Implementing Rules and Regulations of the DPA (2016)",
+      "Cybercrime Prevention Act (2012) — addresses cybersecurity and data-related offenses"
+    ],
+    "enforcementStyle": "The NPC enforces the DPA through investigations, cease-and-desist orders, and administrative fines up to PHP 5 million for first violations and PHP 10 million for subsequent violations. Enforcement has been moderate with increased activity in recent years, though complaints processing has been slow; criminal penalties under the DPA are rarely pursued."
+  },
+  {
+    "code": "PL",
+    "name": "Poland",
+    "numericCode": "616",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable in all Member States of the European Union on 25 May 2018, without requiring implementation by the EU Member States through national law. The Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by the GDPR where Member States are permitted to legislate differently in their own ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "A company that processes transmission data contrary to the Telecommunications Act or fails to meet obligations to obtain consent to process data about location or to store and to gain access to cookies may be subject to a fine of up to 3% of the company’s revenues for the previous calendar year. The fine is imposed by the President of the OEC. In addition, the President of the OEC may impose a fine on a person holding a managerial position in the company (such as a member of the management board) of up to 300% of his or her monthly remuneration."
+  },
+  {
+    "code": "PT",
+    "name": "Portugal",
+    "numericCode": "620",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two-year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A Regulation (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "QA",
+    "name": "Qatar",
+    "numericCode": "634",
+    "overview": "Personal data is defined under the Data Protection Law as data relating to a natural person whose identity is identified or is reasonably identifiable, whether through this data or by means of combining this data with any other data or details.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CG",
+    "name": "Republic of Congo",
+    "numericCode": "178",
+    "overview": "Any information relating to a natural person identified or identifiable directly or indirectly, by reference to an identification number or identifiable on the basis of one or more elements specific to his/her physical, physiological, genetic, psychological, cultural, social or economic identity.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "RO",
+    "name": "Romania",
+    "numericCode": "642",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on May 25, 2018, without requiring implementation by the EU Member States through national law. A regulation (unlike the directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own d",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "RU",
+    "name": "Russia",
+    "numericCode": "643",
+    "overview": "Personal data is defined in law as any information which relates directly or indirectly to a specific or defined physical person (the data subject). This can be widely interpreted in various contexts, so it is important to consider each situation carefully.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "RW",
+    "name": "Rwanda",
+    "numericCode": "646",
+    "overview": "The Data Protection Law defines personal data as“any information relating to an identified or identifiable natural person who can be identified, directly or indirectly, in particular by reference to an identifier such as: identification number an online identifier or to one or more factors specific to the physical, psychological, genetic, mental, economic, cultural or social identity of that natural person”(article 3, 1°).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SA",
+    "name": "Saudi Arabia",
+    "numericCode": "682",
+    "overview": "Personal data is defined as \"every data – of whatever source or form – that would lead to the identification of the individual specifically, or make it possible to identify him directly or indirectly, including: name, personal identification number, addresses, contact numbers, license numbers, records, personal property, bank account and credit card numbers, fixed or moving pictures of the individual, and other data of personal nature.\"",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SN",
+    "name": "Senegal",
+    "numericCode": "686",
+    "overview": "“Personal Data” means all data relating to an identified or identifiable individual with reference to an identification number or one, or many, characteristics of his physical, physiological, genetic, psychical, cultural, social or economic identity (Article 4 of the Act).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "RS",
+    "name": "Serbia",
+    "numericCode": "688",
+    "overview": "Under the DP Law, personal data is any information about a natural person through which the respective person is identified or identifiable (for example, name, address, email address, photo, etc.).",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SC",
+    "name": "Seychelles",
+    "numericCode": "",
+    "overview": "Personal data is defined under the Act as data consisting of information which relates to a living individual who can be identified from that information (or from that and other information in the possession of the data user), including any expression of opinion about the individual but not any indication of the intentions of the data user in respect of that individual.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SG",
+    "name": "Singapore",
+    "numericCode": "702",
+    "overview": "Personal data is defined in the Act to mean data, whether true or not, about an individual (whether living or recently deceased*) who can be identified from: that data and other information to which the organization has, or is likely to have access. Note: The Act's application to recently deceased individuals is limited to disclosure and protection of personal data where such data is about an individual who has been deceased for ten years or fewer. The data protection obligations under the Act do not apply to business contact information. This excludes from the Act the following if provided so",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SX",
+    "name": "Sint Maarten",
+    "numericCode": "",
+    "overview": "According to the Explanatory Memorandum on the National Ordinance Personal Data Protection the term personal data has a broad meaning. This does not only concern data that can identify a person, but concerns any data that can be associated with a particular person; it is foreseeable that under certain circumstances data can be traced to one person through systematic comparison and lengthy investigations. Personal identifiable confidential data is therefore not only limited to home address, email address, telephone number, membership number and/or identity number. Personal data means any inform",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SK",
+    "name": "Slovak Republic",
+    "numericCode": "703",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on 25 May 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "SI",
+    "name": "Slovenia",
+    "numericCode": "705",
+    "overview": "Primarily, the application of the GDPR turns on whether an organization is established in the EU. An 'establishment' may take a wide variety of forms and is not necessarily a legal entity registered in an EU Member State. However, the GDPR also has extra-territorial effect. An organization that is not established within the EU will still be subject to the GDPR if it processes personal data of data subjects who are in the Union where the processing activities are related \"to the offering of goods or services\" (Article 3(2)(a)) (no payment is required) to such data subjects in the EU or \"the mon",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ZA",
+    "name": "South Africa",
+    "numericCode": "710",
+    "overview": "\"Personal information\" is defined in POPIA as information relating to an identifiable, living, natural person, and where applicable, an identifiable, existing, juristic person, including: Information relating to the race, gender, sex, pregnancy, marital status, national, ethnic or social origin; color, sexual orientation, age, physical or mental health, well-being, disability, religion, conscience, belief; culture, language and birth of the person; Information relating to the education, medical, financial, criminal or employment history of the person; Any identifying number, symbol, email addr",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "KR",
+    "name": "South Korea",
+    "numericCode": "410",
+    "overview": "Under the PIPA, “personal information” means information relating to a living individual that constitutes any of the following: Information that identifies a particular individual by his / her full name, resident registration number, image, etc.; Information which, even if by itself does not identify a particular individual, may be easily combined with other information to identify a particular individual (in this case, whether or not there is ease of combination shall be determined by reasonably considering the time, cost, technology, etc. used to identify the individual such as likelihood th",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ES",
+    "name": "Spain",
+    "numericCode": "724",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on 25 May 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "The processing of personal data related to administrative offences or penalties is permitted if it is carried out by the relevant public bodies having sanctioning powers over such offenses, and only to the extent necessary for achieving their legitimate purposes. If those requirements are not met, the processing shall be allowed by an specific law, or be based on the data subject’s consent. Please note that lawyers and procedural representatives are also allowed to process the information provided by their clients related to administrative offenses or penalties for the purposes of rendering th"
+  },
+  {
+    "code": "LK",
+    "name": "Sri Lanka",
+    "numericCode": "144",
+    "overview": "Sri Lanka does not have a comprehensive data protection law. Privacy protections are fragmented across sector-specific legislation and constitutional provisions. The Constitution recognizes privacy rights, and certain sectors like telecommunications and banking have data protection rules, but no unified framework exists.",
+    "authority": "No dedicated data protection authority. The Telecommunications Regulatory Authority of Sri Lanka (TRCSL) oversees some telecom-related data matters, but there is no independent, comprehensive data protection regulator.",
+    "mainLaws": [
+      "Constitution of Sri Lanka (1978) — Article 14 recognizes privacy rights",
+      "Telecommunications Act No. 25 of 1991 — contains limited data protection provisions for telecom operators"
+    ],
+    "enforcementStyle": "Enforcement is weak and inconsistent due to the absence of a dedicated authority. Privacy violations may be addressed through constitutional petitions, sector-specific regulators, or civil remedies, but enforcement is limited and reactive rather than proactive."
+  },
+  {
+    "code": "SE",
+    "name": "Sweden",
+    "numericCode": "752",
+    "overview": "The General Data Protection Regulation (Regulation (EU) 2016/679) (GDPR) is a European Union law which entered into force in 2016 and, following a two year transition period, became directly applicable law in all Member States of the European Union on 25 May 2018, without requiring implementation by the EU Member States through national law. A 'Regulation' (unlike the Directive which it replaced) is directly applicable and has consistent effect in all Member States. However, there remain more than 50 areas covered by GDPR where Member States are permitted to legislate differently in their own ",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "CH",
+    "name": "Switzerland",
+    "numericCode": "756",
+    "overview": "Personal data means any information relating to an identified or identifiable natural person. In contrast to its previous version, the FADP does no longer apply to personal data pertaining to legal persons.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "The FADP provides for criminal liability and fines of up to CHF 250,000, which are primarily directed against the responsible natural person (and not the respective company as under the GDPR). In particular, the following duties are subject to criminal fines in the event of certain wilful violations: duty to provide information when collecting personal data and in the case of an automated individual decision; duty to provide information upon a data subject access request; duty to cooperate with the FDPIC in the context of an investigation; duty to meet certain requirements in connection with c"
+  },
+  {
+    "code": "TW",
+    "name": "Taiwan",
+    "numericCode": "158",
+    "overview": "The PDPA defines “personal data” as the name, date of birth, identification card number, passport number, special traits, fingerprints, marital status, family, education, profession, medical history, medical treatment, genetic information, sexual life (including sexual orientation), health examination, criminal record, contact information, financial condition, and social activities of a natural person, as well as other data by which such person may be directly or indirectly identified.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "A person who, with the intention to gain “benefit” for themself or a third party or to “harm” the interests of others, violates certain requirements as set out in the PDPA or conducts a prohibited cross-border transfer of personal data may be punished by up to five years’ imprisonment and / or fines of up to NT$ 1,000,000 (approx. US$ 35,000 as at December 10, 2021). In addition, the acquisition, dissemination, alteration, compromise of the accuracy of, or deletion of personal data with the intent to gain “benefit”  for themself or a third party or to “harm” the interests of others, in circums"
+  },
+  {
+    "code": "TJ",
+    "name": "Tajikistan",
+    "numericCode": "762",
+    "overview": "Tajikistan lacks a comprehensive data protection law. Privacy is addressed primarily through constitutional provisions (Article 33 of the Constitution guarantees privacy rights) and scattered sectoral regulations. The country's legal framework remains underdeveloped in comparison to international data protection standards.",
+    "authority": "No dedicated data protection authority. Data protection matters fall under the purview of various government agencies including the Ministry of Internal Affairs and the National Center for Database and Registry.",
+    "mainLaws": [
+      "Constitution of Tajikistan (1994, amended 2003) — Article 33 on privacy rights",
+      "Law on Protection of Personal Data (2010) — basic personal data protection framework"
+    ],
+    "enforcementStyle": "Enforcement is minimal and fragmented. There is limited capacity for privacy enforcement, few publicized data protection cases, and penalties are not systematically applied. The country is not considered to have active or strict data protection enforcement mechanisms."
+  },
+  {
+    "code": "TZ",
+    "name": "Tanzania",
+    "numericCode": "834",
+    "overview": "The PDPA defines “personal data” as data about an identified or identifiable person that is recorded in any form, including such person’s: personal data relating to the race, national or ethnic origin, religion, age or marital status; personal data relating to the education, medical history, criminal or employment history; identification number, symbol or other assigned particular; address, fingerprints, or blood type;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "TH",
+    "name": "Thailand",
+    "numericCode": "764",
+    "overview": "The collection, use or disclosure of Personal Data requires consent of the data subject unless other legal bases for processing apply. These include, among other things, the performance of contract or legal obligations, or by legitimate interest of the Data Controller. The legal bases of processing Personal Data and Sensitive Personal Data are different. Due to the sensitive nature of Sensitive Personal Data, explicit consent is required for its collection, use and disclosure without relying on the other legal bases set out in the PDPA (such as vital interest, public health interest and preven",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "The Royal Decree issued on 17 August 2023 exempts certain obligations of Data Controllers under the PDPA in respect of the processing of Personal Data by the listed authorities, such as the National Anti-Corruption Commission, Department of Revenue, Customs Department, Excise Department. However, the exempted Data Controllers must still provide security measures as prescribed by the Regulator to ensure that the exemption does not unreasonably affect the personal data protection principle."
+  },
+  {
+    "code": "TO",
+    "name": "Tonga",
+    "numericCode": "",
+    "overview": "Tonga does not have a comprehensive data protection or privacy law. Privacy protections are limited and primarily governed through constitutional provisions and sectoral regulations. The jurisdiction lacks a dedicated legislative framework comparable to international standards such as GDPR or CCPA.",
+    "authority": "No dedicated data protection authority.",
+    "mainLaws": [],
+    "enforcementStyle": "Enforcement of privacy rights is limited and fragmented across multiple agencies without a centralized data protection regulator. Remedies are typically pursued through general courts and constitutional protections rather than specialized data protection mechanisms."
+  },
+  {
+    "code": "TT",
+    "name": "Trinidad and Tobago",
+    "numericCode": "780",
+    "overview": "Personal information is defined as information about an identifiable individual that is recorded in any form including: The name of the individual where it appears with other personal information relating to the individual or where the disclosure of the name itself would reveal information about the individual The address and telephone number of the individual Any identifying number, symbol or other particular identifier designed to identify the individual Information relating to the individual's race, nationality or ethnic origin, religion, age or marital status",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "TN",
+    "name": "Tunisia",
+    "numericCode": "788",
+    "overview": "Article 4 of Act n° 2004-63 of July 27, 2004 defined personal data as all information, regardless of their origin or form, and which directly or indirectly, allows to identify or make identifiable, a natural person, with the exception of information related to public life, or considered as such by law.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "TR",
+    "name": "Turkey",
+    "numericCode": "792",
+    "overview": "In the LLPD, personal data is defined as “Any information relating to an identified or identifiable natural person.”",
+    "authority": "Pursuant to Decision 2019/10, data controllers are required to notify the Data Protection Authority within 72 hours of becoming aware of a breach. In cases where the notification cannot be sent within 72 hours, the causes for the delay must be sent as well. Further, with the Decision 2019/10, the Data Protection Authority published theData Breach Notification Form, which can be accessed here. For all data breach notifications sent to the Data Protection Authority, the Data Breach Notification Form must be used. If it is not possible to fill out all of the information in the Data Breach Notific",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "TM",
+    "name": "Turkmenistan",
+    "numericCode": "795",
+    "overview": "Turkmenistan lacks a comprehensive, dedicated data protection law. Privacy protections are fragmented across various legislation including the Constitution, Criminal Code, and sectoral laws. The legal framework for data protection remains underdeveloped compared to international standards.",
+    "authority": "No dedicated data protection authority. Data protection responsibilities are dispersed among various government agencies without a centralized regulator.",
+    "mainLaws": [
+      "Constitution of Turkmenistan (1992, amended)",
+      "Criminal Code provisions on privacy violations",
+      "Secrecy and Classification Laws"
+    ],
+    "enforcementStyle": "Enforcement is limited and inconsistent. There is no systematic data protection oversight mechanism. Privacy violations may be addressed through criminal law or sectoral regulations, but enforcement is opaque and sporadic. The country has a restrictive information control environment with limited transparency."
+  },
+  {
+    "code": "AE",
+    "name": "UAE - General",
+    "numericCode": "784",
+    "overview": "“Personal Data” is defined as any data relating to an identified natural person, or one who can be identified directly or indirectly by way of linking data, using identifiers such as name, voice, picture, identification number, online identifier, geographic location, or one or more special features that express the physical, psychological, economic, cultural or social identity of such person. It also includes Sensitive Personal Data and Biometric Data.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "UG",
+    "name": "Uganda",
+    "numericCode": "800",
+    "overview": "Personal data is defined under section 2 of the Data Protection and Privacy Act as information about a person from which the person can be identified such as information relating to nationality, age, marital status, education level, occupation and identity data. This information is considered personal data regardless of the form in which the information is recorded.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "Fines— The Data Protection and Privacy Act provides for fines as a penalty for the commission of an offence under the Act. Save for the fine imposed on a corporation for non-compliance with Act, the fines provided do not exceed 245 currency points (which is equivalent to UGX 4,900,000). The exception in the case of a violation by a corporation allows a court to order a corporation to pay a fine of up to 2 percent of the corporation’s annual gross turnover. Imprisonment— A court of law may order imprisonment of a person convicted of any of the offences under the Data Protection and Privacy Act."
+  },
+  {
+    "code": "UA",
+    "name": "Ukraine",
+    "numericCode": "804",
+    "overview": "Data Protection Law defines \"personal data\" as data or an aggregation of data on an individual who is identified or can be precisely identified.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "GB",
+    "name": "United Kingdom",
+    "numericCode": "826",
+    "overview": "The application of the UK GDPR turns principally on whether an organization is established in the United Kingdom.  As under the EU GDPR, an 'establishment' may take a wide variety of forms, and is not limited to a company registered in the United Kingdom. The UK GDPR also has extra-territorial effect, following the same principles as set out in the EU GDPR. As a result, an organisation that it is not established within the United Kingdom will be subject to the UK GDPR if it processes personal data of data subjects who are in the United Kingdom  where the processing activities are related\"to th",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "US",
+    "name": "United States",
+    "numericCode": "840",
+    "overview": "Varies widely by law and regulation.  The definition of personal information varies under US law.  Some laws—such as data breach and security laws—apply more narrowly, to sensitive personal information, such as government identifiers, financial account information, password, biometrics, health insurance or medical information, and other information that can lead to identity fraud and theft or financial harm.  On the other hand, under a number of state and federal laws, personal information broadly includes any information that identifies or is linked or reasonably linkable to an individual. Un",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": "In the United States, consumer protection laws, which prohibit unfair and deceptive business practices, provide another avenue for enforcement against businesses for their privacy and security practices. At the federal level, the US Federal Trade Commission (FTC) uses its authority to protect consumers against unfair or deceptive trade practices, to take enforcement actions against businesses for materially unfair privacy and data security practices. The FTC uses this authority to, among other things, take enforcement actions and investigate companies for: Failing to implement reasonable data "
+  },
+  {
+    "code": "UY",
+    "name": "Uruguay",
+    "numericCode": "858",
+    "overview": "Uruguay has a comprehensive data protection framework anchored in the Personal Data Protection Law (Law 18.331, enacted 2008), which governs the collection, processing, and transfer of personal data and applies to both public and private sectors. The law is grounded in constitutional privacy rights and aligns with international standards, including GDPR-like principles of lawfulness, purpose limitation, and data subject rights.",
+    "authority": "The Data Protection Authority (Autoridad de Protección de Datos Personales, APDP), established under Law 18.331, is an independent agency responsible for overseeing compliance, investigating complaints, issuing guidance, and imposing sanctions.",
+    "mainLaws": [
+      "Personal Data Protection Law (Law 18.331, 2008)",
+      "Constitutional right to privacy (Article 72 of the Uruguayan Constitution)"
+    ],
+    "enforcementStyle": "The APDP enforces the law through administrative proceedings and can impose penalties ranging from fines (up to approximately USD 1 million for serious violations) to suspension of processing activities. Enforcement is generally moderate but firm; the authority has issued significant decisions against both public institutions and private companies for violations such as unauthorized data transfers and lack of consent."
+  },
+  {
+    "code": "UZ",
+    "name": "Uzbekistan",
+    "numericCode": "860",
+    "overview": "The Law on Personal Data definesPersonal Dataas information recorded on electronic, paper and / or other tangible medium, relating to a specific individual or that allows to identify such individual (i.e. ‘subject of personal data’). Apart from the above, the Law on Personal Data distinguishes separate types of personal data in respect of which the Law imposes a special processing and protection regime. They include: special personal data, i.e. data about racial or social origin, political, religious or ideological beliefs, membership in political parties and trade unions, as well as data rega",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "VE",
+    "name": "Venezuela",
+    "numericCode": "",
+    "overview": "There is no legal definition of “Personal Data” in Venezuelan legislation. Nonetheless, decision No. 855 of the TSJ, of May 8, 2012, gave us the following definition of Personal Data:“Any information related to an identified or identifiable individual”. Likewise, any Personal Data must be processed fairly and responsibly for particular purposes, on the basis of the data subject's consent or as a consequence of some other legitimate basis, provided  by law.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "VN",
+    "name": "Vietnam",
+    "numericCode": "704",
+    "overview": "Under the PDPD, personal data is defined as information on an electronic medium in the form of symbols, letters, numbers, photos, sounds, or the like that is associated with or helps to identify a specific individual.  Information that helps to identify a specific individual is further clarified as information generated from an individual's activities that, when combined with other data and stored information, can identify a particular person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ZM",
+    "name": "Zambia",
+    "numericCode": "894",
+    "overview": "Data which relates to an individual who can be directly or indirectly identified from that data which includes a name, an identification number, location data, an online identifier, or one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  },
+  {
+    "code": "ZW",
+    "name": "Zimbabwe",
+    "numericCode": "716",
+    "overview": "According to the Act, “personal information” means information relating to a data subject, and includes: the person’s name, address or telephone number; the person’s race, national or ethnic origin, colour, religious or political beliefs or associations; the person’s age, sex, sexual orientation, marital status or family status; an identifying number, symbol or other particulars assigned to that person;",
+    "authority": "",
+    "mainLaws": [],
+    "enforcementStyle": ""
+  }
+]

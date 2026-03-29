@@ -145,8 +145,6 @@ export function JurisdictionLogo({ jurisdiction, className = "w-16 h-16" }: { ju
       return <PDPCLogo className={className} />;
     case "EU GDPR":
       return <EULogo className={className} label="GDPR" />;
-    case "EU EDPB":
-      return <EULogo className={className} label="EDPB" />;
     case "Australia OAIC":
       return <AustraliaLogo className={className} />;
     default:

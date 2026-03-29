@@ -108,8 +108,6 @@ export default function JurisdictionMap({
                           const j = jurisdictions[0];
                           onSelectJurisdiction(selectedJurisdiction === j ? null : j);
                         } else if (jurisdictions.length > 1) {
-                          // For countries with multiple jurisdictions (e.g. US has FTC + CA DOJ),
-                          // cycle through or pick the first non-selected
                           const next = jurisdictions.find((j) => j !== selectedJurisdiction) || jurisdictions[0];
                           onSelectJurisdiction(next);
                         }

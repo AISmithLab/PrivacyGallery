@@ -197,36 +197,6 @@ export const JURISDICTION_INFO: Record<Jurisdiction, JurisdictionInfo> = {
     color: "#D97706",
   },
 
-  "EU EDPB": {
-    jurisdiction: "EU EDPB",
-    fullName: "European Union — European Data Protection Board",
-    flag: "🇪🇺",
-    abbreviation: "EDPB",
-    overview:
-      "The EDPB is an independent EU body that ensures consistent application of the GDPR across member states. It issues binding decisions in cross-border disputes, adopts guidelines and recommendations, and coordinates between national DPAs. EDPB decisions often address the most significant and precedent-setting privacy questions in Europe.",
-    laws: [
-      {
-        name: "General Data Protection Regulation (GDPR)",
-        year: 2016,
-        description:
-          "The EDPB operates under the GDPR framework, ensuring its consistent application and resolving disputes between national DPAs on cross-border cases.",
-      },
-    ],
-    authority: {
-      name: "European Data Protection Board",
-      acronym: "EDPB",
-      role: "Independent EU body composed of representatives from each national DPA and the European Data Protection Supervisor. Issues binding decisions, guidelines, and opinions to ensure consistent GDPR enforcement across the EU.",
-    },
-    enforcementStyle:
-      "The EDPB focuses on harmonization and consistency rather than direct enforcement. Its binding decisions in cross-border cases often result in higher fines than originally proposed by lead supervisory authorities. The EDPB has been instrumental in major cases involving big tech companies, international data transfers, and consent frameworks. Its approach is systematic and precedent-driven.",
-    countryCodes: [
-      "040", "056", "100", "191", "196", "203", "208", "233", "246",
-      "250", "276", "300", "348", "372", "380", "428", "440", "442",
-      "470", "528", "616", "620", "642", "703", "705", "724", "752",
-    ],
-    color: "#B45309",
-  },
-
   "Australia OAIC": {
     jurisdiction: "Australia OAIC",
     fullName: "Australia — Office of the Australian Information Commissioner",

@@ -25,7 +25,7 @@ export type ViolationType =
   | "Improper Data Disposal"
   | "Illegal Monitoring/Surveillance";
 
-export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore PDPC" | "EU GDPR" | "EU EDPB" | "Australia OAIC" | "Canada OPC";
+export type Jurisdiction = "US FTC" | "California DOJ" | "UK ICO" | "Singapore PDPC" | "EU GDPR" | "Australia OAIC" | "Canada OPC";
 
 export type Sector = "Technology" | "Social Media" | "Healthcare" | "E-Commerce" | "Gaming" | "Finance" | "Advertising" | "Food Delivery" | "Hospitality" | "Retail" | "Transportation";
 

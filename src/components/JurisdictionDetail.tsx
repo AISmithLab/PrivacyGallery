@@ -152,27 +152,6 @@ export default function JurisdictionDetail({ jurisdiction }: JurisdictionDetailP
             {stats.totalCases} cases · {stats.minYear}–{stats.maxYear}
           </p>
 
-          {/* Severity Snapshot — 2x2 grid */}
-          <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-3">Severity Snapshot</p>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Total Fines</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.totalFines)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Largest Fine</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.maxFine)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">Avg Fine</p>
-              <p className="text-lg font-bold mt-1">{formatCurrency(stats.avgFine)}</p>
-            </div>
-            <div className="detail-yellow-box p-4">
-              <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">% Monetary</p>
-              <p className="text-lg font-bold mt-1">{stats.pctMonetary}%</p>
-            </div>
-          </div>
-
           {/* Bar charts grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <BarSection title="Top Sectors Affected" data={stats.topSectors} total={stats.totalCases} />
@@ -226,7 +205,7 @@ function BarSection({ title, data, total }: { title: string; data: [string, numb
                 <span className="text-xs font-mono font-bold ml-2 shrink-0">{count}</span>
               </div>
               <div className="h-2.5 overflow-hidden" style={{ backgroundColor: "#e5e5e5" }}>
-                <div className="h-full bg-black transition-all duration-500" style={{ width: `${barPct}%` }} />
+                <div className="h-full transition-all duration-500" style={{ width: `${barPct}%`, backgroundColor: "#FFD700", border: "1px solid black" }} />
               </div>
             </div>
           );

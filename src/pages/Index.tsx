@@ -71,8 +71,8 @@ const Index = () => {
     }
 
     const jurOrder: Record<string, number> = {
-      "US FTC": 0, "California DOJ": 1, "UK ICO": 2, "EU GDPR": 3, "EU EDPB": 4,
-      "Singapore PDPC": 5, "Australia OAIC": 6,
+      "US FTC": 0, "California DOJ": 1, "UK ICO": 2, "EU GDPR": 3,
+      "Singapore PDPC": 4, "Australia OAIC": 5, "Canada OPC": 6,
     };
     result.sort((a, b) => (jurOrder[a.jurisdiction] ?? 99) - (jurOrder[b.jurisdiction] ?? 99));
 
@@ -106,7 +106,7 @@ const Index = () => {
           A global registry of{" "}
           <span className="font-bold">{cases.length}</span>{" "}
           data privacy enforcement decisions across{" "}
-          <span className="font-bold">6</span>{" "}
+          <span className="font-bold">{new Set(cases.map(c => c.jurisdiction)).size}</span>{" "}
           jurisdictions, totaling{" "}
           <span className="font-bold">{formatTotalFines(totalFines)}</span>{" "}
           in fines.
