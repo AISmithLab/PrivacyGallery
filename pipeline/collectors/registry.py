@@ -18,6 +18,7 @@ _COLLECTOR_MAP: dict[str, tuple[str, str]] = {
     "eu_gdpr": ("pipeline.collectors.gdpr", "GDPRCollector"),
     "eu_edpb": ("pipeline.collectors.edpb", "EDPBCollector"),
     "us_ca_doj": ("pipeline.collectors.california_doj", "CaliforniaDOJCollector"),
+    "ca_opc": ("pipeline.collectors.canada_opc", "CanadaOPCCollector"),
 }
 
 

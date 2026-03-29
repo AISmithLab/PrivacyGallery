@@ -258,6 +258,37 @@ export const JURISDICTION_INFO: Record<Jurisdiction, JurisdictionInfo> = {
     countryCodes: ["036"],
     color: "#0891B2",
   },
+  "Canada OPC": {
+    jurisdiction: "Canada OPC",
+    fullName: "Canada — Office of the Privacy Commissioner",
+    flag: "🇨🇦",
+    abbreviation: "OPC",
+    overview:
+      "Canada enforces privacy through the Personal Information Protection and Electronic Documents Act (PIPEDA) for the private sector and the Privacy Act for federal institutions, both overseen by the OPC. The framework emphasizes consent, accountability, and purpose limitation. Recent reforms through the proposed Consumer Privacy Protection Act (CPPA) aim to modernize enforcement with significant penalties.",
+    laws: [
+      {
+        name: "PIPEDA",
+        year: 2000,
+        description:
+          "The Personal Information Protection and Electronic Documents Act governs how private-sector organizations collect, use, and disclose personal information in the course of commercial activities.",
+      },
+      {
+        name: "Privacy Act",
+        year: 1983,
+        description:
+          "Governs how federal government institutions handle personal information, giving individuals the right to access and correct their personal data held by the government.",
+      },
+    ],
+    authority: {
+      name: "Office of the Privacy Commissioner of Canada",
+      acronym: "OPC",
+      role: "Independent Officer of Parliament responsible for overseeing compliance with both PIPEDA and the Privacy Act. Has power to investigate complaints, conduct audits, and make recommendations, though enforcement orders require Federal Court involvement.",
+    },
+    enforcementStyle:
+      "The OPC has traditionally relied on an ombudsman model — investigating complaints, issuing findings and recommendations, and negotiating compliance agreements rather than imposing fines directly. For binding orders or penalties, the OPC must apply to the Federal Court. Recent legislative proposals would grant the OPC direct order-making and penalty powers. The OPC frequently publishes detailed investigation reports that set privacy standards across industries.",
+    countryCodes: ["124"],
+    color: "#DC2626",
+  },
 };
 
 /** Get jurisdiction info by jurisdiction key */

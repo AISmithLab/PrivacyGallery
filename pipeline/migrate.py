@@ -96,6 +96,17 @@ JURISDICTIONS = [
         "access_method": "scrape",
         "crawl_frequency": "weekly",
     },
+    {
+        "id": "ca_opc",
+        "display_name": "Canada OPC",
+        "country": "Canada",
+        "regulator": "Office of the Privacy Commissioner of Canada",
+        "base_url": "https://www.priv.gc.ca",
+        "case_list_url": "https://www.priv.gc.ca/en/opc-actions-and-decisions/investigations/investigations-into-businesses/",
+        "document_types": ["html"],
+        "access_method": "scrape",
+        "crawl_frequency": "weekly",
+    },
 ]
 
 # Map from display_name (as stored in cases.jurisdiction via norm_jurisdiction) to jurisdiction id
@@ -127,6 +138,12 @@ _JURISDICTION_MAP = {
     "australia": "au_oaic",
     "australia oaic": "au_oaic",
     "australia/oaic": "au_oaic",
+    "canada": "ca_opc",
+    "canada opc": "ca_opc",
+    "canada/pipeda": "ca_opc",
+    "pipeda": "ca_opc",
+    "opc": "ca_opc",
+    "privacy act (canada)": "ca_opc",
 }
 
 

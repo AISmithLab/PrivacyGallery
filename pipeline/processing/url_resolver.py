@@ -75,6 +75,7 @@ TRUSTED_DOMAINS = (
     "edpb.europa.eu", "oag.ca.gov", "gov.uk",
     "naih.hu",  # Hungarian DPA
     "giodo.gov.pl",  # Polish DPA
+    "priv.gc.ca",  # Canada OPC
 )
 
 

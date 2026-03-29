@@ -19,6 +19,7 @@ JURISDICTION_ENUM = [
     "EU GDPR",
     "EU EDPB",
     "Australia OAIC",
+    "Canada OPC",
 ]
 
 SECTORS = [
@@ -69,6 +70,8 @@ def norm_jurisdiction(j: str | None) -> str:
         return "EU GDPR"
     if "oaic" in j_lower or "australia" in j_lower:
         return "Australia OAIC"
+    if "canada" in j_lower or "pipeda" in j_lower or "opc" in j_lower or "privacy act (canada)" in j_lower:
+        return "Canada OPC"
     return "US FTC"
 
 
