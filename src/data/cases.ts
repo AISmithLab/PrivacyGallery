@@ -88,7 +88,6 @@ export const JURISDICTIONS: Jurisdiction[] = [
   "UK ICO",
   "Singapore PDPC",
   "EU GDPR",
-  "EU EDPB",
   "Australia OAIC",
   "Canada OPC",
 ];
