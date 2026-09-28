@@ -2,7 +2,7 @@
 
 A global registry of **787+ data privacy enforcement cases** across 7 jurisdictions, totaling **$532M+** in fines. Browse cases, compare enforcement actions side-by-side, explore jurisdictions on an interactive map, and learn what privacy enforcement terms actually mean.
 
-**Live site**: [[jury.privacydev.org](https://jury.privacydev.org)](https://jury.aismithlab.com/)
+**Live site**: [(https://jury.privacydev.org)](https://jury.aismithlab.com/)
 
 ---
 
